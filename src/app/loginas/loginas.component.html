@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<body>
+    <header id="divHeader" class="div_header">
+        <span class="span_header">
+            LOGIN
+        </span>
+        <fa-icon id="btn_seguir" [icon]="faCheck"></fa-icon>
+    </header>
+    <main class="cadastro" id="gSignInWrapper">
+
+        <div>
+          <div class="contain_alert">
+            <span class="cadastro__alert is-alert"></span>
+          </div>
+          <div class="container_input">
+              <fa-icon class="icon_inputs" [icon]="faMobileScreenButton"></fa-icon>
+              <input class="cadastro_input" id="login" type="number" name="login" placeholder="DDD+Celular" required>
+          </div>
+
+            <div class="container_input">
+                <fa-icon class="icon_inputs" [icon]="faKey"></fa-icon>
+                <input class="cadastro_input cadastro_input_senha" id="senha" type="password" name="senha" placeholder="Senha" required>
+                <fa-icon id="togglePassword" [icon]="faEye" class="icon_view_senha"></fa-icon>
+            </div>
+
+            <div class="contain_esqueci_senha">
+                <a class="esqueci_senha">
+                    Esqueci a senha
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -5,23 +5,28 @@
         <span class="span_header">
             LOGIN
         </span>
-        <fa-icon id="btn_seguir" [icon]="faCheck"></fa-icon>
+        <fa-icon (click)="login()" id="btn_seguir" [icon]="faCheck"></fa-icon>
     </header>
-    <main class="cadastro" id="gSignInWrapper">
 
+    <main class="cadastro" id="gSignInWrapper">
         <div>
-          <div class="contain_alert">
-            <span class="cadastro__alert is-alert"></span>
-          </div>
-          <div class="container_input">
-              <fa-icon class="icon_inputs" [icon]="faMobileScreenButton"></fa-icon>
-              <input class="cadastro_input" id="login" type="number" name="login" placeholder="DDD+Celular" required>
-          </div>
+            <div class="contain_alert">
+                <span class="cadastro__alert is-alert">{{errorMessage}}</span>
+            </div>
+
+            <div class="container_input">
+                <fa-icon class="icon_inputs" [icon]="faMobileScreenButton"></fa-icon>
+                <input class="cadastro_input" [(ngModel)]="usuario_celular" id="celular" type="number" name="celular" placeholder="DDD+Celular" required>
+            </div>
 
             <div class="container_input">
                 <fa-icon class="icon_inputs" [icon]="faKey"></fa-icon>
-                <input class="cadastro_input cadastro_input_senha" id="senha" type="password" name="senha" placeholder="Senha" required>
-                <fa-icon id="togglePassword" [icon]="faEye" class="icon_view_senha"></fa-icon>
+                <input class="cadastro_input cadastro_input_senha" [(ngModel)]="usuario_senha" id="senha" [type]="inputType" name="usuario_senha" placeholder="Senha" required>
+                <fa-icon id="togglePassword"
+                         [icon]="showPassword ? faEyeSlash : faEye"
+                         (click)="togglePasswordVisibility()"
+                         class="icon_view_senha">
+                </fa-icon>
             </div>
 
             <div class="contain_esqueci_senha">

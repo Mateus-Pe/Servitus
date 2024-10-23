@@ -1,25 +1,21 @@
-import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  private urlGetParoquias = 'https://pedeoferta.com.br/templo/index.php/welcome/get_cidades_temp';
+  private loginUrl = 'https://pedeoferta.com.br/templo/index.php/welcome/login';
 
-  constructor(private client: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getParoquias(): Observable<any>{
-    console.log("Chamando o serviço getParoquias");
-   // const headers = new HttpHeaders({
-   //   'Content-Type': 'application/json'  // ou 'application/x-www-form-urlencoded'
-   // });
-    //const id = { cidade_id: cidadeId };  // Enviando 'cidade_id' como um objeto simples
-  return this.client.get<any>(this.urlGetParoquias);
-  
+  login(usuario_celular: string, usuario_senha: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    const body = new URLSearchParams();
+    body.set('usuario_celular', usuario_celular);
+    body.set('usuario_senha', usuario_senha);
+
+    return this.http.post<any>(this.loginUrl, body.toString(), { headers });
   }
-
-  
 }

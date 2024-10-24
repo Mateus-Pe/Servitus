@@ -1,5 +1,5 @@
 import { Component, HostListener  } from '@angular/core';
-import { LoginService } from '../services/login.service';
+import { LoginService } from '../services/login/login.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -27,7 +27,7 @@ export class LoginasComponent {
   constructor(private loginService: LoginService, private router: Router){}
 
   login(){
-    if (this.usuario_celular.length < 9){
+    if (this.usuario_celular.length < 11){
       this.errorMessage = 'Digite seu DDD + Celular para prosseguir';
       return;
     }else{
@@ -61,5 +61,9 @@ export class LoginasComponent {
     if (target.id === 'celular' || target.id === 'senha') {
       this.errorMessage = '';
     }
+  }
+
+  esqueciSenha(){
+    this.router.navigate(['/esqueci-senha'])
   }
 }

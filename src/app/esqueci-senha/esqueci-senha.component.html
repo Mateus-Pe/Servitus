@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<body>
+    <header id="divHeader" class="div_header">
+        <span class="span_header">
+            TROCAR SENHA
+        </span>
+    </header>
+
+    <main class="cadastro">
+        <div>
+            <div class="contain_alert">
+                <span class="cadastro__alert"
+                      [class.is-alert]="isAlert"
+                      [class.is-verify]="isVerify">
+                    {{message}}
+                </span>
+            </div>
+
+            <div id="divHide" *ngIf="showDivHide">
+                <div class="container_input">
+                    <fa-icon class="icon_inputs" [icon]="faMobileScreenButton"></fa-icon>
+                    <input class="cadastro_input" [(ngModel)]="usuario_celular" id="celular" type="text" name="celular" placeholder="DDD+celular" pattern="\d{11}" inputmode="numeric" maxlength="11" required>
+                </div>
+
+                <div id="solicitar_senha" class="container_senha" (click)="getEsqueciSenha()">
+                    <div>
+                        Enviar nova senha
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="divGif" *ngIf="showDivGif" class="success-animation">
+            <div class="checkmark">
+            </div>
+        </div>
+    </main>
+</body>
+</html>

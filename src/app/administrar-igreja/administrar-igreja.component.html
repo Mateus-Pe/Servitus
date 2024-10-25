@@ -1,0 +1,51 @@
+<div class="contain_cidade">
+    <fa-icon [icon]="faLocationDot" id="cidade_nome"></fa-icon>
+</div>
+
+
+<div id="divListaPrincipal">
+    <div *ngFor="let paroquia of igrejas; let i = index" class="div-igreja">
+        <div class="contain_lista_paroquia" (click)="toggleAccordion(paroquia)">
+            <div class="list-line">
+                <span class="span-igreja">
+                    <p>{{paroquia.tipo}}</p>
+                </span>
+                <div class="contain_options_lista">
+                    <fa-icon [icon]="faPenToSquare" class="editar_paroquia"></fa-icon>
+                    <fa-icon [icon]="faUserPlus" class="botao_adicionar"></fa-icon>
+                    <fa-icon ></fa-icon>
+                </div>
+            </div>
+        </div>
+        <div [ngClass]="{'expanded': paroquia.expanded}" class="accordion div-igreja-detalhes">
+            <div *ngFor="let comunidade of paroquia.listabycat; let j = index" class="contain_lista_comunidade">
+                <div class="list-line" (click)="toggleDetalhes(comunidade)">
+                    <span for="itens-check" class="label-lista">
+                        <p>
+                            {{comunidade.igreja_nome}}
+                        </p>
+                    </span>
+                    <fa-icon></fa-icon>
+                </div>
+                <div *ngIf="comunidade.expanded" class="modal-container endereco-lista accordion">
+                    <div>
+                        <p style="padding-top: 5px;">
+                            {{comunidade.igreja_endereco_logradouro}}, {{comunidade.igreja_endereco_numero}}
+                        </p>
+                        <p>
+                            {{comunidade.igreja_endereco_bairro}}
+                        </p>
+                        <p>
+                            {{comunidade.igreja_endereco_cidade}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="add">
+    <fa-icon [icon]="faPlus" class="plus"></fa-icon>
+</div>

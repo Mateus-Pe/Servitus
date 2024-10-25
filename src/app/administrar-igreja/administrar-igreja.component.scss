@@ -1,0 +1,260 @@
+.cadastro__input{
+    padding-left: 4rem;
+    height: 3.5rem;
+    width: 100%;
+}
+
+.cadastro span{
+    color: #363636;
+    font-size: 2.5rem;
+    position: absolute;
+}
+
+.modal-content {
+    background-color: white;
+    margin: auto;
+    border: 1px solid #888;
+    border-radius: 30px;
+    width: 80%;
+    height: 45%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    max-width: 400px;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+}
+
+.modal-footer button {
+    margin: 0 10px;
+    padding: 8px 10px;
+    font-size: 1rem;
+    background-color: white;
+    color: darkred;
+    border: 1px solid darkred;
+    border-radius: 30px;
+    width: 65%;
+}
+
+html, *{
+    font-family: 'Exo';
+    box-sizing: border-box;
+    line-height: unset;
+}
+
+.ui-icon {
+    display: none !important;
+}
+
+.list-line {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.list-line span p{
+    display:inline; 
+    padding:10px;
+}
+
+#divListaPrincipal {
+    margin-top: 10px;
+    padding-bottom: 90px;
+}
+
+#divCorpo{
+    font-family: Exo; 
+    height: 100%; 
+    left: 0; 
+    overflow: auto; 
+    width: 100%; 
+    margin-top:0px; 
+    position: relative;
+}
+
+#add {
+    font-size: 60px;
+    height: 55px;
+    width: 55px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    background: darkred;
+    position: fixed;
+    right: 30px;
+    bottom: 10px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 1.2);
+}
+
+.plus{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 55px !important;
+    font-size: 35px !important;
+}
+
+.modal-container {
+    align-items: left;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    flex-flow: column;
+    height: 10rem;
+    padding: unset !important;
+    overflow: hidden !important;
+  }
+
+  .modal-container div{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 9px;
+    gap: 9px;
+    font-size: 13px;
+    margin-top: 0.7em !important;
+    padding: 0 1.2em;
+    border-top: 1px solid lightgray;
+    width: 100%;
+  }
+
+  .modal-container div p{
+    margin: 3px 0; 
+    text-align: left;
+    font-weight: normal;
+  }
+
+.div-igreja{
+    font-family: Exo; 
+    border-bottom: 1px solid white; 
+    width: 100%;
+    text-align: left; 
+    background-color:darkred;
+}
+
+.span-igreja{
+    font-size:1.5rem;
+    color:white;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    width: 100%;
+    overflow: hidden;
+}
+
+.label-lista{
+    font-size:1.5rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    width: 100%;
+    overflow: hidden;
+}
+
+.endereco-lista{
+    margin-top: 0px; 
+    font-family: Exo; 
+    font-size: 10px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start;
+}
+
+.contain_inputs{
+    display: flex; 
+    align-items: center;
+}
+
+.contain_inputs span{
+    color: lightgray; 
+    position: absolute;
+}
+
+.contain_inputs input,select{
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid darkred;
+    width: 100%
+}
+
+.contain_cidade{
+    background-color: #f6f2fb;
+    width: 100%;
+    height: 20px;
+    border-bottom: 1px solid lightgray; 
+    text-align: center; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.contain_cidade fa-icon{
+    font-size: 1.6rem; 
+    text-transform: none; 
+    color: darkred
+}
+
+.contain_lista_paroquia{
+    height: 40px; 
+    border-radius:0px; 
+    display: flex; 
+    font-weight: bold; 
+    cursor: pointer; 
+    position: relative; 
+    margin-top:0px; 
+    padding: 1.5em .5em 1.5em .7em; 
+    align-items:center; 
+    border-color: white;
+}
+
+.contain_options_lista{
+    display: flex; 
+    align-items: center; 
+    gap: 30px;
+}
+
+.contain_options_lista fa-icon{
+    color:white; 
+    font-size:1.5rem;
+}
+
+.div-igreja-detalhes{
+    max-height: 0; // Começa com altura 0
+    overflow: hidden; // Esconde o conteúdo que está fora do limite
+    transition: max-height 2.5s ease;
+
+    &.expanded {
+        max-height: 100000000px; 
+    }
+}
+
+.contain_lista_comunidade{
+    border: 1px solid #ddd !important; 
+    border-radius:0px !important; 
+    display: block !important; 
+    color: #484848 !important; 
+    font-weight: bold;
+    cursor: pointer !important; 
+    position: relative !important;
+    margin-top:0px !important; 
+    padding: 1.5em .5em 1.5em .7em !important; 
+    background: white !important;
+}
+
+.accordion {
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}

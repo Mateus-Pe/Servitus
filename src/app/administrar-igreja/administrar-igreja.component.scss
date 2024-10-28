@@ -232,13 +232,7 @@ html, *{
 }
 
 .div-igreja-detalhes{
-    max-height: 0; // Começa com altura 0
-    overflow: hidden; // Esconde o conteúdo que está fora do limite
-    transition: max-height 2.5s ease;
-
-    &.expanded {
-        max-height: 100000000px; 
-    }
+    
 }
 
 .contain_lista_comunidade{
@@ -255,6 +249,21 @@ html, *{
 }
 
 .accordion {
+    max-height: 0; // Começa com altura 0
+    transition: max-height 4.8s ease; // Aumente o tempo para 0.8s ou mais
     overflow: hidden;
-    transition: max-height 0.3s ease;
+
+    &.expanded {
+        max-height: 1000px;
+    }
+}
+
+
+.icon_inputs{
+    color: lightgray;
+    margin-top: 0.5rem;
+    font-size: 20px;
+    position: absolute;
+    width: 4rem;
+    margin-left: 10px;
 }

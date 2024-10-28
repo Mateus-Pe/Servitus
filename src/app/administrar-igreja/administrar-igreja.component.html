@@ -12,7 +12,7 @@
                 </span>
                 <div class="contain_options_lista">
                     <fa-icon [icon]="faPenToSquare" class="editar_paroquia"></fa-icon>
-                    <fa-icon [icon]="faUserPlus" class="botao_adicionar"></fa-icon>
+                    <fa-icon [icon]="faUserPlus" (click)="openModal(paroquia.paroquia_id)" class="botao_adicionar"></fa-icon>
                     <fa-icon ></fa-icon>
                 </div>
             </div>
@@ -21,13 +21,13 @@
             <div *ngFor="let comunidade of paroquia.listabycat; let j = index" class="contain_lista_comunidade">
                 <div class="list-line" (click)="toggleDetalhes(comunidade)">
                     <span for="itens-check" class="label-lista">
-                        <p>
+                        <label>
                             {{comunidade.igreja_nome}}
-                        </p>
+                        </label>
                     </span>
                     <fa-icon></fa-icon>
                 </div>
-                <div *ngIf="comunidade.expanded" class="modal-container endereco-lista accordion">
+                <div *ngIf="comunidade.expanded" class=" accordion modal-container endereco-lista">
                     <div>
                         <p style="padding-top: 5px;">
                             {{comunidade.igreja_endereco_logradouro}}, {{comunidade.igreja_endereco_numero}}
@@ -46,6 +46,53 @@
 </div>
 
 
-<div id="add">
+<div id="add" (click)="getNovaParoquia()">
     <fa-icon [icon]="faPlus" class="plus"></fa-icon>
+</div>
+
+
+<!---------------------Modal para montar template--------------------------->
+
+
+<div *ngIf="modalAdicionar" id="modalAdicionar" class="modal" style="display: block;">
+    <div class="modal-content cadastro">
+        <div>
+            <input class="cadastro__input" id="id_paroquia" type="hidden" required>
+        </div>
+
+        <div class="contain_inputs">
+            <fa-icon [icon]="faUser" class="icon_inputs"></fa-icon>
+            <input [(ngModel)]="usuarioNome" class="cadastro__input" id="usuario_nome" name="usuario_nome" placeholder="Nome" required>
+        </div>
+
+        <div class="contain_inputs">
+            <fa-icon [icon]="faPhone" class="icon_inputs"></fa-icon>
+            <input [(ngModel)]="usuarioCelular" class="cadastro__input" id="usuario_celular" name="usuario_celular" placeholder="15000000000" type="number" required>
+        </div>
+
+        <div class="contain_inputs">
+            <fa-icon [icon]="faBriefcase" class="icon_inputs"></fa-icon>
+            <select [(ngModel)]="usuarioTipo" class="cadastro__input" id="usuario_tipo" name="usuario_tipo" placeholder="Função" required>
+                <option value="tipo" selected>Função</option>
+                <option value="P">Pároco</option>
+                <option value="S">Secretário</option>
+                <option value="O">Outro</option>
+            </select>
+        </div>
+
+        <div class="contain_inputs">
+            <fa-icon id="copy_link" [icon]="faCopy" class="icon_inputs"></fa-icon>
+            <input class="cadastro__input" id="link_usuario" name="link_usuario" placeholder="Link" required>
+        </div>
+
+        <div class="modal-footer">
+            <button (click)="closeModal()" class="modal-close" href="#!" id="cancelarAdicao">
+                Cancelar
+            </button>
+
+            <button (click)="getNovoUsuario()" href="#!" id="confirmarAdicao">
+                Confirmar
+            </button>
+        </div>
+    </div>
 </div>

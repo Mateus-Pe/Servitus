@@ -131,10 +131,9 @@ export class AdministrarIgrejaComponent implements OnInit {
             element.style.maxHeight = `${fullHeight}px`; // Define max-height para a altura total
         }, 0);
     }
-}
+  }
 
 
-  
 
 
 

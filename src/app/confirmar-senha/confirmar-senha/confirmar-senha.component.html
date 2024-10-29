@@ -1,0 +1,28 @@
+<header id="divHeader" class="div_header">
+    <span class="span_header">CONFIRMAR SENHA</span>
+    <fa-icon [icon]="faCheck" id="btn_seguir" (click)="getAlterarSenha()"></fa-icon>
+</header>
+
+<main class="cadastro">
+    <div>
+        <div class="contain_alert">
+            <span class="cadastro__alert is-alert">{{errorMessage}}</span>
+        </div>
+
+        <div class="container_input">
+            <fa-icon [icon]="faUnlock" class="ion_senha"></fa-icon>
+            <input class="cadastro_input" [(ngModel)]="usuario_senha" id="senha" [type]="senhaInputType" name="senha" placeholder="Nova Senha" required>
+            <fa-icon [icon]="showPassword ? faEyeSlash : faEye"
+            (click)="togglePasswordVisibility()"
+            class="ion_view_senha"></fa-icon>
+        </div>
+
+        <div class="container_input">
+            <fa-icon [icon]="faCircleCheck" class="ion_senha"></fa-icon>
+            <input class="cadastro_input" [(ngModel)]="confirma_senha" id="confirmar_senha" [type]="confirmarSenhaInputType" name="confirmar_senha" placeholder="Confirmar senha" required>
+            <fa-icon [icon]="showPasswordConfirm ? faEyeSlash : faEye"
+            (click)="toggleConfirmPasswordVisibility()"
+            class="ion_view_senha"></fa-icon>
+        </div>
+    </div>
+</main>

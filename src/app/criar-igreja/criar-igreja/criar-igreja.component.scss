@@ -1,0 +1,123 @@
+body{
+    background-color: white;
+    position: relative;
+}
+
+ main{
+    display: block;
+    background-color: white; 
+    padding-top: 50px;
+ }
+
+.adicionar_input{
+    border: 0;
+    outline: 0;
+    background: transparent;  
+    border-bottom: 1px solid darkred; 
+    width: 80%;
+    padding-left: 4rem;
+    height: 3.5rem;
+    font-family: Exo !important;
+}
+
+.div_header{
+    background-color: darkred;
+    border-bottom: 1px solid darkred;
+    top: 0px;
+    width: 100%;
+    height: 55px; 
+    z-index: 2; 
+    position: fixed; 
+    display: flex;
+    justify-content: space-between;
+}
+
+.ions_header{
+    color: white;
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+}
+
+.span_criar-igreja{
+    font-size: 2rem; 
+    color: #fff; 
+    position: relative;
+    padding: 1.5rem;
+    font-family: Exo;
+}
+
+.div_input{
+    margin-top: 3%;
+}
+
+.span_input{
+    color: lightgray !important;
+    font-size: 20px;
+    margin-top: 0.5rem;
+    width: 40px;
+}
+
+.span_div{
+    font-family: Exo;
+}
+
+.container{
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.lista{
+    margin-top: 0px; 
+    background-color: white;
+    color:solid darkred;
+    border-bottom: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    height: 50vh;
+    overflow: hidden;
+    font-family: Exo !important;
+    overflow-y: scroll;
+}
+
+.divPesq{
+    max-height:40px;
+    margin-top: 10px; 
+    padding-bottom: 10px; 
+    border-bottom: 1px solid darkred;
+}
+
+.divLista{
+    outline: 0;
+    background: transparent;   
+    width: 80%;
+    padding-left: 4rem;
+    height: 2rem;
+    font-family: Exo !important;
+    position: relative;
+    padding-right: 0px; 
+    padding-left: 0px;
+    color: darkred;
+    z-index: 100;
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+}
+
+.cadastro {
+    font-family: sans-serif;
+    font-size: 1.6rem; 
+    text-align: center; 
+}
+
+.is-alert{
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    font-family: Exo;
+}

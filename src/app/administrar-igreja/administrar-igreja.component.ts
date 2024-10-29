@@ -1,10 +1,10 @@
 import { Component, OnInit, Input  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { GetListaParoquiaService } from '../services/get-lista-paroquia/get-lista-paroquia.service';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLocationDot, faPenToSquare, faPlus, faUserPlus, faUser, faPhone, faBriefcase, faCopy } from '@fortawesome/free-solid-svg-icons';
+import { GetListaParoquiaService } from '../services/get-lista-paroquia/get-lista-paroquia.service';
 import { NovaParoquiaService } from '../services/nova_paroquia/nova-paroquia.service';
 import { NovoUsuarioService } from '../services/novo_usuario/novo-usuario.service';
 
@@ -13,7 +13,7 @@ import { NovoUsuarioService } from '../services/novo_usuario/novo-usuario.servic
   standalone: true,
   imports: [ CommonModule, FontAwesomeModule, FormsModule ],
   templateUrl: './administrar-igreja.component.html',
-  styleUrl: './administrar-igreja.component.scss'
+  styleUrls: ['./administrar-igreja.component.scss'] 
 })
 export class AdministrarIgrejaComponent implements OnInit {
   faPenToSquare = faPenToSquare;
@@ -63,8 +63,10 @@ export class AdministrarIgrejaComponent implements OnInit {
     this.novaParoquiaService.getNovaParoquia(this.cidadeId).subscribe({
       next: (response) => {
         console.log(response);
-        if (response.status === '1'){
+        if (response.status == '1'){
           window.sessionStorage.setItem('paroquia_id', response.paroquia_id);
+          console.log('Navegando para criar-igreja');
+          this.router.navigate(['/criar-igreja']);
         }
       },
       error: (error) => {

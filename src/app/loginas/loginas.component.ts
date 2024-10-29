@@ -35,7 +35,7 @@ export class LoginasComponent {
     }
     this.loginService.login(this.usuario_celular, this.usuario_senha).subscribe({
       next: (response) => {
-        if (response.status === 1){
+        if (response.status == 1){
           window.sessionStorage.setItem('paroquia_id', response.usuario.usuario_paroquia_id)
         }else{
           this.errorMessage = "Usuário ou senha incorretos";

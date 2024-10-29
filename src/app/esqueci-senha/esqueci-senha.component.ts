@@ -33,7 +33,7 @@ export class EsqueciSenhaComponent {
     }
     this.esqueciSenhaService.esqueci_senha(this.usuario_celular).subscribe({
       next: (response) => {
-        if (response.status === 1){
+        if (response.status == 1){
           this.envioCompleto();
         }else{
           this.envioIncompleto();

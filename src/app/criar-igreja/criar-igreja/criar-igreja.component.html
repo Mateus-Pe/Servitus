@@ -1,0 +1,50 @@
+<header class="div_header">
+    <fa-icon [icon]="faArrowLeft" id="voltar" class="ions_header" style="margin-left: 10px;"></fa-icon>
+    <span class="span_criar-igreja">CRIAR IGREJA</span>
+    <fa-icon (click)="getGeoLocation()" [icon]="faCheck" id="btn_salvar" class="ions_header" style="margin-right: 10px;"></fa-icon>
+</header>
+
+<main class="cadastro">
+    <div>
+        <div class="div_input">
+            <span class="cadastro__alert is-alert span_div">{{errorMessage}}</span>
+        </div>
+
+        <div *ngIf="showOtherInputs" class="div_input div_form input-with-icon">
+            <fa-icon [icon]="faChurch" class="input-icon span_input"></fa-icon>
+            <input [(ngModel)]="nomeInstituicao" (keyup)="resumeNome()" #tabIndex class="adicionar_input" (keyup.enter)="moveToNextInput(0)" id="nome_instituicao" type="text" name="nome_instituicao" autocomplete="off" placeholder="Nome Instituição">
+        </div>
+
+        <div *ngIf="showOtherInputs" class="div_input div_form input-with-icon">
+            <fa-icon [icon]="faEarthAmericas" class="input-icon span_input"></fa-icon>
+            <input [(ngModel)]="cepInstituicao" #tabIndex class="adicionar_input" (keyup.enter)="moveToNextInput(1)" id="cep_instituicao" type="number" name="cep_instituicao" autocomplete="off" placeholder="CEP">
+        </div>
+
+        <div class="div_input div_form input-with-icon">
+            <fa-icon [icon]="faMapLocationDot" class="input-icon span_input"></fa-icon>
+            <input [(ngModel)]="cidadeInstituicao" (focus)="onCityInputFocus()" (input)="onCidadeChange($event)"  #tabIndex class="adicionar_input" (keyup.enter)="moveToNextInput(2)" id="cidade_instituicao" type="text" name="cidade_instituicao" autocomplete="off" placeholder="Cidade">
+        </div>
+        <div class="container divLista" *ngIf="isCityInputFocused">
+            <div *ngFor="let cidade of cidadesFiltradas" class="divPesq" (click)="selecionarCidade(cidade)">
+                <div style="margin-top: 10px;">
+                    <span style="font-size:1.4rem;">{{ cidade.name }} - {{ cidade.uf }}</span>
+                </div>
+              </div>
+        </div>
+
+        <div *ngIf="showOtherInputs" class="div_input div_form input-with-icon">
+            <fa-icon [icon]="faFlag" class="input-icon span_input"></fa-icon>
+            <input [(ngModel)]="bairroInstituicao" #tabIndex class="adicionar_input" (keyup.enter)="moveToNextInput(3)" id="bairro_instituicao" type="text" name="bairro_instituicao" autocomplete="off" placeholder="Bairro">
+        </div>
+
+        <div *ngIf="showOtherInputs" class="div_input div_form input-with-icon">
+            <fa-icon [icon]="faLocationDot" class="input-icon span_input"></fa-icon>
+            <input [(ngModel)]="logradouroInstituicao" #tabIndex class="adicionar_input" (keyup.enter)="moveToNextInput(4)" id="logradouro_instituicao" type="text" name="logradouro_instituicao" autocomplete="off" placeholder="Logradouro">
+        </div>
+
+        <div *ngIf="showOtherInputs" class="div_input div_form input-with-icon">
+            <fa-icon [icon]="faHouse" class="input-icon span_input"></fa-icon>
+            <input [(ngModel)]="numeroInstituicao" #tabIndex class="adicionar_input" (keyup.enter)="moveToNextInput(5)" id="numero_instituicao" type="number" name="numero_instituicao" autocomplete="off" placeholder="Número">
+        </div>
+    </div>
+</main>

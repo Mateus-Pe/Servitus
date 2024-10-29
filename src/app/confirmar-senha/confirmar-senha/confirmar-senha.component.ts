@@ -45,7 +45,7 @@ export class ConfirmarSenhaComponent {
 
     this.alterarSenhaService.alterar_senha(this.usuario_senha, this.usuario_token).subscribe({
       next: (response) => {
-        if(response.status === 1) {
+        if(response.status == 1) {
           window.sessionStorage.setItem('paroquia_id', response.usuario.usuario_paroquia_id);
           console.log('deu certo');
         }

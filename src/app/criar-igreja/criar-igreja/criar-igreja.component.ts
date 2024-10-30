@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChildren, QueryList, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft, faCheck, faChurch, faEarthAmericas, faMapLocationDot, faFlag, faLocationDot, faHouse } from '@fortawesome/free-solid-svg-icons';
 import { GeoLocationService } from '../../services/api-geolocation/api-geolocation.service';
@@ -51,6 +52,7 @@ export class CriarIgrejaComponent {
   constructor(private geoLocationService: GeoLocationService,
               private incluirIgrejaService: IncluirIgrejaService,
               private cidadeService: CidadeService,
+              private router: Router
   ){}
 
   ngOnInit() {
@@ -91,6 +93,7 @@ export class CriarIgrejaComponent {
           console.log('Latitude:', location.lat);
           console.log('Longitude:', location.lng);
           this.getSalvar(location);
+          console.log('Logradouro:', this.logradouroInstituicao);
         } else {
           console.error('Nenhum resultado encontrado.');
         }
@@ -132,6 +135,8 @@ export class CriarIgrejaComponent {
         if (response.status == '1'){
           window.sessionStorage.setItem('igreja_desc', this.nomeResumido);
           window.sessionStorage.setItem('igreja_id', response.igreja_id);
+          console.log("mudando para criar igreja");
+          this.router.navigate(['/lista-igreja']);
         } else{
           console.error('Erro ao incluir igreja:', response);
         }
@@ -245,6 +250,10 @@ export class CriarIgrejaComponent {
       ) {
       this.errorMessage = '';
     }
+  }
+
+  voltarLista(){
+    this.router.navigate(['/criar-igreja']);
   }
 
 }

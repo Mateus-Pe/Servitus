@@ -152,4 +152,11 @@ export class AdministrarIgrejaComponent implements OnInit {
     this.usuarioTipo = 'tipo';
     this.linkUsuario = '';
   }
+
+  editarParoquia(idParoquia: number){
+    window.sessionStorage.setItem('paroquia_id', idParoquia.toString());
+    console.log(idParoquia);
+    this.router.navigate(['/lista-igreja']);
+ 
+  }
 }

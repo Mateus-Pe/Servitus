@@ -27,7 +27,7 @@ export class IncluirIgrejaService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const body = new URLSearchParams();
     body.set('endereco_cep', endereco_cep.toString());
-    body.set('endereco_logradoudo', endereco_logradouro);
+    body.set('endereco_logradouro', endereco_logradouro);
     body.set('endereco_numero', endereco_numero.toString());
     body.set('endereco_bairro', endereco_bairro);
     body.set('endereco_cidade', endereco_cidade);

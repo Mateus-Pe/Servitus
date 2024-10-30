@@ -1,5 +1,5 @@
 <header class="div_header">
-    <fa-icon [icon]="faArrowLeft" id="voltar" class="ions_header" style="margin-left: 10px;"></fa-icon>
+    <fa-icon (click)="voltarLista()" [icon]="faArrowLeft" id="voltar" class="ions_header" style="margin-left: 10px;"></fa-icon>
     <span class="span_criar-igreja">CRIAR IGREJA</span>
     <fa-icon (click)="getGeoLocation()" [icon]="faCheck" id="btn_salvar" class="ions_header" style="margin-right: 10px;"></fa-icon>
 </header>

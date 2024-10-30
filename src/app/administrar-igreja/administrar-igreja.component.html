@@ -11,7 +11,7 @@
                     <p>{{paroquia.tipo}}</p>
                 </span>
                 <div class="contain_options_lista">
-                    <fa-icon [icon]="faPenToSquare" class="editar_paroquia"></fa-icon>
+                    <fa-icon [icon]="faPenToSquare" (click)="editarParoquia(paroquia.paroquia_id)" class="editar_paroquia"></fa-icon>
                     <fa-icon [icon]="faUserPlus" (click)="openModal(paroquia.paroquia_id)" class="botao_adicionar"></fa-icon>
                     <fa-icon ></fa-icon>
                 </div>

@@ -253,7 +253,7 @@ export class CriarIgrejaComponent {
   }
 
   voltarLista(){
-    this.router.navigate(['/criar-igreja']);
+    this.router.navigate(['/lista-igreja']);
   }
 
 }

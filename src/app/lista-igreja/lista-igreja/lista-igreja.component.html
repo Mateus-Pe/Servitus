@@ -49,7 +49,7 @@
                       </label>
                     </div>
                     
-                    <fa-icon [icon]="faGear" class="editar-igreja" style="line-height: 1;"></fa-icon>
+                    <fa-icon [icon]="faGear" (click)="openModal(comunidade.igreja_id, comunidade.igreja_nome, igreja.tipo)" class="editar-igreja" style="line-height: 1;"></fa-icon>
                   </h3>
           
                   <div *ngIf="comunidade.expanded" class="modal-container endereco-lista">
@@ -67,7 +67,68 @@
 
     </div>
 
-    <div id="add">
+    <div id="add" (click)="criarIgreja()">
         <fa-icon [icon]="faPlus" class="plus"></fa-icon>
     </div>
+
+
+
+    <app-modal *ngIf="showModal" (close)="closeModal()">
+      <div modal-body>
+        <div class="principal_config">
+
+          <div id="calendario">
+            <div class="container_span">
+              <fa-icon [icon]="faCalendar" class="span_ions_config"></fa-icon>
+              <span>Calendário</span>
+            </div>
+          </div>
+
+
+          <div id="editar_perfil">
+            <div class="container_span">
+              <fa-icon [icon]="faGear" class="span_ions_config"></fa-icon>
+              <span>Editar perfil</span>
+            </div>
+          </div>
+
+          <div id="excluir">
+            <div class="container_span">
+              <fa-icon [icon]="faTrash" class="span_ions_config"></fa-icon>
+              <span>Excluir</span>
+            </div>
+          </div>
+
+          <div *ngIf="showTradeParoquia" (click)="getExisteMatriz(selectedIgrejaName!, selectedIgrejaId!)" id="tornar_matriz">
+            <div class="container_span">
+              <fa-icon [icon]="faChurch" class="span_ions_config"></fa-icon>
+              <span>Tornar paróquia</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div modal-footer style="margin-top: 10px;">
+        <button (click)="closeModal()" class="button_cancel">
+          Cancelar
+        </button>
+      </div>
+    </app-modal>
+
+
+
+    <app-modal *ngIf="showModalConfirm">
+      <div modal-body>
+        <div style="font-size: 13px;">
+          <p>A Paróquia atual é a <b>{{matrizModalConfirm}}</b>.</p><br>
+          <p>Deseja tornar a <b>{{igrejaModalConfirm}}</b> Paróquia?</p>
+        </div>
+      </div>
+
+      <div modal-footer class="modal-footer">
+        <button id="cancelarTransicao" (click)="closeModalConfirm()">Cancelar</button>
+        <button id="confirmarTransicao" (click)="atualizar_matriz()">Confirmar</button>
+      </div>
+    </app-modal>
 </div>

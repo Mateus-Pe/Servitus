@@ -48,6 +48,7 @@ export class ConfirmarSenhaComponent {
         if(response.status == 1) {
           window.sessionStorage.setItem('paroquia_id', response.usuario.usuario_paroquia_id);
           console.log('deu certo');
+          this.router.navigate(['/lista-igreja']);
         }
       },
       error: (error) => {

@@ -1,0 +1,19 @@
+.modal-content {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 30px;
+    width: 70%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    max-width: 400px;
+    text-align: center;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+}

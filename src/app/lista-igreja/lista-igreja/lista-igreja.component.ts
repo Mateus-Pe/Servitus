@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlus, faGear, faCircleChevronDown  } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faGear, faCircleChevronDown, faCalendar, faTrash, faChurch  } from '@fortawesome/free-solid-svg-icons';
 import { ListaIgrejaService } from '../../services/lista_igreja/lista-igreja.service';
-import { GetEstatisticaService } from '../../services/get-estatistica/get-estatistica.service'; 
+import { GetEstatisticaService } from '../../services/get-estatistica/get-estatistica.service';
+import { ModalComponent } from '../../modal/modal/modal.component';
+import { GetMatrizService } from '../../services/get_matriz/get-matriz.service';
+import { AtualizarMatrizService } from '../../services/atualizar_matriz/atualizar-matriz.service';
 
 @Component({
   selector: 'app-lista-igreja',
   standalone: true,
-  imports: [FontAwesomeModule, CommonModule],
+  imports: [FontAwesomeModule, CommonModule, ModalComponent],
   templateUrl: './lista-igreja.component.html',
   styleUrl: './lista-igreja.component.scss'
 })
@@ -16,14 +20,30 @@ export class ListaIgrejaComponent implements OnInit {
   faPlus = faPlus;
   faGear = faGear;
   faCircleChevronDown = faCircleChevronDown;
+  faCalendar = faCalendar;
+  faTrash = faTrash;
+  faChurch = faChurch
 
   paroquia_id : number | null = null;
   igrejas: any[] = [];
   eventos: any = {};
 
+  selectedIgrejaId: number | null = null;
+  selectedIgrejaName: string | null = null;
+
+  showModal = false;
+  showModalConfirm = false;
+  textoModalConfirm: string | null = null;
+  matrizModalConfirm: string | null = null;
+  igrejaModalConfirm: string | null = null;
+  showTradeParoquia = false;
+
   constructor(
     private listaIgrejaService: ListaIgrejaService,
-    private getEstatisticaService: GetEstatisticaService
+    private getEstatisticaService: GetEstatisticaService,
+    private getMatrizService: GetMatrizService,
+    private atualizarMatrizService: AtualizarMatrizService,
+    private router: Router
   ){}
 
   ngOnInit(): void {
@@ -66,6 +86,52 @@ export class ListaIgrejaComponent implements OnInit {
     })
   }
 
+  getExisteMatriz(igrejaNome: string, id: number){
+    const paroquiaId = window.sessionStorage.getItem('paroquia_id');
+    if (this.selectedIgrejaName != null) {
+      this.getMatrizService.getMatriz(Number(paroquiaId)).subscribe({
+        next: (response) => {
+          if (response.status == '1'){
+            const matriz = response.matriz.igreja_nome;
+            this.closeModal();
+            this.openModalConfirm();
+            this.igrejaModalConfirm = igrejaNome;
+            this.matrizModalConfirm = matriz;
+          }
+        },
+        error: (error) => {
+          console.error('Erro ao verificar matriz:', error);
+        }
+      })
+    } else {
+      console.warn('selectedIgrejaName é null.');
+    }
+  }
+
+
+  atualizar_matriz(){
+    const paroquiaId = window.sessionStorage.getItem('paroquia_id');
+    const igrejaId = this.selectedIgrejaId;
+    if (igrejaId != null){
+      this.atualizarMatrizService.getAtualizarMatriz(igrejaId, Number(paroquiaId)).subscribe({
+        next: (response) => {
+          if (response.status == '1'){
+            this.closeModalConfirm();
+            this.getListaIgreja(this.paroquia_id!);
+          }
+        },
+        error: (error) => {
+          console.error('Erro ao verificar matriz:', error);
+        }
+      })
+    } else{
+      console.warn('IgrejaId é null.');
+    }
+  }
+
+
+
+
 
   toggleAccordion(igreja: any) {
     igreja.expanded = !igreja.expanded;
@@ -77,6 +143,34 @@ export class ListaIgrejaComponent implements OnInit {
     if (mobileNav) {
       mobileNav.style.display = mobileNav.style.display === 'none' ? 'block' : 'none';
     }
+  }
+
+
+  criarIgreja(): void{
+    window.sessionStorage.setItem('igreja_id', '');
+    this.router.navigate(['\criar-igreja']);
+  }
+
+  openModal(igrejaId: number, igrejaName: string, igrejaTipo: string) {
+    this.selectedIgrejaId = igrejaId;
+    this.selectedIgrejaName = igrejaName;
+    this.showTradeParoquia = igrejaTipo !== 'PARÓQUIA';
+    this.showModal = true;
+    console.log(this.selectedIgrejaId);
+    console.log(this.selectedIgrejaName);
+  }
+
+  openModalConfirm(){
+    this.showModalConfirm = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.showTradeParoquia = false;
+  }
+
+  closeModalConfirm(){
+    this.showModalConfirm = false;
   }
 }
 

@@ -204,6 +204,15 @@ export class ListaIgrejaComponent implements OnInit {
   closeModalRemove(){
     this.showModalRemove = false;
   }
+
+  calendario(){
+    if (this.selectedIgrejaId) {
+      window.sessionStorage.setItem('igreja_id', this.selectedIgrejaId.toString());
+      this.router.navigate(['/calendario']);
+    } else {
+      console.error('selectedIgrejaId is not set.');
+    }
+  }
 }
 
 

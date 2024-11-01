@@ -1,0 +1,429 @@
+html,* {
+    font-family: 'Exo'; box-sizing: border-box; 
+}
+
+body {
+    background-color: white !important; 
+    line-height: unset;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 100%;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.center {
+    text-align: center;
+    font-size: 15px;
+}
+
+.calendarList1 {
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(1, 30px);
+    align-items: center;
+    justify-items: center;
+    grid-gap: 8px;
+    font-size: 14px;
+    color: #707070;
+}
+
+.calendarList2 {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 20px);
+    align-items: center;
+    justify-items: center;
+    grid-gap: 8px;
+    font-size: 14px;
+    color: #707070;
+}
+
+.calendarList2 li {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding: 10px;
+    width: 30px;
+    height: 22px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.calendarList2 li.dia_eventos{
+    background-color: #EAEAEA;
+    color: #606060;
+    border-radius: 10%; 
+    font-weight: bold; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    transition: background-color 0.4s ease, color 0.4s ease;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendarList2 li:active {
+    background-color: darkred;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.calendarList1, .calendarList2 {
+    transition: margin-left 0.5s ease;
+}
+
+.calendarYearMonth {
+    color: #707070;
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+}
+
+.calendarYearMonth p {
+    vertical-align: middle !important;
+
+}
+
+.calBtn {
+    user-select: none;
+    cursor: pointer;
+    background: white;
+    margin: 4% 30px;
+    padding: 1px 15px;
+    border-radius: 12px;
+    font-size: 16px;
+    line-height: 22px;
+    color: darkred;
+    border: 1px solid darkred;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.columns{
+    position:relative;
+    display: flex;
+    align-items: center;
+    left: 10%;
+    color: darkred;
+}
+
+.dia_selecionado{
+    background-color: #ffaaaa !important;
+    color: white !important;
+    transition: background-color 0.5s ease !important;
+    border: 1px solid darkred !important;
+}
+
+#add {
+    font-size: 60px;
+    height: 55px;
+    width: 55px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    background: darkred;
+    position: absolute;
+    right: 30px;
+    bottom: 10px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 1.2);
+}
+
+.plus{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 55px !important;
+    font-size: 35px !important;
+}
+
+.header1{
+    background-color: darkred;
+    height: 55px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+}
+
+.mobile_nav{
+    background-color: darkred !important;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.span_header{
+    font-size: 2rem; 
+    color: #fff; 
+    position: relative; 
+    right: 2.0rem; 
+    padding: 1.5rem;
+    font-family: Exo;
+}
+
+.no-scroll {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-content {
+    background-color: black;
+    margin: auto;
+    border-radius: 10px;
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    max-height: 85%;
+    overflow-y: auto;
+}
+
+.modal-content1 {
+    background-color: white;
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #888;
+    border-radius: 30px;
+    width: 70%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    max-width: 400px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+}
+
+.modal-footer button {
+    margin: 0 10px;
+    padding: 8px 10px;
+    font-size: 1rem;
+    background-color: white;
+    color: darkred;
+    border: 1px solid darkred;
+    border-radius: 30px;
+}
+
+.modal-status {
+    background-color: white;
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #888;
+    border-radius: 30px;
+    width: 85%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    max-width: 400px;
+    display: grid; 
+    justify-content: center; 
+    gap: 10px;
+}
+/*Modal feed*/
+.feed_principal {
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 2px;
+    padding-left: 2px;
+    padding-right: 6px;
+}
+
+.div_feed_secundario {
+    border-radius: 10px;
+    border: 1px solid white;
+    margin-left: 0.2rem;
+    margin-bottom: 0.1rem;
+    margin-right: 0.2rem;
+    background-color: white;
+    width: 100%;
+}
+
+.div_perfil {
+    display: flex;
+    text-decoration: none;
+}
+
+.perfil_div {
+    display: flex;
+    align-items: center;
+}
+
+.img_igreja {
+    height: 3.5rem;
+    width: 3.5rem;
+    border-radius: 50%;
+}
+
+.nome_igreja {
+    align-self: center;
+    color: #363636;
+    margin-left: 0.6rem;
+    font-size: 1.3rem;
+    font-family: exo;
+}
+
+.div_layout_feed {
+    margin-top: 1.5rem;
+}
+
+.a_img_layout {
+    color: #363636;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.div_descricao {
+    margin-top: 15px;
+}
+
+.span_descricao {
+    height: 2.5rem;
+    margin-top: 1.5rem;
+    color: rgb(98, 97, 97);
+    font-family: exo;
+    font-size: 1.5rem;
+}
+
+.disabilitado {
+    pointer-events: none;
+    opacity: 0.2;
+  }
+/*-------------------------------------*/
+
+.div_modal {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    max-width: 400px;
+    text-align: center;
+    display: grid;
+    gap: 10px;
+    width: 75%;
+}
+
+.config_modal{
+    justify-content: center; 
+    display: grid; 
+    gap: 1.5rem; 
+    font-size: 1.6rem;
+}
+
+.container_config{
+    gap: 0.5rem; 
+    align-items: center; 
+    display: flex;
+}
+
+.config_opcoes{
+    color: lightgray; 
+    font-size: 24px;
+    width: 24px; 
+    align-items: center; 
+    display: flex; 
+    justify-content: center;
+}
+
+#cancelar div{
+    gap: 0.5rem; 
+    align-items: center; 
+    display: flex; 
+    justify-content: center; 
+    background-color: white; 
+    border: 1px solid darkred; 
+    color: darkred; 
+    border-radius: 30px;
+}
+
+.close_modal_visualizar{
+    color: white;
+    font-size: 3rem; 
+    position: absolute; 
+    right: 0.5rem; 
+    top: 0.5rem;
+}
+
+.opcoes_modal_excluir{
+    font-size: 1.3rem !important; 
+    width: 100px;
+}
+
+.cancelar_modal_excluir{
+    font-size: 1.3rem !important; 
+    background-color: lightcoral !important; 
+    color: white !important;
+    width: 150px;
+}
+
+.container_status{
+    display: flex; 
+    align-items: center; 
+    gap: 15px;
+}
+
+.container_status div{
+    border-radius: 50%; 
+    width: 13px; 
+    height: 13px;
+    position: relative; 
+    left: 5px; 
+}
+
+.lista_agenda{
+    padding-bottom:150px;
+    height: 300px;
+    overflow-y: auto;
+}
+
+#mensagem_modalPreExcluir{
+    font-size: 1.3rem;
+}
+
+#mensagem_status{
+    text-align: center;
+}

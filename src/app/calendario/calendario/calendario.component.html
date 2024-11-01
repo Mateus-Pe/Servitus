@@ -1,0 +1,83 @@
+<nav class="mobile-nav mobile_nav" role="navigation" style="display: none;">
+    <ul class="mobile-nav__items">
+        <li>
+            <a class="mobile-nav__link-produtos3">
+                <fa-icon></fa-icon>
+                Igrejas
+            </a>
+        </li>
+
+        <li>
+            <a class="mobile-nav__link-categorias2">
+                <fa-icon></fa-icon>
+                Perfil
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
+<div class="page-menu">
+    <header class="header1">
+
+        <div class="page-menu--toggle page-menu__hamburger" href="#" id="btnMenu">
+
+            <span class="page-menu__item"></span>
+
+            <span class="page-menu__item"></span>
+
+            <span class="page-menu__item"></span>
+
+        </div>
+
+        <span class="span_header" id="span_header">CALENDÁRIO</span><br>
+
+    </header>
+
+    <div id="divPrincipal">
+
+        <div class="container">
+
+            <div class="calendarYearMonth center">
+                <fa-icon class="left calBtn" [icon]="faAngleLeft" (click)="prevMonth()"></fa-icon>
+                <p id="yearMonth"> {{ year }} {{ monthName }} </p>
+                <fa-icon class="right calBtn" [icon]="faAngleRight" (click)="nextMonth()"></fa-icon>
+            </div>
+
+            <div>
+                <ol class="calendarList1">
+                    <li class="day-name">Seg</li>
+                    <li class="day-name">Ter</li>
+                    <li class="day-name">Qua</li>
+                    <li class="day-name">Qui</li>
+                    <li class="day-name">Sex</li>
+                    <li class="day-name">Sab</li>
+                    <li class="day-name">Dom</li>
+                </ol>
+
+                <ol class="calendarList2" id="calendarList">
+                    <li *ngFor="let day of daysInMonth" 
+                        [ngStyle]="{'grid-column-start': day === 1 ? firstDay : undefined}" 
+                        (click)="onDayClick(day)"
+                        [class.dia_selecionado]="selectedDay === day"
+                        [attr.id]="day"
+                        >
+                        {{ day }}
+                    </li>
+                </ol>
+
+            </div>
+
+            <div id="divListaAgenda" class="lista_agenda"></div>
+
+        </div>
+
+
+
+        <div id="add">
+            <fa-icon class="plus" [icon]="faPlus">
+                
+            </fa-icon>
+        </div>
+    </div>
+</div>

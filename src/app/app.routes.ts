@@ -5,6 +5,7 @@ import { ConfirmarSenhaComponent } from './confirmar-senha/confirmar-senha/confi
 import { CriarIgrejaComponent } from './criar-igreja/criar-igreja/criar-igreja.component';
 import { AdministrarIgrejaComponent } from './administrar-igreja/administrar-igreja.component';
 import { ListaIgrejaComponent } from './lista-igreja/lista-igreja/lista-igreja.component';
+import { CalendarioComponent } from './calendario/calendario/calendario.component';
 
 export const routes: Routes = [
     { path: 'loginas', component: LoginasComponent },
@@ -13,5 +14,6 @@ export const routes: Routes = [
     { path: 'criar-igreja', component: CriarIgrejaComponent},
     { path: 'administrar-igreja', component: AdministrarIgrejaComponent },
     { path: 'lista-igreja', component: ListaIgrejaComponent},
+    { path: 'calendario', component: CalendarioComponent},
     { path: '', redirectTo: '/loginas', pathMatch: 'full' }
 ];

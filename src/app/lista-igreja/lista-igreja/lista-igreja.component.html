@@ -1,4 +1,4 @@
-<nav class="mobile-nav mobile_nav" role="navigation" style="display: none;">
+<nav class="mobile-nav mobile_nav" role="navigation" *ngIf="isMenuOpen">
     <ul class="mobile-nav__items">
         <li>
             <a>
@@ -11,7 +11,7 @@
 
 <div class="page-menu">
     <header class="header1">
-        <a class="page-menu--toggle page-menu__hamburger" id="btnMenu" (click)="toggleMenu()">
+        <a class="page-menu--toggle page-menu__hamburger" id="btnMenu" [ngClass]="{ 'active': isMenuOpen }" (click)="toggleMenu()">
             <span class="page-menu__item"></span>
             <span class="page-menu__item"></span>
             <span class="page-menu__item"></span>
@@ -92,7 +92,7 @@
             </div>
           </div>
 
-          <div id="excluir">
+          <div id="excluir" (click)="openModalRemove()">
             <div class="container_span">
               <fa-icon [icon]="faTrash" class="span_ions_config"></fa-icon>
               <span>Excluir</span>
@@ -129,6 +129,20 @@
       <div modal-footer class="modal-footer">
         <button id="cancelarTransicao" (click)="closeModalConfirm()">Cancelar</button>
         <button id="confirmarTransicao" (click)="atualizar_matriz()">Confirmar</button>
+      </div>
+    </app-modal>
+
+
+    <app-modal *ngIf="showModalRemove">
+      <div modal-body>
+        <div style="font-size: 13px;">
+          <p> Deseja remover <b>{{selectedIgrejaName}}</b>?</p><br>
+        </div>
+      </div>
+
+      <div modal-footer class="modal-footer">
+        <button id="cancelarRemocao" (click)="closeModalRemove()">Cancelar</button>
+        <button id="confirmarRemocao" (click)="remover()">Confirmar</button>
       </div>
     </app-modal>
 </div>

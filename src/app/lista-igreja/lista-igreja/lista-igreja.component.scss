@@ -159,6 +159,11 @@ html, *{
     top: 0;
     width: 100%;
     z-index: 1;
+    display: none;
+}
+
+.mobile-nav.active {
+    display: block;
 }
 
 .editar-igreja{
@@ -280,4 +285,8 @@ html, *{
 }
 .toggle > input:disabled ~ label:after {
     background-color: rgba(255, 255, 255, 0.3);
+}
+
+.accordion-item {
+    transition: max-height 10.5s ease-in-out;
 }

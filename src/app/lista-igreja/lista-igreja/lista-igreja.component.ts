@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -8,6 +8,7 @@ import { GetEstatisticaService } from '../../services/get-estatistica/get-estati
 import { ModalComponent } from '../../modal/modal/modal.component';
 import { GetMatrizService } from '../../services/get_matriz/get-matriz.service';
 import { AtualizarMatrizService } from '../../services/atualizar_matriz/atualizar-matriz.service';
+import { RemoverIgrejaService } from '../../services/remover-igreja/remover-igreja.service';
 
 @Component({
   selector: 'app-lista-igreja',
@@ -32,18 +33,23 @@ export class ListaIgrejaComponent implements OnInit {
   selectedIgrejaName: string | null = null;
 
   showModal = false;
+  showModalRemove = false;
   showModalConfirm = false;
   textoModalConfirm: string | null = null;
   matrizModalConfirm: string | null = null;
   igrejaModalConfirm: string | null = null;
   showTradeParoquia = false;
 
+  isMenuOpen: boolean = false;
+
   constructor(
     private listaIgrejaService: ListaIgrejaService,
     private getEstatisticaService: GetEstatisticaService,
     private getMatrizService: GetMatrizService,
     private atualizarMatrizService: AtualizarMatrizService,
-    private router: Router
+    private removerIgrejaService: RemoverIgrejaService,
+    private router: Router,
+    private cd: ChangeDetectorRef
   ){}
 
   ngOnInit(): void {
@@ -129,6 +135,21 @@ export class ListaIgrejaComponent implements OnInit {
     }
   }
 
+  remover(){
+    const igrejaId = this.selectedIgrejaId;
+    this.removerIgrejaService.getRemoverIgreja(igrejaId!).subscribe({
+      next: (response) => {
+        if (response.status == 1){
+          this.closeModalRemove();
+          this.getListaIgreja(this.paroquia_id!);
+        }
+      },
+      error: (error) => {
+        console.error('Erro na autenticação:', error);
+      }
+    })
+  }
+
 
 
 
@@ -139,16 +160,18 @@ export class ListaIgrejaComponent implements OnInit {
 
 
   toggleMenu() {
-    const mobileNav = document.querySelector('.mobile-nav') as HTMLElement; // Asserção de tipo
-    if (mobileNav) {
-      mobileNav.style.display = mobileNav.style.display === 'none' ? 'block' : 'none';
-    }
+    const mobileNav = document.querySelector('.mobile-nav') as HTMLElement;
+    //mobileNav.classList.toggle('active');
+    console.log("clicou");
+    this.isMenuOpen = !this.isMenuOpen;
+    this.cd.detectChanges();
+    console.log("Menu toggle:", this.isMenuOpen);
   }
 
 
   criarIgreja(): void{
     window.sessionStorage.setItem('igreja_id', '');
-    this.router.navigate(['\criar-igreja']);
+    this.router.navigate(['/criar-igreja']);
   }
 
   openModal(igrejaId: number, igrejaName: string, igrejaTipo: string) {
@@ -164,6 +187,11 @@ export class ListaIgrejaComponent implements OnInit {
     this.showModalConfirm = true;
   }
 
+  openModalRemove(){
+    this.showModalRemove = true;
+    this.closeModal();
+  }
+
   closeModal() {
     this.showModal = false;
     this.showTradeParoquia = false;
@@ -171,6 +199,10 @@ export class ListaIgrejaComponent implements OnInit {
 
   closeModalConfirm(){
     this.showModalConfirm = false;
+  }
+
+  closeModalRemove(){
+    this.showModalRemove = false;
   }
 }
 

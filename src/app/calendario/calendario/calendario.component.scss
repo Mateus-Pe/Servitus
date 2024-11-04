@@ -124,6 +124,7 @@ body {
     align-items: center;
     left: 10%;
     color: darkred;
+    font-size: 2rem;
 }
 
 .dia_selecionado{
@@ -426,4 +427,12 @@ body {
 
 #mensagem_status{
     text-align: center;
+}
+
+.pesq{
+    background-color: white;
+    height:50px;
+    line-height:50px; 
+    padding-bottom: 10px; 
+    border-bottom: 1px solid #5b318a36
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faAngleLeft, faAngleRight, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight, faPlus, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { GetAgendaCalendarioService } from '../../services/get-agenda-calendario/get-agenda-calendario.service';
+import { AgendaCalendarioHoraService } from '../../services/agenda_calendario_hora/agenda-calendario-hora.service';
 
 @Component({
   selector: 'app-calendario',
@@ -15,6 +16,7 @@ export class CalendarioComponent implements OnInit {
   faAngleLeft = faAngleLeft;
   faAngleRight = faAngleRight;
   faPlus = faPlus;
+  faEllipsis = faEllipsis;
 
   year: number;
   month: number;
@@ -23,6 +25,8 @@ export class CalendarioComponent implements OnInit {
   monthName: string = '';
   igrejaId: number | null = null;
   selectedDay: number | null = null;
+  eventDays: number[] = [];
+  agendaItems: any[] = [];
 
   months = [
     { 'id': 1, 'name': 'Janeiro', 'name_small' : 'JAN' },
@@ -43,11 +47,17 @@ export class CalendarioComponent implements OnInit {
   ngOnInit() {
     const igrejaIdString = window.sessionStorage.getItem('igreja_id');
     this.igrejaId = igrejaIdString ? Number(igrejaIdString) : null;
-    this.makeCalendar(this.year, this.month);
+    
+    if (this.igrejaId) {
+      this.makeCalendar(this.year, this.month);
+    } else {
+      console.error("Igreja ID não encontrado no sessionStorage.");
+    }
   }
 
   constructor(
-    private getAgendaCalendarioService: GetAgendaCalendarioService
+    private getAgendaCalendarioService: GetAgendaCalendarioService,
+    private agendaCalendarioHoraService: AgendaCalendarioHoraService
   ) {
     this.year = new Date().getFullYear();
     this.month = new Date().getMonth() + 1;
@@ -59,20 +69,33 @@ export class CalendarioComponent implements OnInit {
     this.getAgendaCalendarioService.getAgendaCalendario(this.igrejaId!).subscribe({
       next: (response) => {
         if (response.status == 1) {
+          console.log(response.status);
+          this.eventDays = [];
           response.calendario.forEach((o: any) => {
-            const dia = o.agenda_data.substr(0, 2);
+            const dia = Number( o.agenda_data.substr(0, 2));
             const mes = o.agenda_data.substr(3, 2);
             const ano = o.agenda_data.substr(6, 4);
 
-            if (ano == this.year && mes == this.month) {
-              document.getElementById(dia)?.classList.add("dia_eventos"); // Adiciona a classe ao elemento correspondente
-              console.log(mes);
+            if (ano == this.year.toString() && mes == this.month.toString().padStart(2, '0')) {
+              this.eventDays.push(dia);
             }
           });
         }
       },
       error: (error) => {
         console.error('Erro ao carregar o calendário', error);
+      }
+    })
+  }
+
+  get_calendario_hora(dtReferencia: string){
+    this.agendaCalendarioHoraService.getAgendaCalendarioHora(this.igrejaId!, dtReferencia).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.agendaItems = response.calendario_hora;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar as agendas', error);
       }
     })
   }
@@ -130,11 +153,33 @@ export class CalendarioComponent implements OnInit {
       this.monthName = this.months.find(x => x.id === this.month)?.name_small || '';
       this.makeCalendar(this.year, this.month);
       this.selectedDay = null; // Limpa a seleção do dia, se necessário
+      this.agendaItems = [];
       // Adicione qualquer lógica adicional necessária aqui, como limpar a lista de agenda
   }
 
+  isEventDay(day: number): boolean {
+    return this.eventDays.includes(day); 
+  }
 
-  onDayClick(day: number) {
+
+  onDayClick(day: number, currentMonth: number, currentYear: number): void {
     this.selectedDay = day;
+    const data = `${currentYear}-${currentMonth}-${day}`;
+    this.get_calendario_hora(data);
+  }
+
+  statusLayoutColor(status: string): string {
+    console.log(status);
+    switch (status) {
+      case '0':
+      case '1':
+        return 'red';
+      case '2':
+        return 'green';
+      case '3':
+        return 'orange';
+      default:
+        return 'gray'; // Cor padrão caso o status não corresponda a nenhum caso
+    }
   }
 }

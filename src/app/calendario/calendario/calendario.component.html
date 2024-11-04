@@ -57,9 +57,10 @@
 
                 <ol class="calendarList2" id="calendarList">
                     <li *ngFor="let day of daysInMonth" 
-                        [ngStyle]="{'grid-column-start': day === 1 ? firstDay : undefined}" 
-                        (click)="onDayClick(day)"
-                        [class.dia_selecionado]="selectedDay === day"
+                        [ngClass]="{ 'dia_eventos': isEventDay(day) }"
+                        [ngStyle]="{'grid-column-start': day == 1 ? firstDay : undefined}" 
+                        (click)="onDayClick(day, month, year)"
+                        [class.dia_selecionado]="selectedDay == day"
                         [attr.id]="day"
                         >
                         {{ day }}
@@ -68,7 +69,53 @@
 
             </div>
 
-            <div id="divListaAgenda" class="lista_agenda"></div>
+            <div id="divListaAgenda" class="lista_agenda">
+                <div *ngFor="let item of agendaItems" class="pesq">
+                    <div class="add" style="display: flex;" [attr.data-agenda_id]="item.agenda_id">
+
+                        <div style="width: 20%; text-align: left;">
+                            <span style="font-size:1.5rem; color: black; margin-left: 15px;">
+                                {{item.agenda_hora}}
+                            </span>
+                        </div>
+
+                        <div style="width: 50%; text-align: left;">
+                            <span style="font-size:1.5rem; color: black;">
+                                {{item.evento_nome}}
+                            </span>
+                        </div>
+
+                        <div id="div_status" style="width: 10%; align-items: center; display: flex; justify-content: center;">
+                            <div [attr.data-agenda_id]="item.agenda_id" 
+                                [attr.data-status]="item.agenda_layout_tipo" 
+                                class="status_layout" 
+                                [ngStyle]="{
+                                'border-radius': '50%', 
+                                'background-color': statusLayoutColor(item.agenda_layout_tipo), 
+                                'width': '10px', 
+                                'height': '10px', 
+                                'border': '1px solid ' + statusLayoutColor(item.agenda_layout_tipo)
+                                }">
+                            </div>
+                        </div>
+
+                        <div class="columns">
+                            <fa-icon
+                            [attr.data-agenda_img]="item.agenda_img"
+                            [attr.data-agenda_id]="item.agenda_id"
+                            [attr.data-agenda_hora]="item.agenda_hora"
+                            [attr.data-status]="item.agenda_layout_tipo"
+                            [attr.data-logo_url]="item.igreja_logo_url"
+                            [attr.data-igreja_nome]="item.igreja_nome"
+                            [attr.data-agenda_desc]="item.agenda_layout_upload_desc"
+                            [icon]="faEllipsis">
+                            
+                            </fa-icon>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
 
         </div>
 

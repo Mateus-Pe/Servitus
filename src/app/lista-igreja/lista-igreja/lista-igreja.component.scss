@@ -156,15 +156,12 @@ html, *{
     height: 100%;
     left: 0;
     position: fixed;
+    display: block;
     top: 0;
     width: 100%;
     z-index: 1;
-    display: none;
 }
 
-.mobile-nav.active {
-    display: block;
-}
 
 .editar-igreja{
     font-size: 21px !important;

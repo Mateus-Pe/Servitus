@@ -1,14 +1,15 @@
 import { Component, OnInit  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faAngleLeft, faAngleRight, faPlus, faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight, faPlus, faEllipsis, faImage, faGear, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { ModalComponent } from '../../modal/modal/modal.component';
 import { GetAgendaCalendarioService } from '../../services/get-agenda-calendario/get-agenda-calendario.service';
 import { AgendaCalendarioHoraService } from '../../services/agenda_calendario_hora/agenda-calendario-hora.service';
 
 @Component({
   selector: 'app-calendario',
   standalone: true,
-  imports: [FontAwesomeModule, CommonModule],
+  imports: [FontAwesomeModule, CommonModule, ModalComponent],
   templateUrl: './calendario.component.html',
   styleUrl: './calendario.component.scss'
 })
@@ -17,6 +18,10 @@ export class CalendarioComponent implements OnInit {
   faAngleRight = faAngleRight;
   faPlus = faPlus;
   faEllipsis = faEllipsis;
+  faImage = faImage;
+  faGear = faGear;
+  faTrash = faTrash;
+  faXmark = faXmark;
 
   year: number;
   month: number;
@@ -27,6 +32,27 @@ export class CalendarioComponent implements OnInit {
   selectedDay: number | null = null;
   eventDays: number[] = [];
   agendaItems: any[] = [];
+
+  showModalConfig = false;
+  agendaId: number | null = null;
+  agendaImg: string | null = null;
+  agendaHora: string | null = null;
+  agendaStatus: number | null = null;
+  igrejaLogoUrl: string | null = null;
+  igrejaNome: string | null = null;
+  agendaDesc: string | null = 'Adicione um comentário para visualiza-lo';
+  showModalViewAgenda = false;
+
+
+  estiloModal = {
+    'background-color': 'black'
+  };
+  estiloModalContent = {
+    'width': '90%',
+    'border-radius': '10px',
+    'padding': 'unset'
+  };
+
 
   months = [
     { 'id': 1, 'name': 'Janeiro', 'name_small' : 'JAN' },
@@ -55,6 +81,8 @@ export class CalendarioComponent implements OnInit {
     }
   }
 
+  /*---------------------SERVIÇOS-----------------------*/
+
   constructor(
     private getAgendaCalendarioService: GetAgendaCalendarioService,
     private agendaCalendarioHoraService: AgendaCalendarioHoraService
@@ -65,11 +93,9 @@ export class CalendarioComponent implements OnInit {
 
 
   carregarCalendario(){
-    console.log(this.igrejaId);
     this.getAgendaCalendarioService.getAgendaCalendario(this.igrejaId!).subscribe({
       next: (response) => {
         if (response.status == 1) {
-          console.log(response.status);
           this.eventDays = [];
           response.calendario.forEach((o: any) => {
             const dia = Number( o.agenda_data.substr(0, 2));
@@ -91,7 +117,6 @@ export class CalendarioComponent implements OnInit {
   get_calendario_hora(dtReferencia: string){
     this.agendaCalendarioHoraService.getAgendaCalendarioHora(this.igrejaId!, dtReferencia).subscribe({
       next: (response) => {
-        console.log(response);
         this.agendaItems = response.calendario_hora;
       },
       error: (error) => {
@@ -101,7 +126,7 @@ export class CalendarioComponent implements OnInit {
   }
 
 
-
+ /*---------------------FUNCIONALIDADES-----------------------*/
 
 
   makeCalendar(year: number, month: number) {
@@ -169,7 +194,6 @@ export class CalendarioComponent implements OnInit {
   }
 
   statusLayoutColor(status: string): string {
-    console.log(status);
     switch (status) {
       case '0':
       case '1':
@@ -181,5 +205,29 @@ export class CalendarioComponent implements OnInit {
       default:
         return 'gray'; // Cor padrão caso o status não corresponda a nenhum caso
     }
+  }
+
+  openModalConfig(item: any){
+    this.agendaId = item.agenda_id;
+    this.agendaImg = item.agenda_img;
+    this.agendaHora = item.agenda_hora;
+    this.agendaStatus = item.agenda_layout_tipo;
+    this.igrejaLogoUrl = item.igreja_logo_url;
+    this.igrejaNome = item.igreja_nome;
+    this.agendaDesc = item.agenda_layout_upload_desc;
+    this.showModalConfig = true;
+  }
+
+  closeModalConfig(){
+    this.showModalConfig = false;
+  }
+
+  openModalViewAgenda(){
+    this.showModalViewAgenda = true;
+    this.showModalConfig = false;
+  }
+
+  closeModalViewAgenda(){
+    this.showModalViewAgenda = false;
   }
 }

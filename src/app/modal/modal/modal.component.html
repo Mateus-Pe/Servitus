@@ -1,5 +1,10 @@
-<div class="modal" (click)="close()">
-    <div class="modal-content">
+<div class="modal" (click)="close()" [ngStyle]="estilosModal">
+
+  <div class="modal-background">
+    <ng-content select="[modal-background]"></ng-content>
+  </div>
+
+  <div class="modal-content" [ngStyle]="estilosModalContent">
       <div class="modal-body">
         <ng-content select="[modal-body]"></ng-content>
       </div>
@@ -7,4 +12,5 @@
         <ng-content select="[modal-footer]"></ng-content>
       </div>
     </div>
+
 </div>

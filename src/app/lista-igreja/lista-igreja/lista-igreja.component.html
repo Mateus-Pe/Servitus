@@ -11,7 +11,7 @@
 
 <div class="page-menu">
     <header class="header1">
-        <a class="page-menu--toggle page-menu__hamburger" id="btnMenu" [ngClass]="{ 'active': isMenuOpen }" (click)="toggleMenu()">
+        <a class="page-menu--toggle page-menu__hamburger" id="btnMenu" (click)="toggleMenu()">
             <span class="page-menu__item"></span>
             <span class="page-menu__item"></span>
             <span class="page-menu__item"></span>
@@ -92,14 +92,14 @@
             </div>
           </div>
 
-          <div id="excluir" (click)="openModalRemove()">
+          <div *ngIf="showOptionsModal" (click)="openModalRemove()" id="excluir">
             <div class="container_span">
               <fa-icon [icon]="faTrash" class="span_ions_config"></fa-icon>
               <span>Excluir</span>
             </div>
           </div>
 
-          <div *ngIf="showTradeParoquia" (click)="getExisteMatriz(selectedIgrejaName!, selectedIgrejaId!)" id="tornar_matriz">
+          <div *ngIf="showOptionsModal" (click)="getExisteMatriz(selectedIgrejaName!, selectedIgrejaId!)" id="tornar_matriz">
             <div class="container_span">
               <fa-icon [icon]="faChurch" class="span_ions_config"></fa-icon>
               <span>Tornar paróquia</span>
@@ -109,7 +109,7 @@
         </div>
       </div>
 
-      <div modal-footer style="margin-top: 10px;">
+      <div modal-footer>
         <button (click)="closeModal()" class="button_cancel">
           Cancelar
         </button>

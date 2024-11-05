@@ -38,7 +38,7 @@ export class ListaIgrejaComponent implements OnInit {
   textoModalConfirm: string | null = null;
   matrizModalConfirm: string | null = null;
   igrejaModalConfirm: string | null = null;
-  showTradeParoquia = false;
+  showOptionsModal = false;
 
   isMenuOpen: boolean = false;
 
@@ -160,8 +160,6 @@ export class ListaIgrejaComponent implements OnInit {
 
 
   toggleMenu() {
-    const mobileNav = document.querySelector('.mobile-nav') as HTMLElement;
-    //mobileNav.classList.toggle('active');
     console.log("clicou");
     this.isMenuOpen = !this.isMenuOpen;
     this.cd.detectChanges();
@@ -177,7 +175,7 @@ export class ListaIgrejaComponent implements OnInit {
   openModal(igrejaId: number, igrejaName: string, igrejaTipo: string) {
     this.selectedIgrejaId = igrejaId;
     this.selectedIgrejaName = igrejaName;
-    this.showTradeParoquia = igrejaTipo !== 'PARÓQUIA';
+    this.showOptionsModal = igrejaTipo !== 'PARÓQUIA';
     this.showModal = true;
     console.log(this.selectedIgrejaId);
     console.log(this.selectedIgrejaName);
@@ -194,7 +192,7 @@ export class ListaIgrejaComponent implements OnInit {
 
   closeModal() {
     this.showModal = false;
-    this.showTradeParoquia = false;
+    this.showOptionsModal = false;
   }
 
   closeModalConfirm(){

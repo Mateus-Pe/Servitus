@@ -100,17 +100,7 @@
                         </div>
 
                         <div class="columns">
-                            <fa-icon
-                            [attr.data-agenda_img]="item.agenda_img"
-                            [attr.data-agenda_id]="item.agenda_id"
-                            [attr.data-agenda_hora]="item.agenda_hora"
-                            [attr.data-status]="item.agenda_layout_tipo"
-                            [attr.data-logo_url]="item.igreja_logo_url"
-                            [attr.data-igreja_nome]="item.igreja_nome"
-                            [attr.data-agenda_desc]="item.agenda_layout_upload_desc"
-                            [icon]="faEllipsis">
-                            
-                            </fa-icon>
+                            <fa-icon [icon]="faEllipsis" (click)="openModalConfig(item)"></fa-icon>
                         </div>
 
                     </div>
@@ -127,4 +117,74 @@
             </fa-icon>
         </div>
     </div>
+
+
+    <app-modal *ngIf="showModalConfig">
+        <div modal-body>
+          <div class="config_modal">
+
+            <div id="visualizar_layout" (click)="openModalViewAgenda()">
+                <div class="container_config">
+                    <fa-icon [icon]="faImage" class="config_opcoes"></fa-icon>
+                    <span data-agenda_img="" data-logo_url="" data-igreja_nome="" data-agenda_desc="" class="acToggle">Visualizar layout</span>
+                </div>
+            </div>
+
+            <div id="editar_layout">
+                <div class="container_config">
+                    <fa-icon [icon]="faGear" class="config_opcoes"></fa-icon>
+                    <span data-agenda_id="" data-agenda_hora="" data-status="" class="acToggle">Editar layout</span>
+                </div>
+            </div>
+
+            <div id="excluir">
+                <div class="container_config">
+                    <fa-icon data-agenda_id="" [icon]="faTrash" class="config_opcoes"></fa-icon>
+                    <span>Excluir</span>
+                </div>
+            </div>
+
+          </div>
+        </div>
+  
+        <div modal-footer class="modal-footer">
+            <button id="cancelar" (click)="closeModalConfig()">
+                <div>
+                    <span>Cancelar</span>
+                </div>
+            </button>
+        </div>
+    </app-modal>
+
+
+    <app-modal *ngIf="showModalViewAgenda" [estilosModal]="estiloModal" [estilosModalContent]="estiloModalContent">
+        <div modal-background>
+            <fa-icon (click)="closeModalViewAgenda()" [icon]="faXmark" class="close_modal_visualizar"></fa-icon>
+        </div>
+        <div modal-body>
+            <div class="feed_principal">
+                <div class="div_feed_secundario">
+                    <div>
+                        <div>
+                            <a class="div_perfil">
+                                <div class="perfil_div">
+                                    <img id="imagem_igreja" class="img_igreja" src="{{igrejaLogoUrl}}">
+                                    <span class="nome_igreja">{{igrejaNome}}</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="div_layout_feed">
+                            <a class="a_img_layout">
+                                <img id="visualiza_layout_feed" src="{{agendaImg}}">
+                            </a>
+                            <div class="div_descricao">
+                                <span id="descricao_layout_feed" class="span_descricao">{{agendaDesc}}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </app-modal>
 </div>

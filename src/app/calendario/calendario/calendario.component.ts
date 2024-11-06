@@ -3,8 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAngleLeft, faAngleRight, faPlus, faEllipsis, faImage, faGear, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ModalComponent } from '../../modal/modal/modal.component';
+import { UtilsService } from '../../utils/utils.service';
 import { GetAgendaCalendarioService } from '../../services/get-agenda-calendario/get-agenda-calendario.service';
 import { AgendaCalendarioHoraService } from '../../services/agenda_calendario_hora/agenda-calendario-hora.service';
+import { RemoveAgendaService } from '../../services/remove_agenda/remove-agenda.service';
+import { PreLoteService } from '../../services/pre_lote/pre-lote.service';
 
 @Component({
   selector: 'app-calendario',
@@ -42,6 +45,10 @@ export class CalendarioComponent implements OnInit {
   igrejaNome: string | null = null;
   agendaDesc: string | null = 'Adicione um comentário para visualiza-lo';
   showModalViewAgenda = false;
+  showModalRemoveE = false;
+  showModalRemoveL = false;
+  flagLote: number | null = null;
+  texto_modal: string = '';
 
 
   estiloModal = {
@@ -52,22 +59,6 @@ export class CalendarioComponent implements OnInit {
     'border-radius': '10px',
     'padding': 'unset'
   };
-
-
-  months = [
-    { 'id': 1, 'name': 'Janeiro', 'name_small' : 'JAN' },
-    { 'id': 2, 'name': 'Fevereiro', 'name_small' : 'FEV' },
-    { 'id': 3, 'name': 'Março', 'name_small' : 'MAR' },
-    { 'id': 4, 'name': 'Abril', 'name_small' : 'ABR' },
-    { 'id': 5, 'name': 'Maio', 'name_small' : 'MAI' },
-    { 'id': 6, 'name': 'Junho', 'name_small' : 'JUN' },
-    { 'id': 7, 'name': 'Julho', 'name_small' : 'JUL' },
-    { 'id': 8, 'name': 'Agosto', 'name_small' : 'AGO' },
-    { 'id': 9, 'name': 'Setembro', 'name_small' : 'SET' },
-    { 'id': 10, 'name': 'Outubro', 'name_small' : 'OUT' },
-    { 'id': 11, 'name': 'Novembro', 'name_small' : 'NOV' },
-    { 'id': 12, 'name': 'Dezembro', 'name_small' : 'DEZ' },
-  ];
 
 
   ngOnInit() {
@@ -85,7 +76,10 @@ export class CalendarioComponent implements OnInit {
 
   constructor(
     private getAgendaCalendarioService: GetAgendaCalendarioService,
-    private agendaCalendarioHoraService: AgendaCalendarioHoraService
+    private agendaCalendarioHoraService: AgendaCalendarioHoraService,
+    private removeAgendaService: RemoveAgendaService,
+    private preLoteService: PreLoteService,
+    private utilsService: UtilsService
   ) {
     this.year = new Date().getFullYear();
     this.month = new Date().getMonth() + 1;
@@ -125,6 +119,45 @@ export class CalendarioComponent implements OnInit {
     })
   }
 
+  remover(){
+    this.removeAgendaService.getRemoveAgenda(this.agendaId!, this.flagLote!).subscribe({
+      next: (response) => {
+        if (response.status == '1'){
+          const data = this.year +'-'+this.month+"-"+this.daysInMonth;
+          console.log(data);
+        }
+      }
+    })
+  }
+
+  pre_lote(){
+    this.preLoteService.getPreLote(this.agendaId!).subscribe({
+      next: (response) => {
+        const agendas = response.agendas;
+        const quantidade = agendas.length;
+      
+        if(quantidade > 1){ //lote
+          this.flagLote = 1;
+          this.closeModalConfig();
+          this.openModalRemoveL();
+          this.texto_modal = "<p style='line-height:20px'><b>Já existem agendamentos:</b><br><br>";
+          agendas.slice(0, 3).forEach((agenda: any) => {
+            this.texto_modal += `${this.utilsService.splitDateTime(agenda.agenda_horario).date} às ${this.utilsService.timeFormat(this.utilsService.splitDateTime(agenda.agenda_horario).time, ':', true)}<br>`;
+          });
+
+          if (quantidade > 3) {
+            this.texto_modal += `<br>E mais [${quantidade - 3}]</p><br>`;
+          }
+        }else{ //especifica
+          this.flagLote = 0;
+          this.closeModalConfig();
+          this.openModalRemoveE();
+        }
+        document.getElementById('mensagem_modalPreExcluir')!.innerHTML = this.texto_modal;
+      }
+    });
+  }
+
 
  /*---------------------FUNCIONALIDADES-----------------------*/
 
@@ -138,7 +171,7 @@ export class CalendarioComponent implements OnInit {
       this.daysInMonth.push(i);
     }
 
-    this.monthName = this.months.find(x => x.id === month)?.name_small || '';
+    this.monthName = this.utilsService.months.find(x => x.id === month)?.name_small || '';
     
     // Carregar o calendário se igrejaId estiver presente
     if (this.igrejaId != null && this.igrejaId.toString() != '') {
@@ -175,7 +208,7 @@ export class CalendarioComponent implements OnInit {
   private updateCalendar() {
       // Limpa a lista de dias e atualiza o texto do mês/ano
       this.daysInMonth = [];
-      this.monthName = this.months.find(x => x.id === this.month)?.name_small || '';
+      this.monthName = this.utilsService.months.find(x => x.id === this.month)?.name_small || '';
       this.makeCalendar(this.year, this.month);
       this.selectedDay = null; // Limpa a seleção do dia, se necessário
       this.agendaItems = [];
@@ -229,5 +262,21 @@ export class CalendarioComponent implements OnInit {
 
   closeModalViewAgenda(){
     this.showModalViewAgenda = false;
+  }
+
+  openModalRemoveE(){
+    this.showModalRemoveE = true;
+  }
+
+  closeModalRemoveE(){
+    this.showModalRemoveE = false;
+  }
+
+  openModalRemoveL(){
+    this.showModalRemoveL = true;
+  }
+
+  closeModalRemoveL(){
+    this.showModalRemoveL = false;
   }
 }

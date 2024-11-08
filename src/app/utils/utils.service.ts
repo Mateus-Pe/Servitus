@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -67,7 +68,7 @@ export class UtilsService {
   
     // Obter o nome do dia e do mês
     let diaName = this.dias.find(x => x.id === S)?.name || ''; // Verifique se existe o dia
-    let mesName = this.months.find(x => x.id === mes)?.name || ''; // Verifique se existe o mês
+    let mesName = this.months.find(x => x.id == mes)?.name || ''; // Verifique se existe o mês
   
     // Inicialização da variável strDia
     let strDia = "";
@@ -75,9 +76,9 @@ export class UtilsService {
     // Condicional para mostrar 'Hoje', 'Amanhã' ou o nome do dia
     if (Math.floor(diff_days) < 7) {
       if (Math.floor(diff_days) < 2) {
-        if (D === hoje.getDate()) {
+        if (D == hoje.getDate()) {
           strDia = 'Hoje';
-        } else if (D === hoje.getDate() + 1) {
+        } else if (D == hoje.getDate() + 1) {
           strDia = 'Amanhã';
         } else {
           strDia = diaName;
@@ -93,7 +94,7 @@ export class UtilsService {
     }
   
     // Se não foi atribuído um nome ao dia, usa o formato "dd de Mês"
-    if (strDia === "") {
+    if (strDia == "") {
       strDia = `${D} de ${mesName}`;
     }
   
@@ -115,10 +116,10 @@ export class UtilsService {
 
     // Se a flag withMinute for verdadeira, retorna a hora e os minutos
     if (withMinute) {
-        return `${H}${s}${m}`;
+      return `${H}${s}${m < 10 ? `0${m}` : m}`;
     } else {
         // Se não quiser mostrar os minutos e minutos forem '00', retorna só a hora
-        if (m === 0) { // Comparando com o número 0
+        if (m == 0) { // Comparando com o número 0
             return `${H}${s}`;
         } else {
             return `${H}${s}${m}`;
@@ -146,15 +147,15 @@ export class UtilsService {
     const diff_days = diff / (1000 * 60 * 60 * 24); // Diferença em dias
   
     const dayName = this.dias.find(x => x.id === S)?.name_caps || '';  // Verifica se dayName existe
-    const monthName = this.months.find(x => x.id === M)?.name_small || '';  // Verifica se monthName existe
+    const monthName = this.months.find(x => x.id == M)?.name_small || '';  // Verifica se monthName existe
   
     let ret = "";
   
     if (Math.floor(diff_days) < 7) {
       if (Math.floor(diff_days) < 2) {
-        if (D === today.getDate()) {
+        if (D == today.getDate()) {
           ret = 'HOJE';
-        } else if (D === today.getDate() + 1) {
+        } else if (D == today.getDate() + 1) {
           ret = 'AMANHÃ';
         } else {
           ret = dayName;
@@ -168,7 +169,7 @@ export class UtilsService {
       D = '0' + D;
     }
   
-    if (!ret) {
+    if (ret == '') {
       ret = `${D}/${M < 10 ? '0' + M : M}`; // Formata o mês com dois dígitos, se necessário
     }
   
@@ -203,7 +204,7 @@ export class UtilsService {
     const hashTime = t.split(':');
   
     // Verifica se o horário tem o formato esperado
-    if (hashTime.length !== 2) {
+    if (hashTime.length != 2) {
       throw new Error('Formato de hora inválido');
     }
   

@@ -195,7 +195,7 @@
 
         <div modal-footer class="modal-footer" style="display: flex;">
             <button id="cancelarRemocao" (click)="closeModalRemoveE()" style="width: unset; font-size: 1rem; padding: 8px 10px;">Cancelar</button>
-            <button id="confirmarRemocao" (click)="remover()" style="width: unset; font-size: 1rem; padding: 8px 10px;">Confirmar</button>
+            <button id="confirmarRemocao" (click)="removeAgendaEspecifica()" style="width: unset; font-size: 1rem; padding: 8px 10px;">Confirmar</button>
         </div>
     </app-modal>
 
@@ -206,8 +206,8 @@
 
         <div modal-footer class="modal-footer" style="display: grid !important; gap: 10px;">
             <div style="display: flex;">
-                <button (click)="remover()" id="excluirLote" class="opcoes_modal_excluir" style="width: 100px;">Excluir todas</button>
-                <button (click)="remover()" id="excluirEspecifica" class="opcoes_modal_excluir" style="width: 100px;">Excluir esta</button>
+                <button (click)="removeAgendaLote()" id="excluirLote" class="opcoes_modal_excluir" style="width: 100px;">Excluir todas</button>
+                <button (click)="removeAgendaEspecifica()" id="excluirEspecifica" class="opcoes_modal_excluir" style="width: 100px;">Excluir esta</button>
             </div>
             <div>
                 <button (click)="closeModalRemoveL()" id="cancelarExclusao" class="modal-close cancelar_modal_excluir" style="width: 150px;">Cancelar</button>

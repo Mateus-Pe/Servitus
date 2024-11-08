@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAngleLeft, faAngleRight, faPlus, faEllipsis, faImage, faGear, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -50,6 +50,7 @@ export class CalendarioComponent implements OnInit {
   flagLote: number | null = null;
   texto_modal: string = '';
 
+  @ViewChild('mensagemModalPreExcluir') mensagemModalPreExcluir!: ElementRef;
 
   estiloModal = {
     'background-color': 'black'
@@ -111,7 +112,7 @@ export class CalendarioComponent implements OnInit {
   get_calendario_hora(dtReferencia: string){
     this.agendaCalendarioHoraService.getAgendaCalendarioHora(this.igrejaId!, dtReferencia).subscribe({
       next: (response) => {
-        this.agendaItems = response.calendario_hora;
+        this.agendaItems = response.calendario_hora.filter((item: any) => item.agenda_id !== this.agendaId);
       },
       error: (error) => {
         console.error('Erro ao carregar as agendas', error);
@@ -123,9 +124,23 @@ export class CalendarioComponent implements OnInit {
     this.removeAgendaService.getRemoveAgenda(this.agendaId!, this.flagLote!).subscribe({
       next: (response) => {
         if (response.status == '1'){
-          const data = this.year +'-'+this.month+"-"+this.daysInMonth;
-          console.log(data);
+          console.log(this.flagLote);
+          console.log(this.agendaId);
+          this.get_calendario_hora(`${this.year}-${this.month}-${this.selectedDay}`);
+          console.log(console.log('Agenda removida com sucesso'));
+          
+          this.closeModalRemoveL();
+          this.closeModalRemoveE();
+
+          console.log(this.year);
+          console.log(this.month);
+          this.makeCalendar(this.year, this.month);
+        } else {
+          console.error('Erro ao remover a agenda');
         }
+      },
+      error: (error) => {
+        console.error('Erro ao remover a agenda', error);
       }
     })
   }
@@ -137,23 +152,20 @@ export class CalendarioComponent implements OnInit {
         const quantidade = agendas.length;
       
         if(quantidade > 1){ //lote
-          this.flagLote = 1;
           this.closeModalConfig();
           this.openModalRemoveL();
-          this.texto_modal = "<p style='line-height:20px'><b>Já existem agendamentos:</b><br><br>";
+          this.texto_modal = "<p><b>Já existem agendamentos:</b><br><br>";
           agendas.slice(0, 3).forEach((agenda: any) => {
-            this.texto_modal += `${this.utilsService.splitDateTime(agenda.agenda_horario).date} às ${this.utilsService.timeFormat(this.utilsService.splitDateTime(agenda.agenda_horario).time, ':', true)}<br>`;
+            this.texto_modal += `${this.utilsService.dateText(this.utilsService.splitDateTime(agenda.agenda_horario).date)} às ${this.utilsService.timeFormat(this.utilsService.splitDateTime(agenda.agenda_horario).time, ':', true)}<br>`;
           });
 
           if (quantidade > 3) {
             this.texto_modal += `<br>E mais [${quantidade - 3}]</p><br>`;
           }
         }else{ //especifica
-          this.flagLote = 0;
           this.closeModalConfig();
           this.openModalRemoveE();
         }
-        document.getElementById('mensagem_modalPreExcluir')!.innerHTML = this.texto_modal;
       }
     });
   }
@@ -177,14 +189,14 @@ export class CalendarioComponent implements OnInit {
     if (this.igrejaId != null && this.igrejaId.toString() != '') {
       this.carregarCalendario();
     }
-  }
+  };
 
   letsCheck(year: number, month: number) {
     // Aqui você deve implementar a lógica para calcular o primeiro dia do mês e os dias no mês
     const firstDay = new Date(year, month - 1, 1).getDay(); // 0 (domingo) a 6 (sábado)
     const daysInMonth = new Date(year, month, 0).getDate(); // Obter o total de dias do mês
     return { firstDay, daysInMonth };
-  }
+  };
 
 
   nextMonth() {
@@ -194,7 +206,8 @@ export class CalendarioComponent implements OnInit {
         this.month = 1;
     }
     this.updateCalendar();
-  }
+  };
+
 
   prevMonth() {
       this.month--;
@@ -203,7 +216,7 @@ export class CalendarioComponent implements OnInit {
           this.month = 12;
       }
       this.updateCalendar();
-  }
+  };
 
   private updateCalendar() {
       // Limpa a lista de dias e atualiza o texto do mês/ano
@@ -213,18 +226,18 @@ export class CalendarioComponent implements OnInit {
       this.selectedDay = null; // Limpa a seleção do dia, se necessário
       this.agendaItems = [];
       // Adicione qualquer lógica adicional necessária aqui, como limpar a lista de agenda
-  }
+  };
 
   isEventDay(day: number): boolean {
     return this.eventDays.includes(day); 
-  }
+  };
 
 
   onDayClick(day: number, currentMonth: number, currentYear: number): void {
     this.selectedDay = day;
     const data = `${currentYear}-${currentMonth}-${day}`;
     this.get_calendario_hora(data);
-  }
+  };
 
   statusLayoutColor(status: string): string {
     switch (status) {
@@ -238,7 +251,7 @@ export class CalendarioComponent implements OnInit {
       default:
         return 'gray'; // Cor padrão caso o status não corresponda a nenhum caso
     }
-  }
+  };
 
   openModalConfig(item: any){
     this.agendaId = item.agenda_id;
@@ -249,34 +262,46 @@ export class CalendarioComponent implements OnInit {
     this.igrejaNome = item.igreja_nome;
     this.agendaDesc = item.agenda_layout_upload_desc;
     this.showModalConfig = true;
-  }
+  };
 
   closeModalConfig(){
     this.showModalConfig = false;
-  }
+  };
 
   openModalViewAgenda(){
     this.showModalViewAgenda = true;
     this.showModalConfig = false;
-  }
+  };
 
   closeModalViewAgenda(){
     this.showModalViewAgenda = false;
-  }
+  };
 
   openModalRemoveE(){
     this.showModalRemoveE = true;
-  }
+  };
 
   closeModalRemoveE(){
     this.showModalRemoveE = false;
-  }
+  };
 
   openModalRemoveL(){
     this.showModalRemoveL = true;
-  }
+  };
 
   closeModalRemoveL(){
     this.showModalRemoveL = false;
+  };
+
+
+  removeAgendaLote(){
+    this.flagLote = 1;
+    this.remover();
+  };
+
+  removeAgendaEspecifica(){
+    this.flagLote = 0;
+    this.remover();
   }
+
 }

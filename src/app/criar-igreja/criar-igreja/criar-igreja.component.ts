@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChildren, QueryList, HostListener } from '@angular/core';
+import { Component, ElementRef, ViewChild, QueryList, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { faArrowLeft, faCheck, faChurch, faEarthAmericas, faMapLocationDot, faFl
 import { GeoLocationService } from '../../services/api-geolocation/api-geolocation.service';
 import { IncluirIgrejaService } from '../../services/incluir_igreja/incluir-igreja.service';
 import { CidadeService } from '../../services/cidades_temp/cidades-temp.service';
+import { AjaxCepService } from '../../services/ajaxCep/ajax-cep.service';
 
 @Component({
   selector: 'app-criar-igreja',
@@ -24,6 +25,13 @@ export class CriarIgrejaComponent {
   faFlag = faFlag;
   faLocationDot = faLocationDot;
   faHouse = faHouse;
+
+  @ViewChild('nomeInput') nomeInput!: ElementRef;
+  @ViewChild('cepInput') cepInput!: ElementRef;
+  @ViewChild('cidadeInput') cidadeInput!: ElementRef;
+  @ViewChild('bairroInput') bairroInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('logradouroInput') logradouroInput!: ElementRef;
+  @ViewChild('numeroInput') numeroInput!: ElementRef;
 
   nomeInstituicao = '';
   cepInstituicao = '';
@@ -47,11 +55,10 @@ export class CriarIgrejaComponent {
   cidades: any[] = [];
   cidadesFiltradas: any[] = [];
 
-  @ViewChildren('tabIndex') tabInputs!: QueryList<ElementRef>;
-
   constructor(private geoLocationService: GeoLocationService,
               private incluirIgrejaService: IncluirIgrejaService,
               private cidadeService: CidadeService,
+              private ajaxCepService: AjaxCepService,
               private router: Router
   ){}
 
@@ -69,7 +76,7 @@ export class CriarIgrejaComponent {
     }else if (this.cepInstituicao == ''){
       this.errorMessage = 'Para prosseguir coloque o CEP';
       return;
-    }else if (this.cepInstituicao.toString().length !== 8){
+    }else if (this.cepInstituicao.toString().length != 8){
       this.errorMessage = 'Para prosseguir corrija o CEP';
       console.log(this.cepInstituicao.toString().length);
       return;
@@ -102,6 +109,53 @@ export class CriarIgrejaComponent {
         console.error('Erro ao obter geolocalização:', error);
       }
     })
+  }
+
+  buscarCep() {
+    if (this.cepInstituicao && this.cepInstituicao.toString().length == 8) {
+      this.ajaxCepService.ajaxCep(this.cepInstituicao).subscribe({
+
+        next: (response) => {
+          if (response != null) {
+            console.log(response);
+            console.log(response.error);
+            if (response.erro == "true"){
+              console.log("caiu aqui");
+              this.moveToNextInput(2);
+            }else{
+              console.log("ta aqui bixo");
+              // CEP encontrado, preenchendo os campos
+              this.cidadeInstituicao = response.localidade;
+              this.bairroInstituicao = response.bairro;
+              this.logradouroInstituicao = response.logradouro;
+
+              const cidadeEncontrada = this.cidades.find(
+                cidade => cidade.name === response.localidade && cidade.uf === response.uf
+              );
+              
+              if (cidadeEncontrada) {
+                this.cidadeIdInstituicao = cidadeEncontrada.id;
+                console.log("ID da cidade encontrado:", this.cidadeIdInstituicao);
+              }else{
+                console.warn("Cidade não implementada no Servitus");
+              }
+
+              // Move o foco para o campo 'numeroInstituicao'
+              setTimeout(() => {
+                this.moveToNextInput(4);
+              }, 0);
+            }
+          } else {
+            // Move o foco para o campo 'cidadeInstituicao'
+            
+            this.moveToNextInput(2);
+          }
+        },
+        error: (error) => {
+          console.error('Erro ao buscar o CEP:', error);
+        }
+      });
+    }
   }
 
   getCidades() {
@@ -174,7 +228,7 @@ export class CriarIgrejaComponent {
     }
   }
 
-  selecionarCidade(cidade: any) {
+  selecionarCidade(cidade: any):void {
     const cidadeId = cidade.id; // Define a cidadeId
     this.cidadeIdInstituicao = cidadeId;
     const cidadeNome = cidade.name; // Define o nome da cidade
@@ -182,18 +236,52 @@ export class CriarIgrejaComponent {
     this.isCityInputFocused = false;
     this.showOtherInputs = true;
 
-    // Aqui você pode fazer o que quiser com as variáveis
     console.log('Cidade selecionada:', cidadeNome, 'ID:', cidadeId);
-    // Habilitar campos ou mudar o foco conforme necessário
+    setTimeout(() => {
+      if (this.bairroInput && this.bairroInput.nativeElement) {
+        this.bairroInput.nativeElement.focus();
+      }
+    }, 0);
   }
 
 
-  moveToNextInput(currentIndex: number) {
-    const nextInput = this.tabInputs.toArray()[currentIndex + 1];
-    if (nextInput) {
-      nextInput.nativeElement.focus();
+  moveToNextInput(targetIndex: number) {
+    switch (targetIndex) {
+      case 0:
+        this.cepInput.nativeElement.focus();
+        break;
+      case 1:
+        // Verifica se o campo 'cidadeInstituicao' já foi preenchido
+        if (this.cidadeInstituicao) {
+          this.cidadeInput.nativeElement.focus();
+        } else {
+          // Se não estiver preenchido, chama a função de busca de CEP
+          this.buscarCep(); // Isso vai preencher o campo 'cidadeInstituicao' se o CEP for válido
+        }
+        break;
+      case 2:
+        // Verifica se o campo 'bairroInstituicao' já foi preenchido
+        if (this.bairroInstituicao) {
+          this.bairroInput.nativeElement.focus();
+        }
+        break;
+      case 3:
+        // Verifica se o campo 'logradouroInstituicao' já foi preenchido
+        if (this.logradouroInstituicao) {
+          this.logradouroInput.nativeElement.focus();
+        }
+        break;
+      case 4:
+        // Verifica se o campo 'numeroInstituicao' já foi preenchido
+        if (this.numeroInstituicao) {
+          this.numeroInput.nativeElement.focus();
+        }
+        break;
+      default:
+        break;
     }
   }
+  
 
   onCityInputFocus() {
     this.isCityInputFocused = true; // Define que o input de cidade está focado

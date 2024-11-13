@@ -47,8 +47,11 @@ export class CalendarioComponent implements OnInit {
   showModalViewAgenda = false;
   showModalRemoveE = false;
   showModalRemoveL = false;
+  showModalStatus = false;
+  buttonConfigLayoutStatus = false;
   flagLote: number | null = null;
   texto_modal: string = '';
+  texto_status: string = '';
 
   @ViewChild('mensagemModalPreExcluir') mensagemModalPreExcluir!: ElementRef;
 
@@ -60,6 +63,10 @@ export class CalendarioComponent implements OnInit {
     'border-radius': '10px',
     'padding': 'unset'
   };
+
+  estiloModalContentStatus = {
+    'width': '90%'
+  }
 
 
   ngOnInit() {
@@ -253,6 +260,10 @@ export class CalendarioComponent implements OnInit {
     }
   };
 
+  habilitaBotaoConfig(status: string){
+
+  }
+
   openModalConfig(item: any){
     this.agendaId = item.agenda_id;
     this.agendaImg = item.agenda_img;
@@ -293,6 +304,28 @@ export class CalendarioComponent implements OnInit {
     this.showModalRemoveL = false;
   };
 
+  openModalStatus(item: any){
+    this.agendaId = item.agenda_id;
+    this.agendaStatus = item.agenda_layout_tipo;
+    console.log(this.agendaId);
+    console.log(this.agendaStatus);
+    this.showModalStatus = true;
+
+    if(this.agendaStatus == 2){
+      this.texto_status = 'Este evento já está configurado para aparecer no feed';
+      this.buttonConfigLayoutStatus = false;
+    }else if(this.agendaStatus == 3){
+      this.texto_status = 'Este evento já foi realizado';
+      this.buttonConfigLayoutStatus = false;
+    }else{
+      this.texto_status = 'Este evento ainda não foi configurado, para configurar basta clicar em configurar layout';
+      this.buttonConfigLayoutStatus = true;
+    }
+  }
+
+  closeModalStatus(){
+    this.showModalStatus = false;
+  }
 
   removeAgendaLote(){
     this.flagLote = 1;

@@ -43,6 +43,7 @@ export class CriarIgrejaComponent {
   logoInstituicao = '';
   igrejaMatriz = '0';
   nomeResumido = '';
+  cepValido: boolean = false;
 
   errorMessage = '';
 
@@ -78,7 +79,6 @@ export class CriarIgrejaComponent {
       return;
     }else if (this.cepInstituicao.toString().length != 8){
       this.errorMessage = 'Para prosseguir corrija o CEP';
-      console.log(this.cepInstituicao.toString().length);
       return;
     }else if (this.cidadeIdInstituicao == ''){
       this.errorMessage = 'Para prosseguir coloque a cidade';
@@ -97,10 +97,7 @@ export class CriarIgrejaComponent {
     this.geoLocationService.apiGeoLocation(address).subscribe({
       next: (location) => {
         if (location){
-          console.log('Latitude:', location.lat);
-          console.log('Longitude:', location.lng);
           this.getSalvar(location);
-          console.log('Logradouro:', this.logradouroInstituicao);
         } else {
           console.error('Nenhum resultado encontrado.');
         }
@@ -111,50 +108,43 @@ export class CriarIgrejaComponent {
     })
   }
 
-  buscarCep() {
+  async buscarCep(): Promise<void> {
     if (this.cepInstituicao && this.cepInstituicao.toString().length == 8) {
-      this.ajaxCepService.ajaxCep(this.cepInstituicao).subscribe({
-
-        next: (response) => {
-          if (response != null) {
-            console.log(response);
-            console.log(response.error);
-            if (response.erro == "true"){
-              console.log("caiu aqui");
-              this.moveToNextInput(2);
-            }else{
-              console.log("ta aqui bixo");
+      return new Promise((resolve) => {
+        this.ajaxCepService.ajaxCep(this.cepInstituicao).subscribe({
+          next: (response) => {
+            if (response && response.erro !== "true") {
               // CEP encontrado, preenchendo os campos
               this.cidadeInstituicao = response.localidade;
               this.bairroInstituicao = response.bairro;
               this.logradouroInstituicao = response.logradouro;
-
+  
               const cidadeEncontrada = this.cidades.find(
                 cidade => cidade.name === response.localidade && cidade.uf === response.uf
               );
-              
+  
               if (cidadeEncontrada) {
                 this.cidadeIdInstituicao = cidadeEncontrada.id;
-                console.log("ID da cidade encontrado:", this.cidadeIdInstituicao);
-              }else{
+              } else {
                 console.warn("Cidade não implementada no Servitus");
               }
-
-              // Move o foco para o campo 'numeroInstituicao'
-              setTimeout(() => {
-                this.moveToNextInput(4);
-              }, 0);
+  
+              this.cepValido = true;
+            } else {
+              this.cepValido = false;
             }
-          } else {
-            // Move o foco para o campo 'cidadeInstituicao'
-            
-            this.moveToNextInput(2);
+            resolve();  // Indica que a busca foi concluída
+          },
+          error: (error) => {
+            console.error('Erro ao buscar o CEP:', error);
+            this.cepValido = false;
+            resolve();  // Indica que a busca foi concluída
           }
-        },
-        error: (error) => {
-          console.error('Erro ao buscar o CEP:', error);
-        }
+        });
       });
+    } else {
+      this.cepValido = false;
+      return Promise.resolve();
     }
   }
 
@@ -189,7 +179,6 @@ export class CriarIgrejaComponent {
         if (response.status == '1'){
           window.sessionStorage.setItem('igreja_desc', this.nomeResumido);
           window.sessionStorage.setItem('igreja_id', response.igreja_id);
-          console.log("mudando para criar igreja");
           this.router.navigate(['/lista-igreja']);
         } else{
           console.error('Erro ao incluir igreja:', response);
@@ -236,7 +225,6 @@ export class CriarIgrejaComponent {
     this.isCityInputFocused = false;
     this.showOtherInputs = true;
 
-    console.log('Cidade selecionada:', cidadeNome, 'ID:', cidadeId);
     setTimeout(() => {
       if (this.bairroInput && this.bairroInput.nativeElement) {
         this.bairroInput.nativeElement.focus();
@@ -245,37 +233,33 @@ export class CriarIgrejaComponent {
   }
 
 
-  moveToNextInput(targetIndex: number) {
+  async moveToNextInput(targetIndex: number) {
     switch (targetIndex) {
       case 0:
         this.cepInput.nativeElement.focus();
         break;
       case 1:
-        // Verifica se o campo 'cidadeInstituicao' já foi preenchido
-        if (this.cidadeInstituicao) {
-          this.cidadeInput.nativeElement.focus();
+        await this.buscarCep();
+        if (this.cepValido) {
+          setTimeout(() => {
+            this.numeroInput.nativeElement.focus();
+          }, 0);
         } else {
-          // Se não estiver preenchido, chama a função de busca de CEP
-          this.buscarCep(); // Isso vai preencher o campo 'cidadeInstituicao' se o CEP for válido
+          this.cidadeInput.nativeElement.focus();
         }
         break;
       case 2:
-        // Verifica se o campo 'bairroInstituicao' já foi preenchido
-        if (this.bairroInstituicao) {
+        if (this.bairroInstituicao || !this.cepValido) {
           this.bairroInput.nativeElement.focus();
         }
         break;
       case 3:
-        // Verifica se o campo 'logradouroInstituicao' já foi preenchido
-        if (this.logradouroInstituicao) {
+        if (this.logradouroInstituicao || !this.cepValido) {
           this.logradouroInput.nativeElement.focus();
         }
         break;
       case 4:
-        // Verifica se o campo 'numeroInstituicao' já foi preenchido
-        if (this.numeroInstituicao) {
-          this.numeroInput.nativeElement.focus();
-        }
+        this.numeroInput.nativeElement.focus();
         break;
       default:
         break;
@@ -284,7 +268,7 @@ export class CriarIgrejaComponent {
   
 
   onCityInputFocus() {
-    this.isCityInputFocused = true; // Define que o input de cidade está focado
+    this.isCityInputFocused = true;
     this.showOtherInputs = false;
   }
 
@@ -324,7 +308,6 @@ export class CriarIgrejaComponent {
 
   resumeNome() {
     this.nomeResumido = this.igrejaDescResumida(this.nomeInstituicao);
-    console.log(this.nomeResumido);
   }
 
   @HostListener('focusin', ['$event.target'])

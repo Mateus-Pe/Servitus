@@ -85,10 +85,8 @@
                             </span>
                         </div>
 
-                        <div id="div_status" style="width: 10%; align-items: center; display: flex; justify-content: center;">
-                            <div [attr.data-agenda_id]="item.agenda_id" 
-                                [attr.data-status]="item.agenda_layout_tipo" 
-                                class="status_layout" 
+                        <div id="div_status" (click)="openModalStatus(item)" style="width: 10%; align-items: center; display: flex; justify-content: center;">
+                            <div class="status_layout" 
                                 [ngStyle]="{
                                 'border-radius': '50%', 
                                 'background-color': statusLayoutColor(item.agenda_layout_tipo), 
@@ -99,7 +97,7 @@
                             </div>
                         </div>
 
-                        <div class="columns">
+                        <div class="columns" [ngClass]="{'desabilitado': item.agenda_layout_tipo == 3}">
                             <fa-icon [icon]="faEllipsis" (click)="openModalConfig(item)"></fa-icon>
                         </div>
 
@@ -212,6 +210,34 @@
             <div>
                 <button (click)="closeModalRemoveL()" id="cancelarExclusao" class="modal-close cancelar_modal_excluir" style="width: 150px;">Cancelar</button>
             </div>
+        </div>
+    </app-modal>
+
+    <app-modal *ngIf="showModalStatus" [estilosModalContent]="estiloModalContentStatus">
+        <div modal-body>
+            <div style="border: 1px solid black">
+                <span class="container_status">
+                    <div style="background-color: green; border: 1px solid green;"></div>
+                    <h1>Evento configurado para aparecer no feed.</h1>
+                </span>
+                
+                <span class="container_status">
+                    <div style="background-color: red; border: 1px solid red;"></div>
+                    <h1>Evento não configurado para aparecer no feed.</h1>
+                </span>
+
+                <span class="container_status">
+                    <div style="background-color: orange; border: 1px solid orange"></div>
+                    <h1>Evento já realizado.</h1>
+                </span>
+            </div>
+            <h1 id="mensagem_status">{{texto_status}}</h1>
+        </div>
+
+
+        <div modal-footer class="modal-footer" style="display: flex;">
+            <button class="modal-close" *ngIf="buttonConfigLayoutStatus" style="width: unset; padding: 8px 10px; font-size: 1.06rem;">Configurar layout</button>
+            <button class="modal-close" (click)="closeModalStatus()" style="width: unset; padding: 8px 10px; font-size: 1.06rem;">OK</button>
         </div>
     </app-modal>
 </div>

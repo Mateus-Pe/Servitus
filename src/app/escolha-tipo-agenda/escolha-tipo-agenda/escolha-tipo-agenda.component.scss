@@ -1,0 +1,105 @@
+.principal{
+    display: grid;
+    gap: 3rem;
+    position: relative;
+    top: 30%;
+}
+
+.div-container{
+    border-top: 1px solid rgba(0, 0, 0, 0.30);
+    border-radius: 10px;
+    height: 13rem;
+    width: 18rem;
+    display: grid;
+    justify-content: center;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.div-botao{
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    padding-bottom: 10px;
+}
+
+.botao{
+    font-family: Exo;
+    border: 1px solid darkred;
+    background-color: white;
+    width: 80%;
+    border-radius: 10px;
+    height: 5rem;
+    font-size: 1.2rem;
+}
+
+.opcoes{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.header1{
+    background-color: darkred;
+    height: 55px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+}
+
+.header1 div{
+    position: relative;
+}
+
+.header1 div span{
+    color: white; 
+    font-size: 1.5rem; 
+    font-family: exo;
+}
+
+.div-container div{
+    justify-content: center;
+    display: flex;
+}
+
+.container_agora_nao{
+    justify-content: center; 
+    display: flex;
+}
+
+#agora_nao{
+    width: 12rem; 
+    height: 4rem; 
+    background-color: papayawhip;
+}
+
+#especifica{
+    border: 1px solid darkblue; 
+    background-color: lightcyan;
+}
+
+#recorrente{
+    border: 1px solid darkgreen; 
+    background-color: palegreen;
+}
+
+.ion_recorrente{
+    font-size: 4.5rem; 
+    color: lightgreen;
+}
+
+.ion_especifica{
+    font-size: 4.5rem; 
+    color: lightblue;
+}
+
+.container_especifica{
+    box-shadow: 0 3px 6px rgba(0, 0, 255, 0.2), 0 3px 6px rgba(0, 0, 255, 0.2);
+}
+
+.container_recorrente{
+    box-shadow: 0 3px 6px rgba(0, 128, 0, 0.2), 0 3px 6px rgba(0, 128, 0, 0.2);
+}

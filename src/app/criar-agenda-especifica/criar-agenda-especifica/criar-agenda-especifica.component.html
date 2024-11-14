@@ -1,0 +1,29 @@
+<header class="header1">
+    <div class="page-menu--toggle page-menu__hamburger">
+        <fa-icon [icon]="faXmark" id="btn_close"></fa-icon>
+    </div>
+
+    <div class="page-menu--toggle page-menu__hamburger">
+        <span class="title">
+            AGENDA ESPECIFICA
+        </span>
+    </div>
+
+    <div class="page-menu--toggle page-menu__hamburger">
+        <fa-icon [icon]="faCheck" id="btn_seguir"></fa-icon>
+    </div>
+</header>
+
+<div id="divEventos" class="div_eventos">
+    <div *ngFor="let evento of listaEventosAgenda" 
+         [attr.data-evento_cod]="evento.evento_id" 
+         class="eventos_select divPerfilEC" 
+        >
+      
+      <div>
+        <img [src]="evento.evento_icone_img" alt="Ícone do evento">
+      </div>
+
+      <span>{{ evento.evento_nome }}</span>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<header class="header1">
+    <div>
+        <span>
+            ESCOLHA O TIPO DA AGENDA
+        </span>
+    </div>
+</header>
+
+<div class="principal">
+    <div class="opcoes">
+        <div class="div-container container_especifica">
+            <div>
+                <fa-icon [icon]="faCalendarDay" class="ion_especifica"></fa-icon>
+            </div>
+
+            <div class="div-botao">
+                <button (click)="selectEspecifica()" id="especifica" class="botao">
+                    Agenda especifica.
+                </button>
+            </div>
+        </div>
+
+        <div class="div-container container_recorrente">
+            <div>
+                <fa-icon [icon]="faCalendarDays" class="ion_recorrente"></fa-icon>
+            </div>
+
+            <div class="div-botao">
+                <button (click)="selectRecorrente()" id="recorrente" class="botao">
+                    Agenda recorrente.
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container_agora_nao">
+        <div class="div-botao">
+            <button (click)="selectAgoraNao()" id="agora_nao" class="botao">
+                Agora não.
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAngleLeft, faAngleRight, faPlus, faEllipsis, faImage, faGear, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ModalComponent } from '../../modal/modal/modal.component';
@@ -37,6 +38,7 @@ export class CalendarioComponent implements OnInit {
   agendaItems: any[] = [];
 
   showModalConfig = false;
+  showButtomImage = false;
   agendaId: number | null = null;
   agendaImg: string | null = null;
   agendaHora: string | null = null;
@@ -87,7 +89,8 @@ export class CalendarioComponent implements OnInit {
     private agendaCalendarioHoraService: AgendaCalendarioHoraService,
     private removeAgendaService: RemoveAgendaService,
     private preLoteService: PreLoteService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private router: Router
   ) {
     this.year = new Date().getFullYear();
     this.month = new Date().getMonth() + 1;
@@ -273,6 +276,12 @@ export class CalendarioComponent implements OnInit {
     this.igrejaNome = item.igreja_nome;
     this.agendaDesc = item.agenda_layout_upload_desc;
     this.showModalConfig = true;
+
+    if(this.agendaStatus == 2){
+      this.showButtomImage = true;
+    }else{
+      this.showButtomImage = false;
+    }
   };
 
   closeModalConfig(){
@@ -337,4 +346,7 @@ export class CalendarioComponent implements OnInit {
     this.remover();
   }
 
+  addAgenda(){
+    this.router.navigate(['/escolha-tipo-agenda']);
+  }
 }

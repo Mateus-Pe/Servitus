@@ -109,7 +109,7 @@
 
 
 
-        <div id="add">
+        <div id="add" (click)="addAgenda()">
             <fa-icon class="plus" [icon]="faPlus">
                 
             </fa-icon>
@@ -121,7 +121,7 @@
         <div modal-body>
           <div class="config_modal">
 
-            <div id="visualizar_layout" (click)="openModalViewAgenda()">
+            <div id="visualizar_layout" *ngIf="showButtomImage" (click)="openModalViewAgenda()">
                 <div class="container_config">
                     <fa-icon [icon]="faImage" class="config_opcoes"></fa-icon>
                     <span data-agenda_img="" data-logo_url="" data-igreja_nome="" data-agenda_desc="" class="acToggle">Visualizar layout</span>

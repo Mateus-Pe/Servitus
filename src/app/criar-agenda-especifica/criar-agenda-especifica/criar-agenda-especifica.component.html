@@ -16,6 +16,8 @@
 
 <div id="divEventos" class="div_eventos">
     <div *ngFor="let evento of listaEventosAgenda" 
+         (click)="selecionarEvento(evento)"
+         [class.perfil_ec_selected]="atualEventoId === evento.evento_id"
          [attr.data-evento_cod]="evento.evento_id" 
          class="eventos_select divPerfilEC" 
         >
@@ -27,3 +29,132 @@
       <span>{{ evento.evento_nome }}</span>
     </div>
 </div>
+
+<div class="inputs_agenda cadastro">
+    <div *ngIf="mostrarSelectEventos" style="margin-top: 10px ;width: 100%;">
+        <div class="div_inputs_agendas">
+            <fa-icon [icon]="faHandsPraying" class="input-icon"></fa-icon>
+
+            <select class="inputs_geral" id="select_evento" name="select_evento" (change)="selectEventsInput($event)" required>
+                <option value="0" selected>Selecione o evento</option>
+                <option value="Almoço">Almoço</option>
+                <option value="Quermesse">Quermesse</option>
+                <option value="Festa">Festa</option>
+                <option value="Grupo de oração">Grupo de oração</option>
+                <option value="Grupo de jovens">Grupo de jovens</option>
+                <option value="Feijoada">Feijoada</option>
+                <option value="Pizza">Pizza</option>
+                <option value="Pastel">Pastel</option>
+                <option value="Crisma">Crisma</option>
+                <option value="Primeira comunhão">Primeira comunhão</option>
+                <option value="Outros">Outros</option>
+            </select>
+        </div>
+    </div>
+
+    <div *ngIf="divTextEvento" style="margin-top: 10px ;width: 100%;">
+        <div class="div_inputs_agendas">
+            <fa-icon [icon]="faPen" class="input-icon"></fa-icon>
+            <input class="inputs_geral" [(ngModel)]="textEvento" id="text_evento" name="text_evento" placeholder="Digite o evento a ser realizado" required>
+        </div>
+    </div>
+
+    <div style="margin-top: 10px; width: 100%;">
+        <div class="div_inputs_agendas">
+            <fa-icon [icon]="faCalendarDay" class="input-icon"></fa-icon>
+            <input type="text" (click)="openModalCalendar()" class="inputs_geral" id="data_evento" name="data_evento" placeholder="Data do evento" required>
+        </div>
+    </div>
+
+    <div class="container_de_ate">
+        <div class="div_inputs_agendas_de_ate" style="margin-left: -20px;">
+            <fa-icon [icon]="faHourglassStart" class="input-icon"></fa-icon>
+            <select class="inputs_geral" id="agenda_de" name="agenda_de" placeholder="Das" required>
+                <option value="0" selected>Das</option>
+                <option value="06:00">6:00</option>
+                <option value="06:30">6:30</option>
+                <option value="07:00">7:00</option>
+                <option value="07:30">7:30</option>
+                <option value="08:00">8:00</option>
+                <option value="08:30">8:30</option>
+                <option value="09:00">9:00</option>
+                <option value="09:30">9:30</option>
+                <option value="10:00">10:00</option>
+                <option value="10:30">10:30</option>
+                <option value="11:00">11:00</option>
+                <option value="11:30">11:30</option>
+                <option value="12:00">12:00</option>
+                <option value="12:30">12:30</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00</option>
+                <option value="16:30">16:30</option>
+                <option value="17:00">17:00</option>
+                <option value="17:30">17:30</option>
+                <option value="18:00">18:00</option>
+                <option value="18:30">18:30</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30">19:30</option>
+                <option value="20:00">20:00</option>
+                <option value="20:30">20:30</option>
+                <option value="21:00">21:00</option>
+                <option value="21:30">21:30</option>
+                <option value="22:00">22:00</option>
+                <option value="22:30">22:30</option>
+                <option value="23:00">23:00</option>
+            </select>
+        </div>
+
+        <div class="div_inputs_agendas_de_ate">
+            <fa-icon [icon]="faHourglassEnd" class="input-icon"></fa-icon>
+            <select class="inputs_geral" id="agenda_ate" name="agenda_ate" placeholder="Das" required>
+                <option value="0" selected>Até</option>
+                <option value="06:00">6:00</option>
+                <option value="06:30">6:30</option>
+                <option value="07:00">7:00</option>
+                <option value="07:30">7:30</option>
+                <option value="08:00">8:00</option>
+                <option value="08:30">8:30</option>
+                <option value="09:00">9:00</option>
+                <option value="09:30">9:30</option>
+                <option value="10:00">10:00</option>
+                <option value="10:30">10:30</option>
+                <option value="11:00">11:00</option>
+                <option value="11:30">11:30</option>
+                <option value="12:00">12:00</option>
+                <option value="12:30">12:30</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00</option>
+                <option value="16:30">16:30</option>
+                <option value="17:00">17:00</option>
+                <option value="17:30">17:30</option>
+                <option value="18:00">18:00</option>
+                <option value="18:30">18:30</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30">19:30</option>
+                <option value="20:00">20:00</option>
+                <option value="20:30">20:30</option>
+                <option value="21:00">21:00</option>
+                <option value="21:30">21:30</option>
+                <option value="22:00">22:00</option>
+                <option value="22:30">22:30</option>
+                <option value="23:00">23:00</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<app-modal *ngIf="showModalCalendario" [estilosModalContent]="estiloModalContent">
+    <div modal-body>
+        <app-calendario-utils></app-calendario-utils>
+    </div>
+</app-modal>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
@@ -36,7 +36,7 @@ export class CalendarioUtilsComponent {
   ];
 
   selectedDay: number | null = null;
-
+  @Output() daySelected = new EventEmitter<string>();
   constructor() { }
 
   ngOnInit(): void {
@@ -91,7 +91,15 @@ export class CalendarioUtilsComponent {
   selectDay(day: number): void {
     this.selectedDay = day;
     const selectedDate = new Date(this.globalCY, this.globalCM, day);
+    this.daySelected.emit(this.formatDate(selectedDate));
     
-    console.log('Selected Date: ', selectedDate);
+    console.log('Selected Date: ', this.formatDate(selectedDate));
+  }
+
+  formatDate(date: Date): string {
+    const day = ('0' + date.getDate()).slice(-2);
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;  // Retorna a data no formato dd/mm/yyyy
   }
 }

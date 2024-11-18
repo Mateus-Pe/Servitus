@@ -41,6 +41,7 @@ export class CriarAgendaEspecificaComponent {
   mostrarSelectEventos: boolean = false;
   atualEventoId: number | null = null;
   showModalCalendario = false;
+  dataEvento: string = '';
 /*---------------ESTILOS MODAL------------*/
 estiloModalContent = {
   'width': '90%'
@@ -80,7 +81,7 @@ estiloModalContent = {
       this.divTextEvento = false;
       this.textEvento = '';
     }
-  }
+  };
 
   selectEventsInput(event: Event): void{
     const elementoSelecionado = event.target as HTMLSelectElement;
@@ -91,13 +92,18 @@ estiloModalContent = {
       this.divTextEvento = false;
       this.textEvento = '';
     }
+  };
+
+  onDaySelected(selectedDate: string): void {
+    this.dataEvento = selectedDate;  // Atualiza o campo com a data selecionada
+    this.showModalCalendario = false; // Fecha o modal
   }
 
   openModalCalendar(){
     this.showModalCalendario = true;
-  }
+  };
 
   closeModalCalendar(){
     this.showModalCalendario = false;
-  }
+  };
 }

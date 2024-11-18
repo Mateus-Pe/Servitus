@@ -62,7 +62,7 @@
     <div style="margin-top: 10px; width: 100%;">
         <div class="div_inputs_agendas">
             <fa-icon [icon]="faCalendarDay" class="input-icon"></fa-icon>
-            <input type="text" (click)="openModalCalendar()" class="inputs_geral" id="data_evento" name="data_evento" placeholder="Data do evento" required>
+            <input type="text" [(ngModel)]="dataEvento" (click)="openModalCalendar()" class="inputs_geral" id="data_evento" name="data_evento" placeholder="Data do evento" required>
         </div>
     </div>
 
@@ -155,6 +155,6 @@
 
 <app-modal *ngIf="showModalCalendario" [estilosModalContent]="estiloModalContent">
     <div modal-body>
-        <app-calendario-utils></app-calendario-utils>
+        <app-calendario-utils (daySelected)="onDaySelected($event)"></app-calendario-utils>
     </div>
 </app-modal>

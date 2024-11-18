@@ -17,7 +17,7 @@
   <ol class="calendarList2" id="calendarList">
     <li *ngFor="let day of [].constructor(daysInMonth); let i = index" 
         [ngStyle]="{'grid-column-start': (i + firstDay) % 7 + 1}"
-        [class.dia_selecionado]="selectedDay === i + 1"
+        [ngClass]="{ 'dia_selecionado': selectedDay === i + 1 }"
         (click)="selectDay(i + 1)">
       {{ i + 1 }}
     </li>

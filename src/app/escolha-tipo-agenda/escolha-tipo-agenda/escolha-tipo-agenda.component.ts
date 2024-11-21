@@ -21,7 +21,7 @@ export class EscolhaTipoAgendaComponent {
   }
 
   selectRecorrente(){
-    this.router.navigate(['/criar-agenda']);
+    this.router.navigate(['/criar-agenda-recorrente']);
   }
 
   selectAgoraNao(){

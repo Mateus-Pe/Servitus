@@ -8,6 +8,7 @@ import { ListaIgrejaComponent } from './lista-igreja/lista-igreja/lista-igreja.c
 import { CalendarioComponent } from './calendario/calendario/calendario.component';
 import { EscolhaTipoAgendaComponent } from './escolha-tipo-agenda/escolha-tipo-agenda/escolha-tipo-agenda.component';
 import { CriarAgendaEspecificaComponent } from './criar-agenda-especifica/criar-agenda-especifica/criar-agenda-especifica.component';
+import { CriarAgendaRecorrenteComponent } from './criar-agenda-recorrente/criar-agenda-recorrente/criar-agenda-recorrente.component';
 
 export const routes: Routes = [
     { path: 'loginas', component: LoginasComponent },
@@ -19,5 +20,6 @@ export const routes: Routes = [
     { path: 'calendario', component: CalendarioComponent},
     { path: 'escolha-tipo-agenda', component: EscolhaTipoAgendaComponent},
     { path: 'criar-agenda-especifica', component: CriarAgendaEspecificaComponent},
+    { path: 'criar-agenda-recorrente', component: CriarAgendaRecorrenteComponent},
     { path: '', redirectTo: '/loginas', pathMatch: 'full' }
 ];

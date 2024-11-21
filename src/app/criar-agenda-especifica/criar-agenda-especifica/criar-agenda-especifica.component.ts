@@ -76,7 +76,6 @@ estiloModalContent = {
   ngOnInit() {
     const igrejaId = window.sessionStorage.getItem('igreja_id');
     this.igrejaId = igrejaId ? Number(igrejaId) : null;
-    console.log(this.igrejaId);
     this.evento_agenda();
   }
 /* -------------------------------------------------SERVIÇOS--------------------------------------------*/
@@ -193,10 +192,9 @@ estiloModalContent = {
     }
 
     if (!erro){
-      console.log("NÃO HA VAGAS");
       this.gerar_agenda_especifica();
     }
-  }
+  };
 
   pegarEvento(): string{
     var ret = '';
@@ -208,14 +206,13 @@ estiloModalContent = {
         ret = this.textEvento;
       }
     }
-    console.log(ret);
     return ret;
-  }
+  };
 
   onDaySelected(selectedDate: string): void {
     this.dataEvento = selectedDate;
     this.showModalCalendario = false;
-  }
+  };
 
   autoCompleteAgendaDeAte(event: Event): void {
     const selectedValue = (event.target as HTMLSelectElement).value;
@@ -226,7 +223,11 @@ estiloModalContent = {
     } else {
       this.selectAgendaAte = '0';
     }
-  }
+  };
+
+  voltarCalendario(){
+    this.router.navigate(['/calendario']);
+  };
 
   openModalCalendar(){
     this.showModalCalendario = true;

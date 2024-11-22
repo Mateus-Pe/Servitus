@@ -8,14 +8,14 @@
     </div>
 
     <div class="page-menu--toggle page-menu__hamburger" id="div_btn-salvar">
-        <fa-icon [icon]="faCheck" id="btn_seguir"></fa-icon>
+        <fa-icon [icon]="faCheck" (click)="validacaoEventoAgenda()" id="btn_seguir"></fa-icon>
     </div>
 </header>
 
 <div id="divEventos" class="div_eventos">
     <div *ngFor="let evento of listaEventosAgenda" 
          (click)="selecionarEvento(evento)"
-         [class.perfil_ec_selected]="atualEventoId === evento.evento_id"
+         [class]="getEventoClasses(evento)"
          [attr.data-evento_cod]="evento.evento_id" 
          class="eventos_select divPerfilEC" 
         >
@@ -28,11 +28,18 @@
     </div>
 </div>
 
-<div id="divDiaSemana">
-    <div class="dias_selecionados">Qua</div>
+<div id="divDiaSemana" (click)="showHideDivLista()">
+    <div *ngIf="diasSelecionados.length > 0; else noDiasSelecionados" style="display: flex;">
+      <div *ngFor="let dia of diasSelecionados" class="dias_selecionados">
+        {{ dia }}
+      </div>
+    </div>
+    <ng-template #noDiasSelecionados>
+      <div class="dias_selecionados">Adicione ao menos 1 dia</div>
+    </ng-template>
 </div>
 
-<div id="divLista">
+<div id="divLista" *ngIf="showDivLista">
     <div *ngFor="let dia of diasSemana" class="pesq">
       <div>
         <div>
@@ -44,6 +51,7 @@
           [name]="'dias[]'"
           [value]="dia.valor"
           [(ngModel)]="dia.checked"
+          (change)="atualizarDiasSelecionados()"
         />
         </div>
     </div>
@@ -54,7 +62,7 @@
         <div class="contain_inputs">
             <fa-icon [icon]="faHandsPraying" class="input-icon"></fa-icon>
 
-            <select class="cadastro__input" name="select_evento" [(ngModel)]="selectEvento" (change)="selectEventsInput($event)" required>
+            <select class="cadastro__input" name="select_evento" [(ngModel)]="selectEvento" (change)="selectEventsInput($event)" (click)="hideDivLista()" required>
                 <option value="0" selected>Selecione o evento</option>
                 <option value="Almoço">Almoço</option>
                 <option value="Quermesse">Quermesse</option>
@@ -74,7 +82,7 @@
     <div *ngIf="divTextEvento" class="contain_inputs_agendas">
         <div class="contain_inputs">
             <fa-icon [icon]="faPen" class="input-icon"></fa-icon>
-            <input class="cadastro__input" [(ngModel)]="textEvento" id="text_evento" name="text_evento" placeholder="Digite o evento a ser realizado" required>
+            <input class="cadastro__input" [(ngModel)]="textEvento" id="text_evento" name="text_evento" (click)="hideDivLista()" placeholder="Digite o evento a ser realizado" required>
         </div>
     </div>
 
@@ -82,7 +90,7 @@
 
         <div class="div_inputs_agendas">
             <fa-icon [icon]="faCalendar" class=" input-icon"></fa-icon>
-            <select class="cadastro__input" name="agenda_dias" placeholder="Para o(s) próximo(s)" required>
+            <select class="cadastro__input" name="agenda_dias" [(ngModel)]="agendaDias" (click)="hideDivLista()" placeholder="Para o(s) próximo(s)" required>
                 <option value="0" selected>Para o(s) próximo(s)</option>
                 <option value="3">3 Dias</option>
                 <option value="9">9 Dias</option>
@@ -103,7 +111,7 @@
     <div class="contain_inputs_agendas">
         <div class="div_inputs_agendas">
             <fa-icon [icon]="faClock" class="input-icon"></fa-icon>
-            <select class="cadastro__input" name="tempo_duracao" placeholder="Tempo de Duração" required>
+            <select class="cadastro__input" name="tempo_duracao" [(ngModel)]="tempoDuracao" (click)="hideDivLista()" placeholder="Tempo de Duração" required>
                 <option value="0" selected>Tempo de Duração</option>
                 <option value="15">15 minutos</option>
                 <option value="30">30 minutos</option>
@@ -120,7 +128,7 @@
     <div class="contain_select_das_ate">
         <div class="contain_inputs" style="width: 100%;">
             <fa-icon [icon]="faHourglassStart" class="input-icon"></fa-icon>
-            <select class="cadastro__input" [(ngModel)]="selectAgendaDe" (change)="autoCompleteAgendaDeAte($event)" name="agenda_de" placeholder="Das" style="width: 60%" required>
+            <select class="cadastro__input" [(ngModel)]="selectAgendaDe" (click)="hideDivLista()" (change)="autoCompleteAgendaDeAte($event)" name="agenda_de" placeholder="Das" style="width: 60%" required>
                 <option value="0" selected>Das</option>
                 <option *ngFor="let horario of horarios" [value]="horario">{{ horario }}</option>
             </select>
@@ -128,11 +136,22 @@
 
         <div class="contain_input_ate">
             <fa-icon [icon]="faHourglassEnd" class="input-icon"></fa-icon>
-            <select class="cadastro__input" [(ngModel)]="selectAgendaAte" name="agenda_ate" placeholder="Das" style="width: 60%" required>
+            <select class="cadastro__input" [(ngModel)]="selectAgendaAte" (click)="hideDivLista()" name="agenda_ate" placeholder="Das" style="width: 60%" required>
                 <option value="0" selected>Até</option>
                 <option *ngFor="let horario of horarios" [value]="horario">{{ horario }}</option>
             </select>
         </div>
     </div>
-
 </div>
+
+<!------------------------------------------------------MODAL----------------------------------------->
+
+<app-modal *ngIf="showModalConfirmacao">
+    <div modal-body style="font-size: 13px;">
+        {{textoConfirmacao}}
+    </div>
+
+    <div modal-footer class="modal-footer">
+        <button id="confirmar" (click)="closeModalConfirmacao()">OK</button>
+    </div>
+</app-modal>

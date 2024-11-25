@@ -1,0 +1,42 @@
+<header class="header1">
+    <div class="page-menu--toggle page-menu__hamburger" id="div_btn_close"> 
+        <fa-icon [icon]="faXmark" id="btn_close"></fa-icon>
+    </div>
+
+    <div class="page-menu--toggle page-menu__hamburger" id="div_btn-salvar">
+        <fa-icon [icon]="faCheck" id="btn_salvar"></fa-icon>
+    </div>
+</header>
+
+<div class="div_contain_btn_select">
+    <div id="editImg" class="select_local" *ngIf="editImg">
+        <div class="div_botao">
+            <fa-icon id="btn_editar" [icon]="faGear" class="botao-imagem"></fa-icon>
+        </div>
+        <span id="addEdit">Trocar imagem</span>
+    </div>
+
+    <div id="imagem" class="select_local" *ngIf="imagem">
+        <div class="div_botao">
+            <fa-icon id="add_imagem" [icon]="faImage" class="botao-imagem"></fa-icon>
+        </div>
+        <span id="addEdit">Adicionar imagem</span>
+    </div>
+
+    <div id="visualizar" class="visualizar" *ngIf="visualizar">
+        <div class="div_botao">
+            <fa-icon id="btn_visualizar" [icon]="faEye" class="botao-imagem"></fa-icon>
+        </div>
+        <span>Visualizar publicação</span>
+    </div>
+</div>
+
+<div id="pre_visualizar">
+    <span>PRÉ VISUALIZAÇÃO</span>
+</div>
+
+<div id="imagem_selecionada" *ngIf="imagem_selecionada">
+    <img id="previewImg" src="">
+</div>
+
+<app-tiny-editor [agenda]="agenda" (keyup)="teste($event)"></app-tiny-editor>

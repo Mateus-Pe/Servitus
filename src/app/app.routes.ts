@@ -9,6 +9,7 @@ import { CalendarioComponent } from './calendario/calendario/calendario.componen
 import { EscolhaTipoAgendaComponent } from './escolha-tipo-agenda/escolha-tipo-agenda/escolha-tipo-agenda.component';
 import { CriarAgendaEspecificaComponent } from './criar-agenda-especifica/criar-agenda-especifica/criar-agenda-especifica.component';
 import { CriarAgendaRecorrenteComponent } from './criar-agenda-recorrente/criar-agenda-recorrente/criar-agenda-recorrente.component';
+import { ConfigurarLayoutUploadComponent } from './cnfigurar-layout-upload/configurar-layout-upload/configurar-layout-upload.component';
 
 export const routes: Routes = [
     { path: 'loginas', component: LoginasComponent },
@@ -21,5 +22,6 @@ export const routes: Routes = [
     { path: 'escolha-tipo-agenda', component: EscolhaTipoAgendaComponent},
     { path: 'criar-agenda-especifica', component: CriarAgendaEspecificaComponent},
     { path: 'criar-agenda-recorrente', component: CriarAgendaRecorrenteComponent},
+    { path: 'configurar-layout-upload', component: ConfigurarLayoutUploadComponent},
     { path: '', redirectTo: '/loginas', pathMatch: 'full' }
 ];

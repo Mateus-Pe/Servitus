@@ -1,0 +1,228 @@
+.botao-imagem {
+    background-color: white;
+    color: darkred;
+    border: 1px solid darkred;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.botao-imagem:hover {
+    background-color: #8B0000; 
+    color: white;
+}
+
+.select_local{
+    position: absolute; 
+    display: grid;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 50%;
+    height: 70px;
+}
+
+#descricao_local{
+    width: 100%;
+}
+
+.textarea_coments {
+    background: transparent;
+    border: 1px solid darkred;
+    border-radius: 10px;
+    width: 100%;
+    max-height: 5rem;
+    font-size: 1.5rem;
+    bottom: 0px;
+    
+}
+
+.div_botao{
+    display: grid;
+    justify-content: center;
+}
+
+.header1{
+    background-color: darkred;
+    height: 55px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+}
+
+.visualizar{
+    position: absolute;
+    display: grid;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 50%;
+    height: 70px;
+    right: 0px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+}
+
+.modal-footer button {
+    margin: 0 10px;
+    padding: 8px 10px;
+    font-size: 1rem;
+    background-color: white;
+    color: darkred;
+    border: 1px solid darkred;
+    border-radius: 30px;
+    width: 40%;
+}
+
+.div_modal {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 30px;
+    width: 60%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    max-width: 400px;
+    text-align: center;
+    display: grid;
+    gap: 10px;
+}
+
+/*Modal visualizar*/
+
+.modal-content {
+    background-color: black;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 90%;
+    max-height: 85%;
+}
+
+.div_feed {
+    border-radius: 10px;
+    border: 1px solid white;
+    margin-left: 0.2rem;
+    margin-bottom: 0.1rem;
+    margin-right: 0.2rem;
+    background-color: white;
+    width: 100%;
+}
+
+.div_perfil {
+    display: flex;
+    text-decoration: none;
+}
+
+.perfil_div {
+    display: flex;
+    align-items: center;
+}
+
+.img_igreja {
+    height: 3.5rem;
+    width: 3.5rem;
+    border-radius: 50%;
+}
+
+.nome_igreja {
+    align-self: center;
+    color: #363636;
+    margin-left: 0.6rem;
+    font-size: 1.3rem;
+    font-family: exo;
+}
+
+.div_layout_feed {
+    margin-top: 1.5rem;
+}
+
+.a_img_layout {
+    color: #363636;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.div_descricao {
+    margin-top: 15px;
+}
+
+.span_descricao {
+    height: 2.5rem;
+    margin-top: 1.5rem;
+    color: rgb(98, 97, 97);
+    font-family: exo;
+    font-size: 1.5rem;
+}
+
+#btn_close, #btn_salvar{
+    color: white; 
+    font-size: 24px;
+}
+
+.div_contain_btn_select{
+    display: flex; 
+    width: 100%; 
+    position: relative; 
+    height: 70px;
+}
+
+.div_contain_btn_select div span{
+    font-size: 1.5rem;
+}
+
+#pre_visualizar{
+    height: 15px; 
+    position: relative; 
+    margin-top: 3px;
+    width: 100%; 
+    text-align: center; 
+    font-size: 10px; 
+    background-color: darkred; 
+    color: white;
+}
+
+#pre_visualizar span{
+    position: relative; 
+    top: 20%;
+}
+
+#imagem_selecionada, #descricao_local{
+    width: 100%; 
+    position: relative;
+}
+
+#imagem_selecionada img{
+    width: 100%; 
+    height: 100%; 
+}
+
+#modal_visualizar{
+    background-color: black;
+}
+
+#close_view{
+    color: white;
+    font-size: 3rem; 
+    position: absolute; 
+    right: 0.5rem; 
+    top: 0.5rem;
+}
+
+#confirmar_alteracao, #nao_confirmar_alteracao{
+    font-size: 1.2rem !important;
+}

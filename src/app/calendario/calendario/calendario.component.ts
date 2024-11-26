@@ -349,4 +349,9 @@ export class CalendarioComponent implements OnInit {
   addAgenda(){
     this.router.navigate(['/escolha-tipo-agenda']);
   }
+
+  configLayout(){
+    window.sessionStorage.setItem('agenda_id', this.agendaId!.toString());
+    this.router.navigate(['/configurar-layout-upload']);
+  }
 }

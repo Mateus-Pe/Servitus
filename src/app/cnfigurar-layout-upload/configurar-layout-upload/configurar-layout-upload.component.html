@@ -1,5 +1,5 @@
 <header class="header1">
-    <div class="page-menu--toggle page-menu__hamburger" id="div_btn_close"> 
+    <div class="page-menu--toggle page-menu__hamburger" id="div_btn_close" (click)="backToCalendar()"> 
         <fa-icon [icon]="faXmark" id="btn_close"></fa-icon>
     </div>
 
@@ -16,7 +16,7 @@
         <span id="addEdit">Trocar imagem</span>
     </div>
 
-    <div id="imagem" class="select_local" *ngIf="imagem">
+    <div id="imagem" class="select_local" *ngIf="imagem" (click)="triggerFileInputClick()">
         <div class="div_botao">
             <fa-icon id="add_imagem" [icon]="faImage" class="botao-imagem"></fa-icon>
         </div>
@@ -36,7 +36,16 @@
 </div>
 
 <div id="imagem_selecionada" *ngIf="imagem_selecionada">
-    <img id="previewImg" src="">
+    <img id="previewImg" [src]="previewImgSrc">
 </div>
 
-<app-tiny-editor [agenda]="agenda" (keyup)="teste($event)"></app-tiny-editor>
+<app-tiny-editor [agenda]="agenda" (keyup)="valTextArea($event)"></app-tiny-editor>
+
+<!--Input select image file-->
+<input
+type="file"
+id="imageFileInput"
+accept="image/*"
+style="display: none;"
+(change)="onFileSelected($event)"
+/>

@@ -128,7 +128,7 @@
                 </div>
             </div>
 
-            <div id="editar_layout">
+            <div id="editar_layout" (click)="configLayout()">
                 <div class="container_config">
                     <fa-icon [icon]="faGear" class="config_opcoes"></fa-icon>
                     <span data-agenda_id="" data-agenda_hora="" data-status="" class="acToggle">Editar layout</span>
@@ -236,7 +236,7 @@
 
 
         <div modal-footer class="modal-footer" style="display: flex;">
-            <button class="modal-close" *ngIf="buttonConfigLayoutStatus" style="width: unset; padding: 8px 10px; font-size: 1.06rem;">Configurar layout</button>
+            <button class="modal-close" (click)="configLayout()" *ngIf="buttonConfigLayoutStatus" style="width: unset; padding: 8px 10px; font-size: 1.06rem;">Configurar layout</button>
             <button class="modal-close" (click)="closeModalStatus()" style="width: unset; padding: 8px 10px; font-size: 1.06rem;">OK</button>
         </div>
     </app-modal>

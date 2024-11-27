@@ -174,11 +174,14 @@
     font-size: 24px;
 }
 
+
+
 .div_contain_btn_select{
     display: flex; 
     width: 100%; 
     position: relative; 
     height: 70px;
+    margin-top: 3px;
 }
 
 .div_contain_btn_select div span{
@@ -215,7 +218,7 @@
     background-color: black;
 }
 
-#close_view{
+.close_modal_visualizar{
     color: white;
     font-size: 3rem; 
     position: absolute; 

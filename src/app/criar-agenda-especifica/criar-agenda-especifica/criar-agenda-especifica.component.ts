@@ -109,6 +109,7 @@ estiloModalContent = {
         if (response.status == 1){
           console.log('Agenda gerada com sucesso!', response);
           window.sessionStorage.setItem('agenda_id', response.agenda_id.toString());
+          this.router.navigate(['/configurar-layout-upload']);
         }
       },
       error: (error) => {
@@ -193,6 +194,7 @@ estiloModalContent = {
 
     if (!erro){
       this.gerar_agenda_especifica();
+      
     }
   };
 

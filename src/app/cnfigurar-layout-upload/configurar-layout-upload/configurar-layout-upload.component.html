@@ -3,13 +3,13 @@
         <fa-icon [icon]="faXmark" id="btn_close"></fa-icon>
     </div>
 
-    <div class="page-menu--toggle page-menu__hamburger" id="div_btn-salvar">
+    <div class="page-menu--toggle page-menu__hamburger" id="div_btn-salvar" (click)="validacao()">
         <fa-icon [icon]="faCheck" id="btn_salvar"></fa-icon>
     </div>
 </header>
 
 <div class="div_contain_btn_select">
-    <div id="editImg" class="select_local" *ngIf="editImg">
+    <div id="editImg" class="select_local" *ngIf="editImg" (click)="triggerFileInputClick()">
         <div class="div_botao">
             <fa-icon id="btn_editar" [icon]="faGear" class="botao-imagem"></fa-icon>
         </div>
@@ -23,7 +23,7 @@
         <span id="addEdit">Adicionar imagem</span>
     </div>
 
-    <div id="visualizar" class="visualizar" *ngIf="visualizar">
+    <div id="visualizar" class="visualizar" *ngIf="visualizar" (click)="openModalViewAgenda()">
         <div class="div_botao">
             <fa-icon id="btn_visualizar" [icon]="faEye" class="botao-imagem"></fa-icon>
         </div>
@@ -40,6 +40,62 @@
 </div>
 
 <app-tiny-editor [agenda]="agenda" (keyup)="valTextArea($event)"></app-tiny-editor>
+
+<!--Modais------------------------------------------------------------------------>
+
+<app-modal *ngIf="showModalViewAgenda" [estilosModal]="estiloModal" [estilosModalContent]="estiloModalContent">
+    <div modal-background>
+        <fa-icon (click)="closeModalViewAgenda()" [icon]="faXmark" class="close_modal_visualizar"></fa-icon>
+    </div>
+    <div modal-body>
+        <div class="feed_principal">
+            <div class="div_feed_secundario">
+                <div>
+                    <div>
+                        <a class="div_perfil">
+                            <div class="perfil_div">
+                                <img id="imagem_igreja" class="img_igreja" src="{{igrejaLogoUrl}}">
+                                <span class="nome_igreja">{{igrejaNome}}</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="div_layout_feed">
+                        <a class="a_img_layout">
+                            <img id="visualiza_layout_feed" src="{{previewImgSrc}}">
+                        </a>
+                        <div class="div_descricao">
+                            <span id="descricao_layout_feed" class="span_descricao" [innerHTML]="agendaDesc"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</app-modal>
+
+<app-modal *ngIf="showModalPreSalvar">
+    <div modal-body>
+        <p id="mensagem_modal" [innerHTML]="texto_modal" style="line-height:20px; font-size: 1.3rem;"></p>
+    </div>
+
+    <div modal-footer class="modal-footer">
+        <div style="display: flex;">
+            <button (click)="salvarLote()" id="confirmar_alteracao"style="width: 100px;">Alterar todas</button>
+            <button (click)="salvarEspecifica()" id="nao_confirmar_alteracao" style="width: 100px;">Somente esta</button>
+        </div>
+    </div>
+</app-modal>
+
+<app-modal *ngIf="showModalValidacao">
+    <div modal-body>
+        <p id="mensagem_modal" style="line-height:20px; font-size: 1.3rem;">{{textoValidacao}}</p>
+    </div>
+
+    <div modal-footer class="modal-footer">
+        <button style="width: 100px;" (click)="closeModalValidacao()">Ok</button>
+    </div>
+</app-modal>
 
 <!--Input select image file-->
 <input

@@ -117,7 +117,7 @@ export class CriarAgendaRecorrenteComponent {
       next: (response) => {
         if (response.status == 1) {
           sessionStorage.setItem('agenda_id', response.agenda_id);
-          //this.router.navigate(['/configurar-layout-upload']);
+          this.router.navigate(['/configurar-layout-upload']);
         } else {
           this.mostrarMensagemErro('Nenhum evento criado, os dias da semana não batem com os dias a serem gerados.');
         }
@@ -180,7 +180,8 @@ export class CriarAgendaRecorrenteComponent {
     }
 
     if (!erro){
-      this.gerarAgenda()
+      this.gerarAgenda();
+      
     }
   }
 

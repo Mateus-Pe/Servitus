@@ -1,0 +1,56 @@
+<header class="header1">
+    <div class="page-menu--toggle page-menu__hamburger" id="div_btn_close">
+        <fa-icon [icon]="faXmark" id="btn_close" style="color: white; font-size: 24px;"></fa-icon>
+    </div>
+
+    <div class="div_nome-igreja">
+        <span id="span_nome-igreja">IGREJA</span>
+    </div>
+
+    <div class="page-menu--toggle page-menu__hamburger" href="#" id="div_btn_salvar">
+        <fa-icon [icon]="faCheck" id="btn_salvar" style="color: white; font-size: 24px;"></fa-icon>
+    </div>
+</header>
+
+<div id="img_fundo" class="div_imgFundo_perfil">
+    <div class="imgFundo_perfil">
+        <img id="img_fundo_src" src="" style="width: 100%; height: 250px; display: none;">
+
+        <div style="border-radius: 50%; position: absolute; top: 215px; right: 1.5rem; background-color: lightgrey; width: 30px; height: 30px; align-items: center; justify-content: center; display: flex;">
+            <fa-icon [icon]="faCamera" style="position: relative; font-size: 20px; color: darkred;"></fa-icon>
+        </div>
+    </div>
+</div>
+
+<div id="imagem_igreja" class="div_img_igreja">
+    <img id="img_igreja_selected" class="img_igreja1"  src="perfil-sem-foto.jpg">>
+
+    <div style="border: 3px solid white; border-radius: 50%; position: absolute; top: 80px; right: 0px; background-color: lightgrey; width: 30px; height: 30px; align-items: center; justify-content: center; display: flex;">
+        <fa-icon id="select_img_igreja" [icon]="faCamera" style="position: relative; font-size: 20px; color: darkred;"></fa-icon>
+    </div>
+</div>
+
+<div class="conteudo_perfil">
+    <div style="justify-content: right; display: flex; align-items: center;">
+        <span class="abrir_hora_fixo">
+            <span id="horarios_fixos">
+                Editar horários fixos
+            </span>
+            <fa-icon [icon]="faClock" class="icone_editar ion_map"> </fa-icon>
+        </span>
+    </div>
+
+    <div class="a_div_perfil">
+        <span id="endereco_da_igreja" class="endereco_igreja">
+        </span>
+
+        <span id="contato_da_igreja" class="contato_igreja"
+            style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <div><img src="whatsapp.png"></div>
+            <div><img src="facebook.png" alt=""></div>
+            <div><img src="instagram.png" alt=""></div>
+            <div><img src="email.png" alt=""></div>
+        </span>
+        <div class="contatos"></div>
+    </div>
+</div>

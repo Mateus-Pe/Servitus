@@ -68,7 +68,6 @@ export class ListaIgrejaComponent implements OnInit {
       next: (response) => {
         if (response.status == 1){
           this.eventos = response.estatistica;
-          console.log(this.eventos);
         }else {
           console.error('Status da resposta diferente de 1');
           // Exibir mensagem para o usuário
@@ -83,7 +82,6 @@ export class ListaIgrejaComponent implements OnInit {
   getListaIgreja(paroquia_id: number): void{
     this.listaIgrejaService.getListaIgreja(paroquia_id).subscribe({
       next: (response: any[]) => {
-        console.log(response);
         this.igrejas = response;
       },
       error: (error) => {
@@ -160,10 +158,8 @@ export class ListaIgrejaComponent implements OnInit {
 
 
   toggleMenu() {
-    console.log("clicou");
     this.isMenuOpen = !this.isMenuOpen;
     this.cd.detectChanges();
-    console.log("Menu toggle:", this.isMenuOpen);
   }
 
 
@@ -177,8 +173,6 @@ export class ListaIgrejaComponent implements OnInit {
     this.selectedIgrejaName = igrejaName;
     this.showOptionsModal = igrejaTipo !== 'PARÓQUIA';
     this.showModal = true;
-    console.log(this.selectedIgrejaId);
-    console.log(this.selectedIgrejaName);
   }
 
   openModalConfirm(){
@@ -207,6 +201,15 @@ export class ListaIgrejaComponent implements OnInit {
     if (this.selectedIgrejaId) {
       window.sessionStorage.setItem('igreja_id', this.selectedIgrejaId.toString());
       this.router.navigate(['/calendario']);
+    } else {
+      console.error('selectedIgrejaId is not set.');
+    }
+  }
+
+  configurarPerfil(){
+    if (this.selectedIgrejaId) {
+      window.sessionStorage.setItem('igreja_id', this.selectedIgrejaId.toString());
+      this.router.navigate(['/configurar-perfil-igreja']);
     } else {
       console.error('selectedIgrejaId is not set.');
     }

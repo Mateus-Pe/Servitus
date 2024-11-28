@@ -1,0 +1,312 @@
+body{
+    height: unset;
+    width: 100%;
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+
+.conteudo_perfil{
+    position: relative;
+    padding-left: 6px;
+    padding-right: 6px;
+    top: -5.4rem;
+}
+
+.modal_content{
+    -webkit-animation-duration: 0.4s;
+    -webkit-animation-name: animatetop;
+    animation-duration: 0.4s;
+    animation-name: animatetop;
+    background-color: white;
+    font-size: 2rem;
+    border-radius: 5px;
+    border-top: 1px solid rgba(0, 0, 0, 0.16);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    margin: auto;
+    padding: 0;
+    position: fixed;
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal_header{
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.modal_imagens_header{
+    height: 100%; 
+    align-items: center; 
+    display: flex; 
+    justify-content: center;
+}
+
+.modal_close{
+    font-size: 2.3rem;
+    font-weight: bold;
+    position: absolute;
+    right: 7px;
+    top: 0px;
+}
+
+.input_imagens_header{
+    border-radius: 10px; 
+    width: 55%; 
+    border: 1px solid; 
+    outline: none;
+}
+
+.h3_modal{
+    justify-content: center; 
+    display: flex;
+    font-family: exo;
+}
+
+.modal_body{
+    padding: 0.2rem 1.6rem;
+    overflow-y: auto;
+}
+
+.modal_footer{
+    align-items: center;
+    border-top: 1px solid #e5e5e5;
+    display: flex;
+    height: 5.5rem;
+    justify-content: space-around;
+    padding: 0.2rem 1.6rem;
+}
+
+.div_imgFundo_perfil{
+    position: relative; 
+    margin-top: 5.5rem;
+    margin-right: auto; 
+    margin-left: auto;
+}
+
+.imgFundo_perfil{
+    height: 250px; 
+    border-bottom: 1px solid darkred; 
+    background-color: black; 
+    width: 100%;
+}
+
+.div_img_igreja{
+    position: relative; 
+    z-index: 3; 
+    top: -5.4rem; 
+    left: 4rem;
+    width: 10rem;
+}
+
+.img_igreja1{
+    height: 10rem; 
+    width: 10rem;
+    position: relative;
+    border-radius: 50%;
+    border: 3px solid white;
+}
+
+.a_div_perfil{
+    display: grid;
+    text-decoration: none;
+}
+
+.abrir_hora_fixo{
+    position: relative;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    font-size: 1.2rem;
+    gap: 5px;
+}
+
+.ion_map{
+    color: darkred; 
+    font-size: 2rem !important; 
+}
+
+.endereco_igreja{
+    margin-top: 1rem;
+    align-self: center;
+    color: #363636;
+    margin-left: 0.6rem;
+    font-size: 1.4rem; 
+    font-family: exo;
+    margin-bottom: 20px; 
+    display: flex;
+    align-items: center;
+}
+
+.contato_igreja div img{
+    width: 20px;
+    height: 20px;
+}
+
+.comunidade_select_container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px; 
+    width: 100%; 
+    height: 250px;
+}
+
+.comunidade_select_img{
+    height: 130px; 
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    gap: 10px;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.comunidade_select_img img{
+    height:80px; 
+    border-radius: 50%; 
+    width: 80px;
+    border: 1px solid lightgrey;
+}
+
+.comunidade_select_img span{
+    font-size: 1.3rem; 
+    text-align:center; 
+    text-decoration:none; 
+    font-family: exo;
+}
+
+.modal-content {
+    background-color: white;
+    margin: auto;
+    border: 1px solid #888;
+    border-radius: 30px;
+    width: 80%;
+    height: 250px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    max-width: 400px;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.modal-footer button {
+    margin: 0 10px;
+    padding: 8px 10px;
+    font-size: 1rem;
+    background-color: white;
+    color: darkred;
+    border: 1px solid darkred;
+    border-radius: 30px;
+    width: 40%;
+    position: relative;
+}
+
+.modal1 {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #363636;
+    display: none;
+    font-family: sans-serif;
+    height: 100%;
+    left: 0;
+    overflow: auto;
+    padding-top: 45px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.contatos {
+    text-align: center; 
+    margin-bottom: 10px;
+}
+
+.contato {
+    margin: 10px;
+    text-align: center;
+    font-size: 1.4rem;
+    font-family: exo;
+    display: flex;
+    justify-content: center;
+}
+
+.contato img{
+    max-width: 20px;
+    position: relative;
+    margin-right: 5px;
+}
+
+.header1{
+    background-color: darkred;
+    height: 55px;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    width: 100%;
+    z-index: 4;
+}
+
+.div_nome-igreja{
+    font-size: 2rem; 
+    color: #fff; 
+    padding: 1.5rem;
+    font-family: Exo;
+}
+
+#span_nome-igreja{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+}
+
+.inputs-modal-contatos{
+    display: flex;
+    width: 70%;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 40px;
+}
+
+.inputs-modal-contatos img{
+    width: 20px;
+}
+
+.input_nome_igreja_modal{
+    display: flex;
+    width: 70%;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 40px;
+}
+
+.opacity_hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.opacity_visible {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}

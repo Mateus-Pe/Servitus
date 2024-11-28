@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAngleLeft, faAngleRight, faPlus, faEllipsis, faImage, faGear, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -18,6 +19,21 @@ import { PreLoteService } from '../../services/pre_lote/pre-lote.service';
   styleUrl: './calendario.component.scss'
 })
 export class CalendarioComponent implements OnInit {
+
+  constructor(
+    private getAgendaCalendarioService: GetAgendaCalendarioService,
+    private agendaCalendarioHoraService: AgendaCalendarioHoraService,
+    private removeAgendaService: RemoveAgendaService,
+    private preLoteService: PreLoteService,
+    private utilsService: UtilsService,
+    private sanitizer: DomSanitizer,
+    private router: Router
+  ) {
+    this.year = new Date().getFullYear();
+    this.month = new Date().getMonth() + 1;
+  }
+
+
   faAngleLeft = faAngleLeft;
   faAngleRight = faAngleRight;
   faPlus = faPlus;
@@ -45,15 +61,15 @@ export class CalendarioComponent implements OnInit {
   agendaStatus: number | null = null;
   igrejaLogoUrl: string | null = null;
   igrejaNome: string | null = null;
-  agendaDesc: string | null = 'Adicione um comentário para visualiza-lo';
+  agendaDesc: SafeHtml = '';
   showModalViewAgenda = false;
   showModalRemoveE = false;
   showModalRemoveL = false;
   showModalStatus = false;
   buttonConfigLayoutStatus = false;
   flagLote: number | null = null;
-  texto_modal: string = '';
-  texto_status: string = '';
+  texto_modal: SafeHtml  = '';
+  texto_status: string  = '';
 
   @ViewChild('mensagemModalPreExcluir') mensagemModalPreExcluir!: ElementRef;
 
@@ -75,6 +91,8 @@ export class CalendarioComponent implements OnInit {
     const igrejaIdString = window.sessionStorage.getItem('igreja_id');
     this.igrejaId = igrejaIdString ? Number(igrejaIdString) : null;
     
+    this.agendaDesc = this.sanitizer.bypassSecurityTrustHtml('Adicione um comentário para visualiza-lo');
+
     if (this.igrejaId) {
       this.makeCalendar(this.year, this.month);
     } else {
@@ -83,19 +101,6 @@ export class CalendarioComponent implements OnInit {
   }
 
   /*---------------------SERVIÇOS-----------------------*/
-
-  constructor(
-    private getAgendaCalendarioService: GetAgendaCalendarioService,
-    private agendaCalendarioHoraService: AgendaCalendarioHoraService,
-    private removeAgendaService: RemoveAgendaService,
-    private preLoteService: PreLoteService,
-    private utilsService: UtilsService,
-    private router: Router
-  ) {
-    this.year = new Date().getFullYear();
-    this.month = new Date().getMonth() + 1;
-  }
-
 
   carregarCalendario(){
     this.getAgendaCalendarioService.getAgendaCalendario(this.igrejaId!).subscribe({
@@ -160,18 +165,20 @@ export class CalendarioComponent implements OnInit {
       next: (response) => {
         const agendas = response.agendas;
         const quantidade = agendas.length;
+        
       
         if(quantidade > 1){ //lote
           this.closeModalConfig();
           this.openModalRemoveL();
-          this.texto_modal = "<p><b>Já existem agendamentos:</b><br><br>";
+          let html = "<p><b>Já existem agendamentos:</b><br><br>";
           agendas.slice(0, 3).forEach((agenda: any) => {
-            this.texto_modal += `${this.utilsService.dateText(this.utilsService.splitDateTime(agenda.agenda_horario).date)} às ${this.utilsService.timeFormat(this.utilsService.splitDateTime(agenda.agenda_horario).time, ':', true)}<br>`;
+            html += `${this.utilsService.dateText(this.utilsService.splitDateTime(agenda.agenda_horario).date)} às ${this.utilsService.timeFormat(this.utilsService.splitDateTime(agenda.agenda_horario).time, ':', true)}<br>`;
           });
 
           if (quantidade > 3) {
-            this.texto_modal += `<br>E mais [${quantidade - 3}]</p><br>`;
+            html += `<br>E mais [${quantidade - 3}]</p><br>`;
           }
+          this.texto_modal = this.sanitizer.bypassSecurityTrustHtml(html);
         }else{ //especifica
           this.closeModalConfig();
           this.openModalRemoveE();
@@ -274,7 +281,7 @@ export class CalendarioComponent implements OnInit {
     this.agendaStatus = item.agenda_layout_tipo;
     this.igrejaLogoUrl = item.igreja_logo_url;
     this.igrejaNome = item.igreja_nome;
-    this.agendaDesc = item.agenda_layout_upload_desc;
+    this.agendaDesc = this.sanitizer.bypassSecurityTrustHtml(item.agenda_layout_upload_desc);
     this.showModalConfig = true;
 
     if(this.agendaStatus == 2){

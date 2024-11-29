@@ -14,7 +14,7 @@
 
 <div id="img_fundo" class="div_imgFundo_perfil">
     <div class="imgFundo_perfil">
-        <img id="img_fundo_src" src="" style="width: 100%; height: 250px; display: none;">
+        <img *ngIf="existeFundo" id="img_fundo_src" [src]="imgFundoUrl" style="width: 100%; height: 250px;">
 
         <div style="border-radius: 50%; position: absolute; top: 215px; right: 1.5rem; background-color: lightgrey; width: 30px; height: 30px; align-items: center; justify-content: center; display: flex;">
             <fa-icon [icon]="faCamera" style="position: relative; font-size: 20px; color: darkred;"></fa-icon>
@@ -23,7 +23,7 @@
 </div>
 
 <div id="imagem_igreja" class="div_img_igreja">
-    <img id="img_igreja_selected" class="img_igreja1"  src="perfil-sem-foto.jpg">>
+    <img id="img_igreja_selected" class="img_igreja1"  [src]="imgIgrejaUrl">
 
     <div style="border: 3px solid white; border-radius: 50%; position: absolute; top: 80px; right: 0px; background-color: lightgrey; width: 30px; height: 30px; align-items: center; justify-content: center; display: flex;">
         <fa-icon id="select_img_igreja" [icon]="faCamera" style="position: relative; font-size: 20px; color: darkred;"></fa-icon>
@@ -42,15 +42,42 @@
 
     <div class="a_div_perfil">
         <span id="endereco_da_igreja" class="endereco_igreja">
+            {{enderecoIgreja}}
         </span>
 
-        <span id="contato_da_igreja" class="contato_igreja"
+        <span class="contato_igreja" *ngIf="contatos.length == 0" (click)="openModalContatos()"
             style="display: flex; align-items: center; justify-content: center; gap: 10px;">
             <div><img src="whatsapp.png"></div>
             <div><img src="facebook.png" alt=""></div>
             <div><img src="instagram.png" alt=""></div>
             <div><img src="email.png" alt=""></div>
         </span>
-        <div class="contatos"></div>
+        <div class="contatos" (click)="openModalContatos()">
+            <div class="contato" *ngFor="let contato of contatos">
+                <img [src]="contato.img" alt="{{contato.tipo}}">
+                <span>{{contato.valor}}</span>
+            </div>
+        </div>
     </div>
 </div>
+
+<!----------------------------------------------modais------------------------------------------->
+
+<app-modal *ngIf="showModalContatos" [estilosModalContent]="estiloModalContent">
+    <div modal-body class="modal-content">
+        <div class="inputs-modal-contatos" *ngFor="let tipo of ['whatsapp', 'facebook', 'instagram', 'email']">
+            <img [src]="imagens[tipo]" alt="{{ tipo }}">
+            <input
+              class="cadastro__input"
+              [id]="tipo + '_txt'"
+              [placeholder]="tipo.charAt(0).toUpperCase() + tipo.slice(1)"
+              [(ngModel)]="contatosValores[tipo]"
+              (keyup)="atualizarValorContato($event, tipo)"
+              style="border: 0; outline: 0; background: transparent; border-bottom: 1px solid darkred; width: 100%;">
+        </div>
+    </div>
+
+    <div modal-footer class="modal-footer">
+        <button (click)="closeModalContatos()">OK</button>
+    </div>
+</app-modal>

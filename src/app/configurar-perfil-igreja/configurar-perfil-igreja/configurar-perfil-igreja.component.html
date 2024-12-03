@@ -1,10 +1,10 @@
 <header class="header1">
-    <div class="page-menu--toggle page-menu__hamburger" id="div_btn_close">
+    <div class="page-menu--toggle page-menu__hamburger" id="div_btn_close" (click)="backToLista()">
         <fa-icon [icon]="faXmark" id="btn_close" style="color: white; font-size: 24px;"></fa-icon>
     </div>
 
-    <div class="div_nome-igreja">
-        <span id="span_nome-igreja">IGREJA</span>
+    <div class="div_nome-igreja" (click)="openModalNome()">
+        <span id="span_nome-igreja">{{nomeIgreja}}</span>
     </div>
 
     <div class="page-menu--toggle page-menu__hamburger" href="#" id="div_btn_salvar">
@@ -12,7 +12,7 @@
     </div>
 </header>
 
-<div id="img_fundo" class="div_imgFundo_perfil">
+<div id="img_fundo" class="div_imgFundo_perfil" (click)="clickSelectFileFundoIgreja()">
     <div class="imgFundo_perfil">
         <img *ngIf="existeFundo" id="img_fundo_src" [src]="imgFundoUrl" style="width: 100%; height: 250px;">
 
@@ -22,7 +22,7 @@
     </div>
 </div>
 
-<div id="imagem_igreja" class="div_img_igreja">
+<div id="imagem_igreja" class="div_img_igreja" (click)="carregarBancoImagens()">
     <img id="img_igreja_selected" class="img_igreja1"  [src]="imgIgrejaUrl">
 
     <div style="border: 3px solid white; border-radius: 50%; position: absolute; top: 80px; right: 0px; background-color: lightgrey; width: 30px; height: 30px; align-items: center; justify-content: center; display: flex;">
@@ -45,39 +45,132 @@
             {{enderecoIgreja}}
         </span>
 
-        <span class="contato_igreja" *ngIf="contatos.length == 0" (click)="openModalContatos()"
-            style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-            <div><img src="whatsapp.png"></div>
-            <div><img src="facebook.png" alt=""></div>
-            <div><img src="instagram.png" alt=""></div>
-            <div><img src="email.png" alt=""></div>
+        <span id="contato_da_igreja" class="contato_igreja" *ngIf="!textWhats && !textFace && !textInsta && !textEmail"
+                (click)="openModalContatos()"
+                style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <div><img src="whatsapp.png"></div>
+                <div><img src="facebook.png" alt=""></div>
+                <div><img src="instagram.png" alt=""></div>
+                <div><img src="email.png" alt=""></div>
         </span>
-        <div class="contatos" (click)="openModalContatos()">
-            <div class="contato" *ngFor="let contato of contatos">
-                <img [src]="contato.img" alt="{{contato.tipo}}">
-                <span>{{contato.valor}}</span>
+
+        <div class="contatos" (click)="openModalContatos()" *ngIf="textWhats || textFace || textInsta || textEmail">
+            <div class="contato" *ngIf="textWhats">
+                <img src="whatsapp.png">
+                <span>{{textWhats}}</span>
+            </div>
+
+            <div class="contato" *ngIf="textFace">
+                <img src="facebook.png">
+                <span>{{textFace}}</span>
+            </div>
+
+            <div class="contato" *ngIf="textInsta">
+                <img src="instagram.png">
+                <span>{{textInsta}}</span>
+            </div>
+
+            <div class="contato" *ngIf="textEmail">
+                <img src="email.png">
+                <span>{{textEmail}}</span>
             </div>
         </div>
     </div>
 </div>
 
+<!---------------------------------------------input Select Img---------------------------------->
+<input
+type="file"
+id="selectFileIgreja"
+accept="image/*"
+style="display: none;"
+(change)="selectImgIgreja($event)"
+/>
+
+<input
+type="file"
+id="selectFileFundoIgreja"
+accept="image/*"
+style="display: none;"
+(change)="selectImgFundoIgreja($event)"
+/>
+
 <!----------------------------------------------modais------------------------------------------->
 
 <app-modal *ngIf="showModalContatos" [estilosModalContent]="estiloModalContent">
     <div modal-body class="modal-content">
-        <div class="inputs-modal-contatos" *ngFor="let tipo of ['whatsapp', 'facebook', 'instagram', 'email']">
-            <img [src]="imagens[tipo]" alt="{{ tipo }}">
-            <input
-              class="cadastro__input"
-              [id]="tipo + '_txt'"
-              [placeholder]="tipo.charAt(0).toUpperCase() + tipo.slice(1)"
-              [(ngModel)]="contatosValores[tipo]"
-              (keyup)="atualizarValorContato($event, tipo)"
-              style="border: 0; outline: 0; background: transparent; border-bottom: 1px solid darkred; width: 100%;">
+        <div class="inputs-modal-contatos">
+            <img src="whatsapp.png">
+            <input class="cadastro__input inputContatos" id="whatsapp_txt" name="whatsapp_txt" type="text" maxlength="15"
+                placeholder="Whatsapp" [(ngModel)]="textWhats" (input)="mascaraTelefone($event)" (keydown)="permitirApenasNumeros($event)"
+                required>
+        </div>
+
+        <div class="inputs-modal-contatos">
+            <img src="facebook.png">
+            <input class="cadastro__input inputContatos" id="facebook_txt" name="facebook_txt"
+                placeholder="Facebook" [(ngModel)]="textFace"
+                required>
+        </div>
+
+        <div class="inputs-modal-contatos">
+            <img src="instagram.png">
+            <input class="cadastro__input inputContatos" id="instagram_txt" name="instagram_txt"
+                placeholder="Instagram" [(ngModel)]="textInsta"
+                required>
+        </div>
+
+        <div class="inputs-modal-contatos">
+            <img src="email.png">
+            <input class="cadastro__input inputContatos" id="email_txt" name="email_txt"
+                placeholder="Email" [(ngModel)]="textEmail"
+                required>
         </div>
     </div>
 
     <div modal-footer class="modal-footer">
         <button (click)="closeModalContatos()">OK</button>
+    </div>
+</app-modal>
+
+<app-modal [estilosModalContent]="estilosModalContentBancoImg" *ngIf="showModalBancoImg">
+    <div modal-body class="modal-content">
+        <div class="modal_header" style="height: 50px; width: 100%;">
+            <fa-icon class="modal_close" [icon]="faXmark" (click)="closeModalBancoImg()"></fa-icon>
+
+            <div class="modal_imagens_header">
+                <input id="pesquisa_imagens" class="input_imagens_header" [(ngModel)]="pesquisa" (input)="filtrarImagens()" type="text" placeholder="Pesquisar">
+            </div>
+        </div>
+
+        <div class="modal_body" style="width: 100%">
+            <div class="comunidade_select_container">
+                <div class="comunidade_select_img" (click)="selecionarImagem(img.igreja_logo_url)" *ngFor="let img of bancoImagemFiltrado">
+                    <img id="img_igreja_desc_resumida"  [src]="img.igreja_logo_url">
+                    <span id="desc_resumida">{{img.igreja_desc_resumida}}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div modal-footer class="modal_footer">
+        <h5 (click)="clickSelectFileIgreja()">Nenhuma dessas</h5>
+    </div>
+</app-modal>
+
+<app-modal [estilosModalContent]="estiloModalContent" *ngIf="showModalNome">
+    <div modal-body class="modal-content">
+        <div class="input_nome_igreja_modal">
+
+            <fa-icon [icon]="faChurch" style="color: lightgray; font-size: 20px;"></fa-icon>
+
+            <input class="cadastro__input inputContatos" [(ngModel)]="nomeIgreja" id="nome_igreja" name="nome_igreja" type="text" placeholder="Digite o Nome da igreja"
+                required>
+        </div>
+    </div>
+
+    <div modal-footer class="modal-footer">
+        <button (click)="closeModalNome()">OK</button>
     </div>
 </app-modal>

@@ -7,7 +7,7 @@
         <span id="span_nome-igreja">{{nomeIgreja}}</span>
     </div>
 
-    <div class="page-menu--toggle page-menu__hamburger" href="#" id="div_btn_salvar">
+    <div class="page-menu--toggle page-menu__hamburger" href="#" id="div_btn_salvar" (click)="salvar()">
         <fa-icon [icon]="faCheck" id="btn_salvar" style="color: white; font-size: 24px;"></fa-icon>
     </div>
 </header>
@@ -26,13 +26,13 @@
     <img id="img_igreja_selected" class="img_igreja1"  [src]="imgIgrejaUrl">
 
     <div style="border: 3px solid white; border-radius: 50%; position: absolute; top: 80px; right: 0px; background-color: lightgrey; width: 30px; height: 30px; align-items: center; justify-content: center; display: flex;">
-        <fa-icon id="select_img_igreja" [icon]="faCamera" style="position: relative; font-size: 20px; color: darkred;"></fa-icon>
+        <fa-icon id="select_img_igreja" [icon]="faCamera" style="position: relative; font-size: 17px; color: darkred;"></fa-icon>
     </div>
 </div>
 
 <div class="conteudo_perfil">
     <div style="justify-content: right; display: flex; align-items: center;">
-        <span class="abrir_hora_fixo">
+        <span class="abrir_hora_fixo" (click)="openModalHorariosFixos()">
             <span id="horarios_fixos">
                 Editar horários fixos
             </span>
@@ -78,7 +78,7 @@
     </div>
 </div>
 
-<!---------------------------------------------input Select Img---------------------------------->
+<!-------------------------------------------input Select Img File---------------------------------->
 <input
 type="file"
 id="selectFileIgreja"
@@ -173,4 +173,19 @@ style="display: none;"
     <div modal-footer class="modal-footer">
         <button (click)="closeModalNome()">OK</button>
     </div>
+</app-modal>
+
+<app-modal [estilosModalContent]="estilosModalContentBancoImg" *ngIf="showModalHorariosFixos">
+     <div modal-body>
+        <div class="modal_header">
+            <fa-icon class="modal_close" [icon]="faXmark" (click)="closeModalHorariosFixos()"></fa-icon>
+
+            <h3 class="h3_modal">Horários</h3>
+            <h6 id="click_sugestao1" style="color: lightgreen;"> Sugestão 1</h6>
+        </div>
+
+        <div class="modal_body">
+            <app-tiny-editor [agenda]="horarios" [editorHeight]="170" (keyup)="valTextArea($event)"></app-tiny-editor>
+        </div>
+     </div>
 </app-modal>

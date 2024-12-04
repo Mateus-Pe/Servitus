@@ -5,13 +5,15 @@ import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCamera, faXmark, faCheck, faClock, faChurch } from '@fortawesome/free-solid-svg-icons';
 import { ModalComponent } from '../../modal/modal/modal.component';
+import { TinyEditorComponent } from '../../tiny-editor/tiny-editor.component';
 import { GetIgrejaByIdService } from '../../services/get-igreja-by-id/get-igreja-by-id.service';
 import { GetBancoImgService } from '../../services/get-banco-img/get-banco-img.service';
+import { AtualizarPerfilIgrejaService } from '../../services/atualizar-perfil-igreja/atualizar-perfil-igreja.service';
 
 @Component({
   selector: 'app-configurar-perfil-igreja',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, ModalComponent, FormsModule],
+  imports: [CommonModule, FontAwesomeModule, ModalComponent, FormsModule, TinyEditorComponent],
   templateUrl: './configurar-perfil-igreja.component.html',
   styleUrl: './configurar-perfil-igreja.component.scss'
 })
@@ -21,6 +23,7 @@ export class ConfigurarPerfilIgrejaComponent {
 
   constructor(private getIgrejaById: GetIgrejaByIdService,
               private getBancoImgService: GetBancoImgService,
+              private atualizarPerfilIgrejaService: AtualizarPerfilIgrejaService,
               private router: Router){}
 
   //var ions------------------------------------
@@ -41,6 +44,8 @@ export class ConfigurarPerfilIgrejaComponent {
   imgVemDoBanco = false;
   previewImg: boolean = false;
   origemImagem: string = '';
+  file: File | null = null;
+  fileFundo: File | null = null;
 
   igrejaId: number | null = null;
 
@@ -50,6 +55,7 @@ export class ConfigurarPerfilIgrejaComponent {
   showModalContatos = false;
   showModalBancoImg = false;
   showModalNome = false;
+  showModalHorariosFixos = false;
 
   //var estilo modal----------------------------
   estiloModalContent = {
@@ -76,6 +82,10 @@ export class ConfigurarPerfilIgrejaComponent {
 
   nomeIgrejaTemp: string | null = '';
 
+  horarios = {
+    horariosDesc: ''
+  };
+
   //Init---------------------------------------
 
   ngOnInit() {
@@ -101,10 +111,16 @@ export class ConfigurarPerfilIgrejaComponent {
           if (obj.igreja.igreja_logo_url != null && obj.igreja.igreja_logo_url != ''){
             this.imgIgrejaUrl = obj.igreja.igreja_logo_url;
           }else{
-            this.imgIgrejaUrl = 'perfil-sem-foto.jpg'
+            this.imgIgrejaUrl = 'perfil-sem-foto.jpg';
           }
-          this.nomeIgreja = obj.igreja.igreja_nome
+          this.nomeIgrejaTemp = obj.igreja.igreja_nome;
+          this.nomeIgreja = obj.igreja.igreja_nome;
           this.enderecoIgreja = obj.igreja.igreja_endereco_logradouro + ", " + obj.igreja.igreja_endereco_numero + ", " + obj.igreja.igreja_endereco_bairro + ", " + obj.igreja.igreja_endereco_cidade;
+          this.textWhats = obj.igreja.igreja_whats;
+          this.textFace = obj.igreja.igreja_face;
+          this.textInsta = obj.igreja.igreja_instagram;
+          this.textEmail = obj.igreja.igreja_email;
+          this.horarios.horariosDesc = obj.igreja.igreja_horario_fixo;
         }
       },
       error: (error) => {
@@ -126,6 +142,30 @@ export class ConfigurarPerfilIgrejaComponent {
         console.error('Erro ao buscar imagens', error);
       },
     });
+  }
+
+  salvar(){
+    this.atualizarPerfilIgrejaService.getAtualizarPerfilIgreja(this.igrejaId!,
+                                                               this.nomeIgreja!,
+                                                               this.textWhats!,
+                                                               this.textFace!,
+                                                               this.textInsta!,
+                                                               this.textEmail!,
+                                                               this.horarios.horariosDesc,
+                                                               this.fileFundo!,
+                                                               this.imgVemDoBanco,
+                                                               this.imgIgrejaUrl!,
+                                                               this.file!
+    ).subscribe({
+      next: (response) => {
+        if (response.status == '1'){
+          this.router.navigate(['/lista-igreja']);
+        }
+      },
+      error: (error) => {
+        console.error('Erro ao atualizar o perfil da igreja', error);
+      }
+    })
   }
 
   //funções--------------------------------
@@ -151,7 +191,8 @@ export class ConfigurarPerfilIgrejaComponent {
           img.src = e.target.result as string; // Carrega a imagem para verificação
         }
       };
-
+      this.imgVemDoBanco = false;
+      this.file = file;
       reader.readAsDataURL(file); // Lê o arquivo como DataURL
     }
   }
@@ -178,7 +219,7 @@ export class ConfigurarPerfilIgrejaComponent {
           img.src = e.target.result as string; // Carrega a imagem para verificação
         }
       };
-
+      this.fileFundo = file
       reader.readAsDataURL(file); // Lê o arquivo como DataURL
     }
   }
@@ -256,6 +297,11 @@ export class ConfigurarPerfilIgrejaComponent {
     this.closeModalBancoImg(); // Fecha o modal
   }
 
+  valTextArea(conteudo: string){
+    this.horarios.horariosDesc = conteudo;
+    console.log(conteudo);
+  }
+
   openModalContatos(){
     this.showModalContatos = true;
   };
@@ -267,7 +313,10 @@ export class ConfigurarPerfilIgrejaComponent {
 
   openModalNome(){
     this.showModalNome = true;
-    this.nomeIgrejaTemp = this.nomeIgreja;
+  }
+
+  openModalHorariosFixos(){
+    this.showModalHorariosFixos = true;
   }
 
   closeModalContatos(){
@@ -281,11 +330,13 @@ export class ConfigurarPerfilIgrejaComponent {
 
   closeModalNome(){
     this.showModalNome = false;
-    if (!this.nomeIgrejaTemp!.trim()) {
-      this.nomeIgrejaTemp = this.nomeIgreja;
-    } else {
-      this.nomeIgreja = this.nomeIgrejaTemp!.trim();
+    if (this.nomeIgreja!.trim() == '') {
+      this.nomeIgreja = this.nomeIgrejaTemp;
     }
+  }
+
+  closeModalHorariosFixos(){
+    this.showModalHorariosFixos = false;
   }
 
   backToLista(){

@@ -25,6 +25,7 @@ import { EditorComponent } from '@tinymce/tinymce-angular';
 })
 export class TinyEditorComponent implements OnInit {
   @Input() agenda: any;
+  @Input() editorHeight: number = 120;
   @Output() keyup = new EventEmitter<string>();
   content: string = '';
   editorConfig: any;
@@ -38,7 +39,7 @@ export class TinyEditorComponent implements OnInit {
     // Configura o editor
     this.editorConfig = {
       apiKey: 'txixhs2kyot0muep1k6v2mp5hd6wqk30jmbvp6hv8pk3g4b7',
-      height: 120,
+      height: this.editorHeight,
       plugins: [],
       placeholder: 'Descrição',
       toolbar: 'undo redo | fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | removeformat | code',

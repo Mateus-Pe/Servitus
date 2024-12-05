@@ -1,0 +1,34 @@
+#svg-map path { fill: forestgreen }
+#svg-map text { fill:#fff; font:12px Arial-BoldMT, sans-serif; cursor:pointer }
+#svg-map a{ text-decoration:none }
+#svg-map a:hover { cursor:pointer; text-decoration:none }
+#svg-map a:hover path{ fill: darkred !important }
+#svg-map .circle { fill:#66ccff }
+#svg-map a:hover .circle { fill:darkred !important; cursor:pointer }
+
+.divAltura {
+height: 100vh;
+display: flex;
+align-items: center;
+}
+
+body{
+overflow: hidden;
+}
+
+.divSvg{
+transform: scale(1.0);
+width:100%;
+display: flex;
+
+}
+
+*:focus{
+outline: none;
+-webkit-tap-highlight-color: transparent;
+}
+
+*:active{
+outline: none;
+-webkit-tap-highlight-color: transparent;
+}

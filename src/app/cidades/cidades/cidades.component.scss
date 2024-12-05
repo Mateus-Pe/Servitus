@@ -1,0 +1,60 @@
+.page-menu{
+    background-color: #FFF;
+    height: 100%;
+    left: 0;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    z-index: 2;
+}
+
+.search-market{
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    user-select: none;
+}
+
+.search-market__container{
+    flex-grow: 1;
+}
+
+.search-market__input{
+    border-radius: 0.3rem;
+    border: 0;
+    color: #363636;
+    font-family: sans-serif;
+    font-size: 1.6rem;
+    padding-left: 3.5rem;
+    width: 100%;
+    user-select: none
+}
+
+input:focus {
+    outline: none;
+  }
+
+.search-market__icon{
+    position: absolute;
+    font-size: 1.9rem;
+    margin-left: 1rem;
+    color: #363636;
+    margin-top: 0.5rem;
+}
+
+.vitrine-mercado{
+    font-size: 1.6rem;
+    margin-top: 5.5rem;
+    text-align: center;
+}
+
+.vitrine-geral{
+    background: #FFF;
+}
+
+.container{
+    margin-right: auto;
+    margin-left: auto;
+}

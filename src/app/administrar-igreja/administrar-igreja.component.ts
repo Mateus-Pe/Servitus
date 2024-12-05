@@ -26,7 +26,7 @@ export class AdministrarIgrejaComponent implements OnInit {
   faCopy = faCopy;
 
   @Input() igrejas: any[] = [];
-  cidadeId = 9240;
+  cidadeId: number | null = null;
 
   modalAdicionar: boolean = false;
   idParoquia: number | null = null;
@@ -43,11 +43,17 @@ export class AdministrarIgrejaComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    const cidadeIdString = window.sessionStorage.getItem('igreja_id');
+    this.cidadeId = cidadeIdString ? parseInt(cidadeIdString, 10) : null;
+    sessionStorage.setItem('origem', 'administrarIgreja');
+    if (this.cidadeId == null || isNaN(this.cidadeId)){
+      this.router.navigate(['/estado']);
+    }
     this.getParoquias();
   }
 
   getParoquias(): void{
-    this.getListaParoquiaService.getParoquia(this.cidadeId).subscribe({
+    this.getListaParoquiaService.getParoquia(this.cidadeId!).subscribe({
       next: (response) => {
         console.log(response);
         this.igrejas = response;
@@ -60,7 +66,7 @@ export class AdministrarIgrejaComponent implements OnInit {
 
 
   getNovaParoquia(): void{
-    this.novaParoquiaService.getNovaParoquia(this.cidadeId).subscribe({
+    this.novaParoquiaService.getNovaParoquia(this.cidadeId!).subscribe({
       next: (response) => {
         console.log(response);
         if (response.status == '1'){

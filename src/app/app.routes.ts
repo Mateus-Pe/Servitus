@@ -11,19 +11,23 @@ import { CriarAgendaEspecificaComponent } from './criar-agenda-especifica/criar-
 import { CriarAgendaRecorrenteComponent } from './criar-agenda-recorrente/criar-agenda-recorrente/criar-agenda-recorrente.component';
 import { ConfigurarLayoutUploadComponent } from './cnfigurar-layout-upload/configurar-layout-upload/configurar-layout-upload.component';
 import { ConfigurarPerfilIgrejaComponent } from './configurar-perfil-igreja/configurar-perfil-igreja/configurar-perfil-igreja.component';
+import { EstadoComponent } from './estado/estado/estado.component';
+import { CidadesComponent } from './cidades/cidades/cidades.component';
 
 export const routes: Routes = [
     { path: 'loginas', component: LoginasComponent },
     { path: 'esqueci-senha', component: EsqueciSenhaComponent },
-    { path: 'confirmar-senha', component: ConfirmarSenhaComponent},
-    { path: 'criar-igreja', component: CriarIgrejaComponent},
+    { path: 'confirmar-senha', component: ConfirmarSenhaComponent },
+    { path: 'criar-igreja', component: CriarIgrejaComponent },
     { path: 'administrar-igreja', component: AdministrarIgrejaComponent },
-    { path: 'lista-igreja', component: ListaIgrejaComponent},
-    { path: 'calendario', component: CalendarioComponent},
-    { path: 'escolha-tipo-agenda', component: EscolhaTipoAgendaComponent},
-    { path: 'criar-agenda-especifica', component: CriarAgendaEspecificaComponent},
-    { path: 'criar-agenda-recorrente', component: CriarAgendaRecorrenteComponent},
-    { path: 'configurar-layout-upload', component: ConfigurarLayoutUploadComponent},
-    { path: 'configurar-perfil-igreja', component: ConfigurarPerfilIgrejaComponent},
+    { path: 'lista-igreja', component: ListaIgrejaComponent },
+    { path: 'calendario', component: CalendarioComponent },
+    { path: 'escolha-tipo-agenda', component: EscolhaTipoAgendaComponent },
+    { path: 'criar-agenda-especifica', component: CriarAgendaEspecificaComponent },
+    { path: 'criar-agenda-recorrente', component: CriarAgendaRecorrenteComponent },
+    { path: 'configurar-layout-upload', component: ConfigurarLayoutUploadComponent },
+    { path: 'configurar-perfil-igreja', component: ConfigurarPerfilIgrejaComponent },
+    { path: 'estado', component: EstadoComponent },
+    { path: 'cidades', component: CidadesComponent},
     { path: '', redirectTo: '/loginas', pathMatch: 'full' }
 ];

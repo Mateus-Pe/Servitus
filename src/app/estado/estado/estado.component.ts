@@ -16,16 +16,12 @@ export class EstadoComponent {
 
   ngOnInit(): void {
     this.origem = sessionStorage.getItem('origem');
-    console.log('Origem da navegação:', this.origem);
   }
 
   onSelectEstado(uf: string): void {
-    sessionStorage.setItem('uf', uf);  // Salva o UF na sessão
-    console.log(`UF selecionada: ${uf}`);
-    // Aqui você pode navegar para a próxima tela de cidades, se necessário.
+    sessionStorage.setItem('uf', uf);
     if (this.origem) {
       sessionStorage.setItem('origem', this.origem);
-      console.log('Origem salva:', this.origem);
     } else {
       console.warn('Origem não definida, não será salva.');
     }

@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlus, faGear, faCircleChevronDown, faCalendar, faTrash, faChurch  } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faGear, faCircleChevronDown, faCircleChevronUp, faCalendar, faTrash, faChurch  } from '@fortawesome/free-solid-svg-icons';
 import { ListaIgrejaService } from '../../services/lista_igreja/lista-igreja.service';
 import { GetEstatisticaService } from '../../services/get-estatistica/get-estatistica.service';
 import { ModalComponent } from '../../modal/modal/modal.component';
@@ -21,6 +21,7 @@ export class ListaIgrejaComponent implements OnInit {
   faPlus = faPlus;
   faGear = faGear;
   faCircleChevronDown = faCircleChevronDown;
+  faCircleChevronUp = faCircleChevronUp;
   faCalendar = faCalendar;
   faTrash = faTrash;
   faChurch = faChurch
@@ -152,8 +153,18 @@ export class ListaIgrejaComponent implements OnInit {
 
 
 
-  toggleAccordion(igreja: any) {
-    igreja.expanded = !igreja.expanded;
+  toggleAccordion(comunidade: any) {
+    // Alternar o estado expandido da comunidade
+    comunidade.expanded = !comunidade.expanded;
+  
+    // Fechar outras comunidades de outras igrejas, se necessário
+    this.igrejas.forEach((igreja: any) => {
+      igreja.listabycat.forEach((comunidadeItem: any) => {
+        if (comunidadeItem !== comunidade) {
+          comunidadeItem.expanded = false;  // Fechar as outras comunidades
+        }
+      });
+    });
   }
 
 

@@ -34,14 +34,14 @@
                 <span class="span-igreja">{{ igreja.tipo }}</span>
               </div>
           
-              <div class="accordion" style="font-family: Exo;">
+              <div style="font-family: Exo;">
                 <div *ngFor="let comunidade of igreja.listabycat" class="accordion-item">
                   <h3 
                     (click)="toggleAccordion(comunidade)" 
                     [ngClass]="{'active': comunidade.expanded}" 
                     style="border: 1px solid #ddd; border-radius:0px; display: flex; color: #484848; font-weight: bold; cursor: pointer; position: relative; margin-top:0px; padding: 1.5em .5em 1.5em .7em; background: white;margin-block-end: unset; margin-block-start: unset;">
                     
-                    <fa-icon [icon]="faCircleChevronDown" style="font-size: 15px; color: darkred; display: flex; align-items: center;"></fa-icon>
+                    <fa-icon [icon]="comunidade.expanded ? faCircleChevronUp : faCircleChevronDown" style="font-size: 15px; color: darkred; display: flex; align-items: center;"></fa-icon>
                     
                     <div class="list-line">
                       <label for="itens-check" class="label-lista">
@@ -52,7 +52,7 @@
                     <fa-icon [icon]="faGear" (click)="openModal(comunidade.igreja_id, comunidade.igreja_nome, igreja.tipo)" class="editar-igreja" style="line-height: 1;"></fa-icon>
                   </h3>
           
-                  <div *ngIf="comunidade.expanded" class="modal-container endereco-lista">
+                  <div [ngClass]="{'accordion': true, 'expanded': comunidade.expanded}" class="modal-container endereco-lista ">
                     <div style="display: flex; flex-direction: column; align-items: flex-start; line-height: 0px; font-size: 13px; gap: 0px; padding: 0.4em 1.2em !important;">
                       <p>{{ comunidade.igreja_endereco_logradouro }}, {{ comunidade.igreja_endereco_numero }}</p>
                       <p>{{ comunidade.igreja_endereco_bairro }}</p>

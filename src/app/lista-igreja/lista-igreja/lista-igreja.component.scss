@@ -65,9 +65,9 @@ html, *{
     height: 10rem;
     padding: unset !important;
     overflow: hidden !important;
-    border: 1px solid #aaaaaa;
     background: #ffffff;
     color: #222222;
+    transition: height 1.8s ease-out;
 }
 
 .modal-footer button {
@@ -287,3 +287,13 @@ html, *{
 .accordion-item {
     transition: max-height 10.5s ease-in-out;
 }
+
+.accordion {
+    max-height: 0;  /* Inicialmente o conteúdo está oculto */
+    overflow: hidden;  /* Esconde qualquer conteúdo que ultrapasse o max-height */
+    transition: max-height 0.8s ease-out;  /* Transição suave */
+  }
+  
+  .accordion.expanded {
+    max-height: 200px;  /* Define uma altura máxima maior para quando expandir */
+  }

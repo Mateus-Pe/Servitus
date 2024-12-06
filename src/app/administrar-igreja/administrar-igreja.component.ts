@@ -27,6 +27,7 @@ export class AdministrarIgrejaComponent implements OnInit {
 
   @Input() igrejas: any[] = [];
   cidadeId: number | null = null;
+  cidadeNome = '';
 
   modalAdicionar: boolean = false;
   idParoquia: number | null = null;
@@ -43,19 +44,23 @@ export class AdministrarIgrejaComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    const cidadeIdString = window.sessionStorage.getItem('igreja_id');
+    const cidadeIdString = window.sessionStorage.getItem('cidade_id');
     this.cidadeId = cidadeIdString ? parseInt(cidadeIdString, 10) : null;
-    sessionStorage.setItem('origem', 'administrarIgreja');
-    if (this.cidadeId == null || isNaN(this.cidadeId)){
+    this.cidadeNome = sessionStorage.getItem('cidade_nome') || '';
+    sessionStorage.setItem('origem', 'administrar-igreja');
+
+    if (!this.cidadeId || !this.cidadeNome) {
+      console.warn('Cidade não definida. Redirecionando para a tela Estado.');
       this.router.navigate(['/estado']);
+      return;
     }
+    
     this.getParoquias();
   }
 
   getParoquias(): void{
     this.getListaParoquiaService.getParoquia(this.cidadeId!).subscribe({
       next: (response) => {
-        console.log(response);
         this.igrejas = response;
       },
       error: (error) => {
@@ -71,7 +76,6 @@ export class AdministrarIgrejaComponent implements OnInit {
         console.log(response);
         if (response.status == '1'){
           window.sessionStorage.setItem('paroquia_id', response.paroquia_id);
-          console.log('Navegando para criar-igreja');
           this.router.navigate(['/criar-igreja']);
         }
       },
@@ -107,43 +111,38 @@ export class AdministrarIgrejaComponent implements OnInit {
     paroquia.expanded = !paroquia.expanded;
 
     if (paroquia.expanded) {
-      setTimeout(() => {
         const element = document.querySelector(`#detalhes-${paroquia.id}`) as HTMLElement;
         if (element) {
           const fullHeight = element.scrollHeight; // Altura total
           element.style.maxHeight = `${fullHeight}px`; // Definindo max-height para a altura total
         }
-      }, 0);
     } else {
-      // Se for recolher, voltamos para 0
       const element = document.querySelector(`#detalhes-${paroquia.id}`) as HTMLElement;
       if (element) {
-        element.style.maxHeight = '0'; // Retornando para 0
+        setTimeout(() => {
+          element.style.maxHeight = '0'; // Fechando o painel
+        }, 5);
       }
     }
   }
 
   toggleDetalhes(comunidade: any) {
-    const element = document.querySelector(`#detalhes-comunidade-${comunidade.id}`) as HTMLElement;
-
     if (comunidade.expanded) {
-        // Fechar
-        element.style.maxHeight = '0'; // A altura máxima vai para 0
-        comunidade.expanded = false; // Atualiza a variável de controle
+      comunidade.expanded = !comunidade.expanded;
     } else {
-        // Abrir
-        comunidade.expanded = true; // Atualiza a variável de controle
-
-        setTimeout(() => {
-            const fullHeight = element.scrollHeight; // Captura a altura total
-            element.style.maxHeight = `${fullHeight}px`; // Define max-height para a altura total
-        }, 0);
+      // Se não, feche todos os outros detalhes primeiro
+      this.igrejas.forEach((paroquia: any) => {
+        paroquia.listabycat.forEach((comunidadeItem: any) => {
+          if (comunidadeItem !== comunidade) {
+            comunidadeItem.expanded = false;  // Fecha as outras igrejas
+          }
+        });
+      });
+  
+      // Abre a igreja clicada
+      comunidade.expanded = true;
     }
   }
-
-
-
-
 
   openModal(paroquiaId : number){
     this.idParoquia = paroquiaId;
@@ -163,6 +162,9 @@ export class AdministrarIgrejaComponent implements OnInit {
     window.sessionStorage.setItem('paroquia_id', idParoquia.toString());
     console.log(idParoquia);
     this.router.navigate(['/lista-igreja']);
- 
+  }
+
+  selecionarCidade(){
+    this.router.navigate(['/estado']);
   }
 }

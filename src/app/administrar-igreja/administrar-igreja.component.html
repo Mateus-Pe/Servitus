@@ -1,5 +1,6 @@
-<div class="contain_cidade">
-    <fa-icon [icon]="faLocationDot" id="cidade_nome"></fa-icon>
+<div class="contain_cidade" (click)="selecionarCidade()">
+    <fa-icon [icon]="faLocationDot" ></fa-icon>
+    <span>{{cidadeNome}}</span>
 </div>
 
 
@@ -27,7 +28,7 @@
                     </span>
                     <fa-icon></fa-icon>
                 </div>
-                <div *ngIf="comunidade.expanded" class=" accordion modal-container endereco-lista">
+                <div [ngClass]="{'expanded': comunidade.expanded}" class=" accordion modal-container endereco-lista">
                     <div>
                         <p style="padding-top: 5px;">
                             {{comunidade.igreja_endereco_logradouro}}, {{comunidade.igreja_endereco_numero}}

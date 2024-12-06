@@ -113,6 +113,7 @@ html, *{
     justify-content: center;
     flex-flow: column;
     height: 10rem;
+    max-height: 600px;
     padding: unset !important;
     overflow: hidden !important;
   }
@@ -199,9 +200,16 @@ html, *{
     display: flex; 
     justify-content: center; 
     align-items: center;
+    gap: 3px;
 }
 
 .contain_cidade fa-icon{
+    font-size: 1.6rem; 
+    text-transform: none; 
+    color: darkred
+}
+
+.contain_cidade span{
     font-size: 1.6rem; 
     text-transform: none; 
     color: darkred
@@ -232,7 +240,7 @@ html, *{
 }
 
 .div-igreja-detalhes{
-    
+    transition: max-height 4.8s ease;
 }
 
 .contain_lista_comunidade{
@@ -249,14 +257,15 @@ html, *{
 }
 
 .accordion {
-    max-height: 0; // Começa com altura 0
-    transition: max-height 4.8s ease; // Aumente o tempo para 0.8s ou mais
+    max-height: 0;
     overflow: hidden;
-
+    transition: max-height 0.8s ease-out;
+  
     &.expanded {
-        max-height: 1000px;
+      max-height: 300px;  /* Valor arbitrário maior que o esperado */
     }
 }
+
 
 
 .icon_inputs{

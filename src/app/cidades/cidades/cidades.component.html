@@ -2,7 +2,9 @@
     <div class="search-market" style="background-color: white; top: 0">
         <div class="search-market__container">
             <input class="search-market__input" type="text" id="search-market" placeholder="Buscar Cidades"
-                style="height: 4.2rem;    box-shadow: 0 0.2rem 1rem rgba(90, 14, 14, 0.74); ">
+                style="height: 4.2rem; box-shadow: 0 0.2rem 1rem rgba(90, 14, 14, 0.74); "
+                [(ngModel)]="pesquisa"
+                (keyup)="search()">
         </div>
         <fa-icon [icon]="faSearch" class="search-market__icon"></fa-icon>
     </div>
@@ -10,7 +12,7 @@
     <main class="vitrine-geral vitrine-mercado" style="font-family: Exo;">
         <div class="container" style="position: relative; padding-right: 0px; padding-left: 0px;">
             <div class="lista" style="background-color: white;color: darkred">
-                <div *ngFor="let cidade of cidades" class="pesq" [attr.data-id]="cidade.id" style="max-height: 40px; margin-top: 10px; padding-bottom: 10px; border-bottom: 1px solid darkred;">
+                <div *ngFor="let cidade of cidadesFiltradas" class="pesq" (click)="selectCity(cidade)" [attr.data-id]="cidade.id" style="max-height: 40px; margin-top: 10px; padding-bottom: 10px; border-bottom: 1px solid darkred;">
                     <div style="margin-top: 10px;">
                       <span style="font-size: 1.4rem;">{{ cidade.nickname }}</span>
                     </div>

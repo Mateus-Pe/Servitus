@@ -28,6 +28,7 @@ html, *{
     width: 100%; 
     margin-top:0px; 
     position: relative;
+    transition: filter 0.3s ease-in-out;
 }
 
 #add {
@@ -149,17 +150,6 @@ html, *{
     right: 2.0rem; 
     padding: 1.5rem;
     font-family: Exo;
-}
-
-.mobile_nav{
-    background-color: darkred !important;
-    height: 100%;
-    left: 0;
-    position: fixed;
-    display: block;
-    top: 0;
-    width: 100%;
-    z-index: 1;
 }
 
 

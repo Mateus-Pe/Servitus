@@ -1,4 +1,4 @@
-<nav class="mobile-nav mobile_nav" role="navigation" style="display: none;">
+<nav class="mobile-nav mobile_nav" [class.mobile_nav]="isMenuOpen">
     <ul class="mobile-nav__items">
         <li>
             <a class="mobile-nav__link-produtos3">
@@ -17,24 +17,19 @@
 </nav>
 
 
-<div class="page-menu">
+<div class="page-menu" [ngClass]="{ 'disabled': isMenuOpen }">
     <header class="header1">
-
-        <div class="page-menu--toggle page-menu__hamburger" href="#" id="btnMenu">
-
+        <a class="page-menu--toggle page-menu__hamburger" [class.page-menu__hamburger--open]="isMenuOpen" (click)="toggleMenu()">
             <span class="page-menu__item"></span>
-
             <span class="page-menu__item"></span>
-
             <span class="page-menu__item"></span>
-
-        </div>
+        </a>
 
         <span class="span_header" id="span_header">CALENDÁRIO</span><br>
 
     </header>
 
-    <div id="divPrincipal">
+    <div id="divPrincipal" [ngClass]="{ 'is-blur': isMenuOpen }">
 
         <div class="container">
 

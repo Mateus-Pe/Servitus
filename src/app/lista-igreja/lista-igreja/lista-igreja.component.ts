@@ -170,7 +170,6 @@ export class ListaIgrejaComponent implements OnInit {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
-    this.cd.detectChanges();
   }
 
 

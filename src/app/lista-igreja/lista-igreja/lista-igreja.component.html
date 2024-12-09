@@ -1,4 +1,4 @@
-<nav class="mobile-nav mobile_nav" role="navigation" *ngIf="isMenuOpen">
+<nav class="mobile-nav mobile_nav" [class.mobile_nav]="isMenuOpen">
     <ul class="mobile-nav__items">
         <li>
             <a>
@@ -9,9 +9,9 @@
     </ul>
 </nav>
 
-<div class="page-menu">
+<div class="page-menu" [ngClass]="{ 'disabled': isMenuOpen }">
     <header class="header1">
-        <a class="page-menu--toggle page-menu__hamburger" id="btnMenu" (click)="toggleMenu()">
+        <a class="page-menu--toggle page-menu__hamburger" id="btnMenu" [class.page-menu__hamburger--open]="isMenuOpen" (click)="toggleMenu()">
             <span class="page-menu__item"></span>
             <span class="page-menu__item"></span>
             <span class="page-menu__item"></span>
@@ -19,7 +19,7 @@
         <span class="span_criar-igreja" id="span_criar-igreja">LISTA DE IGREJAS</span><br>
     </header>
 
-    <div id="divCorpo">
+    <div id="divCorpo" [ngClass]="{ 'is-blur': isMenuOpen }">
         <div id="eventos_gerais" class="div_eventos_gerais">
           <span id="eventos_dias" class="span_eventos_gerais">Eventos dos próximos 7 dias:</span>
           <span id="eventos_missas" class="span_eventos_gerais">Missas: {{eventos.missa}}</span>

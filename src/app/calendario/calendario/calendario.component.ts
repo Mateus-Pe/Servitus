@@ -70,6 +70,7 @@ export class CalendarioComponent implements OnInit {
   flagLote: number | null = null;
   texto_modal: SafeHtml  = '';
   texto_status: string  = '';
+  isMenuOpen: boolean = false;
 
   @ViewChild('mensagemModalPreExcluir') mensagemModalPreExcluir!: ElementRef;
 
@@ -360,5 +361,9 @@ export class CalendarioComponent implements OnInit {
   configLayout(){
     window.sessionStorage.setItem('agenda_id', this.agendaId!.toString());
     this.router.navigate(['/configurar-layout-upload']);
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 }

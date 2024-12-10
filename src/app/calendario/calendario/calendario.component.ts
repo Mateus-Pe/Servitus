@@ -358,6 +358,14 @@ export class CalendarioComponent implements OnInit {
     this.router.navigate(['/escolha-tipo-agenda']);
   }
 
+  backLista(){
+    this.router.navigate(['/lista-igreja']);
+  }
+
+  goPerfil(){
+    this.router.navigate(['/configurar-perfil-igreja']);
+  }
+
   configLayout(){
     window.sessionStorage.setItem('agenda_id', this.agendaId!.toString());
     this.router.navigate(['/configurar-layout-upload']);

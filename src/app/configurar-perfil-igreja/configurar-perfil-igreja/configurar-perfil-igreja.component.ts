@@ -120,7 +120,11 @@ export class ConfigurarPerfilIgrejaComponent {
           this.textFace = obj.igreja.igreja_face;
           this.textInsta = obj.igreja.igreja_instagram;
           this.textEmail = obj.igreja.igreja_email;
-          this.horarios.horariosDesc = obj.igreja.igreja_horario_fixo;
+
+          if (obj.igreja.igreja_horario_fixo && typeof obj.igreja.igreja_horario_fixo == 'string') {
+            this.horarios.horariosDesc = obj.igreja.igreja_horario_fixo;
+            console.log(this.horarios.horariosDesc);
+          }
         }
       },
       error: (error) => {

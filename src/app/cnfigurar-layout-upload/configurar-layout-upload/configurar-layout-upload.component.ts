@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faXmark, faCheck, faImage, faEye, faGear } from '@fortawesome/free-solid-svg-icons';
@@ -47,7 +48,7 @@ export class ConfigurarLayoutUploadComponent {
 
   igrejaNome: string | null = null;
   igrejaLogoUrl: string | null = null;
-  agendaDesc: string | null = 'Adicione um comentário para visualiza-lo';
+  agendaDesc: SafeHtml = '';
 
   texto_modal: string = '';
   textoValidacao: string = '';
@@ -66,11 +67,13 @@ estiloModalContent = {
               private preLoteService: PreLoteService,
               private atualizarLayoutAgendaUploadService: AtualizarLayoutAgendaUploadService,
               private utilsService: UtilsService,
+              private sanitizer: DomSanitizer,
               private router: Router){}
 //-----------------------------------Ready-------------------------------------------------
   ngOnInit() {
     const igrejaIdString = window.sessionStorage.getItem('agenda_id');
     this.agendaId = igrejaIdString ? Number(igrejaIdString) : null;
+    this.agendaDesc = this.sanitizer.bypassSecurityTrustHtml('Adicione um comentário para visualiza-lo');
     console.log(this.agendaId);
     if (this.agendaId) {
       this.getAgenda();
@@ -80,37 +83,45 @@ estiloModalContent = {
 //----------------------------------Services-----------------------------------------------
   getAgenda(){
     if (!this.agendaId) return;
+    this.getAgendaByIdService.getAgendaById(this.agendaId).subscribe({
+      next: (response) => {
+        const agenda = response?.agenda;
 
-      this.getAgendaByIdService.getAgendaById(this.agendaId).subscribe((response) => {
-      const agenda = response?.agenda;
-
-      if (agenda) {
-        // Atualiza os dados da agenda
-        this.getAgendasReturn = agenda;
-
-        this.igrejaLogoUrl = agenda.igreja_logo_url;
-        this.igrejaNome = agenda.igreja_nome;
-
-        // Atualiza os elementos da interface
-        if (agenda.agenda_img) {
-          this.imagem_selecionada = true;
-          this.origemImagem = 'L';
-
-          this.previewImgSrc = agenda.agenda_img;
-          this.imagem = false;
-          this.editImg = true;
-          this.visualizar = true;
-        } else {
-          this.imagem_selecionada = false;
-          this.imagem = true;
-          this.editImg = false;
-          this.visualizar = false;
+        if (agenda) {
+          // Atualiza os dados da agenda
+          this.getAgendasReturn = agenda;
+  
+          this.igrejaLogoUrl = agenda.igreja_logo_url;
+          this.igrejaNome = agenda.igreja_nome;
+  
+          // Atualiza os elementos da interface
+          if (agenda.agenda_img) {
+            this.imagem_selecionada = true;
+            this.origemImagem = 'L';
+  
+            this.previewImgSrc = agenda.agenda_img;
+            this.imagem = false;
+            this.editImg = true;
+            this.visualizar = true;
+          } else {
+            this.imagem_selecionada = false;
+            this.imagem = true;
+            this.editImg = false;
+            this.visualizar = false;
+          }
+  
+          if (agenda.agenda_layout_upload_desc && typeof agenda.agenda_layout_upload_desc == 'string') {
+            this.agenda.agenda_layout_upload_desc = agenda.agenda_layout_upload_desc;
+            if (this.agenda.agenda_layout_upload_desc) {
+              this.agendaDesc = this.sanitizer.bypassSecurityTrustHtml(this.agenda.agenda_layout_upload_desc);
+            } else {
+              console.warn('O conteúdo da agenda está indefinido');
+            }
+          }
         }
-
-        if (agenda.agenda_layout_upload_desc) {
-          this.agenda.agenda_layout_upload_desc = agenda.agenda_layout_upload_desc;
-          console.log(this.agenda.agenda_layout_upload_desc);
-        }
+      },
+      error: (error) => {
+        console.error("get agenda deu problema: ", error);
       }
     });
   }
@@ -254,7 +265,7 @@ estiloModalContent = {
 
   valTextArea(conteudo: string){
     this.agenda.agenda_layout_upload_desc = conteudo;
-    console.log(conteudo);
+    this.agendaDesc = this.sanitizer.bypassSecurityTrustHtml(conteudo);
   }
 
   openModalViewAgenda(){

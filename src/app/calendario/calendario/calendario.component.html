@@ -1,14 +1,14 @@
 <nav class="mobile-nav mobile_nav" [class.mobile_nav]="isMenuOpen">
     <ul class="mobile-nav__items">
         <li>
-            <a class="mobile-nav__link-produtos3">
+            <a class="mobile-nav__link-produtos3" (click)="backLista()">
                 <fa-icon></fa-icon>
                 Igrejas
             </a>
         </li>
 
         <li>
-            <a class="mobile-nav__link-categorias2">
+            <a class="mobile-nav__link-categorias2" (click)="goPerfil()">
                 <fa-icon></fa-icon>
                 Perfil
             </a>

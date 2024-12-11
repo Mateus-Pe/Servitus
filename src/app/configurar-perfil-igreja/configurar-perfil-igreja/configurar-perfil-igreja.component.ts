@@ -86,6 +86,8 @@ export class ConfigurarPerfilIgrejaComponent {
     horariosDesc: ''
   };
 
+  placeholderHorarios: string = '';
+
   //Init---------------------------------------
 
   ngOnInit() {
@@ -123,7 +125,7 @@ export class ConfigurarPerfilIgrejaComponent {
 
           if (obj.igreja.igreja_horario_fixo && typeof obj.igreja.igreja_horario_fixo == 'string') {
             this.horarios.horariosDesc = obj.igreja.igreja_horario_fixo;
-            console.log(this.horarios.horariosDesc);
+            this.adjustDescricaoHorarios();
           }
         }
       },
@@ -303,7 +305,17 @@ export class ConfigurarPerfilIgrejaComponent {
 
   valTextArea(conteudo: string){
     this.horarios.horariosDesc = conteudo;
-    console.log(conteudo);
+  }
+
+  adjustDescricaoHorarios(): void {
+    // Verificando se horariosDesc é "null" (como string) ou null real
+    if (this.horarios.horariosDesc === "null" || this.horarios.horariosDesc == null) {
+      this.horarios.horariosDesc = ''; // Deixa a descrição vazia
+      this.placeholderHorarios = "Descrição";
+    } else {
+      this.horarios.horariosDesc = this.horarios.horariosDesc; // Usa o valor recebido
+      this.placeholderHorarios = ''; // Se já tiver descrição, não usa placeholder
+    }
   }
 
   openModalContatos(){

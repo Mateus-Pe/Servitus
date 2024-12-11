@@ -11,62 +11,68 @@ import { EditorComponent } from '@tinymce/tinymce-angular';
   template: `
     <editor
       apiKey="txixhs2kyot0muep1k6v2mp5hd6wqk30jmbvp6hv8pk3g4b7"
-      [init]="editorConfig"
-      placeholder="Descrição"
-      [(ngModel)]="content"
+      [init]="configuracaoEditor"
+      [(ngModel)]="conteudo"
       id="descricao2"
     ></editor>
   `,
   styles: [` .descricao-output { display: inline; opacity: 1; } `]
 })
 export class TinyEditorComponent implements OnInit, OnChanges {
-  @Input() agenda: string = ''; // O valor inicial para evitar problemas
+  @Input() descricao: string = ''; // O valor inicial para evitar problemas
   @Input() editorHeight: number = 120;
+  @Input() placeholder: string = '';
   @Output() keyup = new EventEmitter<string>();
 
-  content: string = ''; // Ligação do conteúdo com o editor
-  editorInstance: any;  // Referência ao editor TinyMCE
-  editorConfig: any; // Configuração do editor
+  conteudo: string = ''; // Ligação do conteúdo com o editor
+  instanciaEditor: any;  // Referência ao editor TinyMCE
+  configuracaoEditor: any; // Configuração do editor
 
   ngOnInit() {
-    this.editorConfig = {
+    this.configuracaoEditor = {
       height: this.editorHeight,
       plugins: ['advlist', 'autolink', 'link', 'lists', 'charmap', 'preview', 'anchor', 
       'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'fullscreen', 
       'insertdatetime', 'media', 'table', 'help', 'emoticons'], // Adicione os plugins que quiser
       toolbar: 'undo redo | fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | removeformat | code | fullscreen',
-      placeholder: 'Descrição',
+      placeholder: this.placeholder,
       fontsize_formats: '8px 10px 12px 14px 18px 24px 36px',
       content_style: 'body { font-family: Arial, Helvetica, sans-serif; font-size: 14px; }',
       statusbar: false, // Remove a barra de status
       setup: (editor: any) => {
-        this.editorInstance = editor;
+        this.instanciaEditor = editor;
         // Remove a barra de status quando o editor for inicializado
-        editor.on('init', () => this.initializeEditor(editor));
+        editor.on('init', () => this.inicializarEditor(editor));
+        editor.on('init', () => {
+          // Inicializa o conteúdo apenas se o editor ainda estiver vazio
+          if (!editor.getContent()) {
+            editor.setContent(this.descricao); // Se não tiver conteúdo, coloca a descrição inicial
+          }
+        });
         // Captura eventos de teclado e mudança de conteúdo
-        editor.on('input change', () => this.updatePreview(editor));
+        editor.on('input change', () => this.atualizarPreview(editor));
       }
     };
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['agenda'] && this.editorInstance) {
-      const newAgenda = changes['agenda'].currentValue;
-      
-      if (newAgenda !== this.content) { // Evitar sobrescrever se o valor já estiver correto
-        this.content = newAgenda; // Sincroniza a variável com o valor de agenda
-        this.editorInstance.setContent(newAgenda); // Atualiza o conteúdo do editor TinyMCE
+    if (changes['descricao'] && this.instanciaEditor) {
+      const novaDescricao = changes['descricao'].currentValue;
+      // Atualiza o conteúdo apenas se o editor estiver vazio
+      if (this.instanciaEditor.getContent() === '') {
+        this.instanciaEditor.setContent(novaDescricao); // Define o conteúdo inicial se estiver vazio
+        this.conteudo = novaDescricao; // Atualiza a variável conteudo
       }
     }
   }
 
-  initializeEditor(editor: any): void {
+  inicializarEditor(editor: any): void {
     // Remove a barra de status de forma programática (apenas se ainda existir)
     const statusbarDiv = document.querySelector('.tox .tox-statusbar');
     if (statusbarDiv) statusbarDiv.remove();
   }
 
-  updatePreview(editor: any): void {
+  atualizarPreview(editor: any): void {
     const conteudoHtml = editor.getContent();
     this.keyup.emit(conteudoHtml); // Emite o conteúdo para o componente pai
   }

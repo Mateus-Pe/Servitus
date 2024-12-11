@@ -60,7 +60,8 @@ estiloModal = {
 estiloModalContent = {
   'width': '90%',
   'border-radius': '10px',
-  'padding': 'unset'
+  'padding': 'unset',
+  'text-align': 'unset'
 };
 
   constructor(private getAgendaByIdService: GetAgendaByIdService,

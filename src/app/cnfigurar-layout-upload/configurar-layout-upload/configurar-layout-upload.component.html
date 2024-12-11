@@ -39,7 +39,7 @@
     <img id="previewImg" [src]="previewImgSrc">
 </div>
 
-<app-tiny-editor [agenda]="agenda.agenda_layout_upload_desc" (keyup)="valTextArea($event)"></app-tiny-editor>
+<app-tiny-editor [placeholder]="'Descrição'" [descricao]="agenda.agenda_layout_upload_desc" (keyup)="valTextArea($event)"></app-tiny-editor>
 
 <!--Modais------------------------------------------------------------------------>
 
@@ -63,7 +63,7 @@
                         <a class="a_img_layout">
                             <img id="visualiza_layout_feed" src="{{previewImgSrc}}">
                         </a>
-                        <div class="div_descricao">
+                        <div class="div_descricao" style="text-align: unset">
                             <span id="descricao_layout_feed" class="span_descricao" [innerHTML]="agendaDesc"></span>
                         </div>
                     </div>

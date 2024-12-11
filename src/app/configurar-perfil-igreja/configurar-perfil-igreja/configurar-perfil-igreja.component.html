@@ -185,7 +185,7 @@ style="display: none;"
         </div>
 
         <div class="modal_body">
-            <app-tiny-editor [agenda]="horarios.horariosDesc" [editorHeight]="170" (keyup)="valTextArea($event)"></app-tiny-editor>
+            <app-tiny-editor [placeholder]="placeholderHorarios" [descricao]="horarios.horariosDesc" [editorHeight]="170" (keyup)="valTextArea($event)"></app-tiny-editor>
         </div>
      </div>
 </app-modal>

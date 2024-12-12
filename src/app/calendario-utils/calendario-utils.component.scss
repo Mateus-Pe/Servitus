@@ -58,6 +58,11 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.calendarList2 li.selected {
+    background-color: darkred;
+    color: white;  
+}
+
 .dia_selecionado{
     background-color: darkred;
     color: white;

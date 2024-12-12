@@ -175,13 +175,37 @@ style="display: none;"
     </div>
 </app-modal>
 
-<app-modal [estilosModalContent]="estilosModalContentBancoImg" *ngIf="showModalHorariosFixos">
+<app-modal [estilosModalContent]="estilosModalContentHorariosFixos" [estilosModal]="estiloModal" *ngIf="showModalHorariosFixos">
      <div modal-body>
         <div class="modal_header">
             <fa-icon class="modal_close" [icon]="faXmark" (click)="closeModalHorariosFixos()"></fa-icon>
 
             <h3 class="h3_modal">Horários</h3>
-            <h6 id="click_sugestao1" style="color: lightgreen;"> Sugestão 1</h6>
+            <h6 id="click_sugestao1" style="color: lightgreen; text-align: center;" (click)="toggleSugestao1()"> Sugestão 1</h6>
+
+            <div id="sugestao1" *ngIf="showSugestao1">
+                <p>
+                    <strong>
+                        Missa:
+                    </strong>
+                    &nbsp;
+                </p>
+                <p>
+                    s&aacute;bado &aacute;s 19h30;
+                </p>
+                <p>
+                    domingo &aacute;s 20h;
+                </p>
+                <p>
+                    <strong>
+                        Confiss&otilde;es:
+                    </strong>
+                    &nbsp;
+                </p>
+                <p>
+                    quarta e quinta das 14h &aacute;s 17h;
+                </p>
+            </div>
         </div>
 
         <div class="modal_body">

@@ -55,6 +55,8 @@ export class CriarAgendaEspecificaComponent {
   selectAgendaDe: string = '0';
   selectAgendaAte: string = '0';
 
+  storedSelectedDay: Date | null = null;
+
   horarios: string[] = [
     '06:00', '06:30', '07:00', '07:30', '08:00', '08:30', '09:00', '09:30',
     '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30',
@@ -212,8 +214,14 @@ estiloModalContent = {
   };
 
   onDaySelected(selectedDate: string): void {
+    const [day, month, year] = selectedDate.split('/').map(num => parseInt(num, 10));
+    // Corrigindo o formato da data, mês começa de 0 em JavaScript
+    const formattedDate =  new Date(year, month - 1, day, 0, 0, 0);
+
     this.dataEvento = selectedDate;
     this.showModalCalendario = false;
+    this.storedSelectedDay = new Date(formattedDate);
+    console.log(this.storedSelectedDay);
   };
 
   autoCompleteAgendaDeAte(event: Event): void {

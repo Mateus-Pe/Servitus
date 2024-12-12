@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
@@ -35,7 +35,7 @@ export class CalendarioUtilsComponent {
     { id: 12, name: 'Dezembro' }
   ];
 
-  selectedDay: number | null = null;
+  @Input() selectedDay: Date | null = null;
   @Output() daySelected = new EventEmitter<string>();
   constructor() { }
 
@@ -44,6 +44,8 @@ export class CalendarioUtilsComponent {
     this.globalCY = today.getFullYear();
     this.globalCM = today.getMonth(); // getMonth() retorna o mês no formato 0-11
     this.makeCalendar(this.globalCY, this.globalCM);
+
+    console.log(this.selectedDay);
   }
 
   makeCalendar(year: number, month: number): void {
@@ -89,7 +91,7 @@ export class CalendarioUtilsComponent {
   }
 
   selectDay(day: number): void {
-    this.selectedDay = day;
+    this.selectedDay = new Date(this.globalCY, this.globalCM, day);
     const selectedDate = new Date(this.globalCY, this.globalCM, day);
     this.daySelected.emit(this.formatDate(selectedDate));
     

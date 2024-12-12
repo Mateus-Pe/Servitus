@@ -56,6 +56,7 @@ export class ConfigurarPerfilIgrejaComponent {
   showModalBancoImg = false;
   showModalNome = false;
   showModalHorariosFixos = false;
+  showSugestao1 = false;
 
   //var estilo modal----------------------------
   estiloModalContent = {
@@ -73,6 +74,20 @@ export class ConfigurarPerfilIgrejaComponent {
     'border-top': '1px solid rgba(0, 0, 0, 0.16)',
     'box-shadow': '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)'
   }
+
+  estilosModalContentHorariosFixos = {
+    'padding': 'unset',
+    'width': '90%',
+    'border-radius': '5px',
+    'font-size': '2rem',
+    'border-top': '1px solid rgba(0, 0, 0, 0.16)',
+    'box-shadow': '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
+    'text-align': 'unset'
+  }
+
+  estiloModal = {
+    'z-index': '5'
+  };
 
   //var Funções--------------------------------
   textWhats: string | null = null;
@@ -191,7 +206,7 @@ export class ConfigurarPerfilIgrejaComponent {
           img.onload = () => {
             this.imgIgrejaUrl = e.target?.result as string; // Atualiza a URL da imagem
             this.previewImg = true;
-            this.origemImagem = 'U'; // Indica que a imagem veio de upload
+            this.origemImagem = 'U';
           };
 
           img.src = e.target.result as string; // Carrega a imagem para verificação
@@ -219,7 +234,7 @@ export class ConfigurarPerfilIgrejaComponent {
             this.imgFundoUrl = e.target?.result as string; // Atualiza a URL da imagem
             this.existeFundo = true;
             this.previewImg = true;
-            this.origemImagem = 'U'; // Indica que a imagem veio de upload
+            this.origemImagem = 'U';
           };
 
           img.src = e.target.result as string; // Carrega a imagem para verificação
@@ -316,6 +331,10 @@ export class ConfigurarPerfilIgrejaComponent {
       this.horarios.horariosDesc = this.horarios.horariosDesc; // Usa o valor recebido
       this.placeholderHorarios = ''; // Se já tiver descrição, não usa placeholder
     }
+  }
+
+  toggleSugestao1() {
+    this.showSugestao1 = !this.showSugestao1;
   }
 
   openModalContatos(){

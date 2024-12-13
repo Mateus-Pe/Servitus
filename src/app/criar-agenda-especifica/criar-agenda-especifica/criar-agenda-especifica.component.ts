@@ -221,7 +221,6 @@ estiloModalContent = {
     this.dataEvento = selectedDate;
     this.showModalCalendario = false;
     this.storedSelectedDay = new Date(formattedDate);
-    console.log(this.storedSelectedDay);
   };
 
   autoCompleteAgendaDeAte(event: Event): void {

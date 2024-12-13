@@ -13,27 +13,39 @@ import { faEye, faEyeSlash, faCheck, faMobileScreenButton, faKey  } from '@forta
   styleUrls: ['./loginas.component.scss']
 })
 export class LoginasComponent {
+  //Var ions --------------------------------------
   faCheck = faCheck;
   faMobileScreenButton = faMobileScreenButton;
   faKey = faKey;
   faEye = faEye;
   faEyeSlash = faEyeSlash;
-  usuario_celular = '';
+  //Var login -------------------------------------
+  usuario_celular: string | number | null = null;
   usuario_senha = '';
   errorMessage = '';
   showPassword = false;
 
+  //construtor -------------------------------------------------------------------------
+  constructor(private loginService: LoginService,
+              private router: Router)
+  {};
 
-  constructor(private loginService: LoginService, private router: Router){}
-
+  //Serviços ---------------------------------------------------------------------------
   login(){
-    if (this.usuario_celular.length < 11){
+    const cel = String(this.usuario_celular).trim();
+    this.usuario_senha = this.usuario_senha.trim();
+
+    if (cel.length != 11 || cel == ''){
       this.errorMessage = 'Digite seu DDD + Celular para prosseguir';
       return;
     }else{
       this.errorMessage = '';
     }
-    this.loginService.login(this.usuario_celular, this.usuario_senha).subscribe({
+    if (!this.usuario_senha) {
+      this.errorMessage = 'Digite a senha para prosseguir';
+      return;
+    }
+    this.loginService.login(cel, this.usuario_senha).subscribe({
       next: (response) => {
         if (response.status == 1){
           window.sessionStorage.setItem('paroquia_id', response.usuario.usuario_paroquia_id);
@@ -48,7 +60,7 @@ export class LoginasComponent {
     })
   }
 
-
+  //Funções -------------------------------------------------------------------------------------------
   togglePasswordVisibility(){
     this.showPassword = !this.showPassword;
   }
@@ -62,6 +74,25 @@ export class LoginasComponent {
     if (target.id === 'celular' || target.id === 'senha') {
       this.errorMessage = '';
     }
+  }
+
+  permitirApenasNumeros(event: KeyboardEvent): boolean {
+    const charCode = event.key.charCodeAt(0);
+  
+    // Permite apenas números (48–57 para números) e teclas de controle como Backspace, Delete, Tab
+    if (
+      (charCode >= 48 && charCode <= 57) || // Números 0–9
+      event.key === 'Backspace' ||
+      event.key === 'Tab' ||
+      event.key === 'Delete' ||
+      event.key === 'ArrowLeft' ||
+      event.key === 'ArrowRight'
+    ) {
+      return true;
+    }
+  
+    event.preventDefault(); // Impede qualquer outro caractere
+    return false;
   }
 
   esqueciSenha(){

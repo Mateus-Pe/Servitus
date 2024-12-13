@@ -19,21 +19,7 @@ import { PreLoteService } from '../../services/pre_lote/pre-lote.service';
   styleUrl: './calendario.component.scss'
 })
 export class CalendarioComponent implements OnInit {
-
-  constructor(
-    private getAgendaCalendarioService: GetAgendaCalendarioService,
-    private agendaCalendarioHoraService: AgendaCalendarioHoraService,
-    private removeAgendaService: RemoveAgendaService,
-    private preLoteService: PreLoteService,
-    private utilsService: UtilsService,
-    private sanitizer: DomSanitizer,
-    private router: Router
-  ) {
-    this.year = new Date().getFullYear();
-    this.month = new Date().getMonth() + 1;
-  }
-
-
+  //var ions --------------------------
   faAngleLeft = faAngleLeft;
   faAngleRight = faAngleRight;
   faPlus = faPlus;
@@ -42,38 +28,41 @@ export class CalendarioComponent implements OnInit {
   faGear = faGear;
   faTrash = faTrash;
   faXmark = faXmark;
-
+  //var calendario -------------------
   year: number;
   month: number;
-  daysInMonth: number[] = [];
   firstDay: number = 0;
   monthName: string = '';
-  igrejaId: number | null = null;
-  selectedDay: number | null = null;
+  //var services ---------------------
+  daysInMonth: number[] = [];
   eventDays: number[] = [];
   agendaItems: any[] = [];
-
+  //var controle ---------------------
   showModalConfig = false;
   showButtomImage = false;
+  showModalViewAgenda = false;
+  showModalRemoveE = false;
+  showModalRemoveL = false;
+  showModalStatus = false;
+  buttonConfigLayoutStatus = false;
+  isMenuOpen: boolean = false;
+  //var funções ------------------------
+  igrejaId: number | null = null;
+  selectedDay: number | null = null;
   agendaId: number | null = null;
   agendaImg: string | null = null;
   agendaHora: string | null = null;
   agendaStatus: number | null = null;
   igrejaLogoUrl: string | null = null;
   igrejaNome: string | null = null;
-  agendaDesc: SafeHtml = '';
-  showModalViewAgenda = false;
-  showModalRemoveE = false;
-  showModalRemoveL = false;
-  showModalStatus = false;
-  buttonConfigLayoutStatus = false;
   flagLote: number | null = null;
+
+  agendaDesc: SafeHtml = '';
   texto_modal: SafeHtml  = '';
   texto_status: string  = '';
-  isMenuOpen: boolean = false;
 
   @ViewChild('mensagemModalPreExcluir') mensagemModalPreExcluir!: ElementRef;
-
+  //var estilos modais ----------------------------------
   estiloModal = {
     'background-color': 'black'
   };
@@ -87,7 +76,21 @@ export class CalendarioComponent implements OnInit {
     'width': '90%'
   }
 
+  //construtor ---------------------------------------------------------------
+  constructor(
+    private getAgendaCalendarioService: GetAgendaCalendarioService,
+    private agendaCalendarioHoraService: AgendaCalendarioHoraService,
+    private removeAgendaService: RemoveAgendaService,
+    private preLoteService: PreLoteService,
+    private utilsService: UtilsService,
+    private sanitizer: DomSanitizer,
+    private router: Router
+  ) {
+    this.year = new Date().getFullYear();
+    this.month = new Date().getMonth() + 1;
+  }
 
+  //ready ----------------------------------------------------------------------
   ngOnInit() {
     const igrejaIdString = window.sessionStorage.getItem('igreja_id');
     this.igrejaId = igrejaIdString ? Number(igrejaIdString) : null;
@@ -189,7 +192,7 @@ export class CalendarioComponent implements OnInit {
   }
 
 
- /*---------------------FUNCIONALIDADES-----------------------*/
+ /*---------------------FUNÇÕES-----------------------*/
 
 
   makeCalendar(year: number, month: number) {
@@ -267,12 +270,12 @@ export class CalendarioComponent implements OnInit {
       case '3':
         return 'orange';
       default:
-        return 'gray'; // Cor padrão caso o status não corresponda a nenhum caso
+        return 'gray';
     }
   };
 
-  habilitaBotaoConfig(status: string){
-
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   openModalConfig(item: any){
@@ -369,9 +372,5 @@ export class CalendarioComponent implements OnInit {
   configLayout(){
     window.sessionStorage.setItem('agenda_id', this.agendaId!.toString());
     this.router.navigate(['/configurar-layout-upload']);
-  }
-
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
   }
 }

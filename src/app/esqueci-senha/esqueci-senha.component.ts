@@ -14,7 +14,9 @@ import { Router } from '@angular/router';
   styleUrl: './esqueci-senha.component.scss'
 })
 export class EsqueciSenhaComponent {
+  //var ions -----------------------------------------
   faMobileScreenButton = faMobileScreenButton;
+  //var funções --------------------------------------
   usuario_celular = '';
   message = '';
   isAlert = false;
@@ -22,8 +24,12 @@ export class EsqueciSenhaComponent {
   showDivHide = true;
   showDivGif = false;
 
-  constructor(private esqueciSenhaService: EsqueciSenhaService, private router: Router){}
+  //construtor --------------------------------------------------------------------------------
+  constructor(private esqueciSenhaService: EsqueciSenhaService,
+              private router: Router
+  ){};
 
+  //serviços ----------------------------------------------------------------------------------
   getEsqueciSenha(){
     if (this.usuario_celular.length < 11 || this.usuario_celular.length == 0){
       this.message = 'Digite seu celular para continuar';
@@ -45,6 +51,7 @@ export class EsqueciSenhaComponent {
     })
   }
 
+  //funções ---------------------------------------------------------------------------------
   envioCompleto(){
     this.isAlert = false;
     this.isVerify = true;
@@ -66,6 +73,25 @@ export class EsqueciSenhaComponent {
     if (target.id === 'celular') {
       this.message = '';
     }
+  }
+
+  permitirApenasNumeros(event: KeyboardEvent): boolean {
+    const charCode = event.key.charCodeAt(0);
+  
+    // Permite apenas números (48–57 para números) e teclas de controle como Backspace, Delete, Tab
+    if (
+      (charCode >= 48 && charCode <= 57) || // Números 0–9
+      event.key === 'Backspace' ||
+      event.key === 'Tab' ||
+      event.key === 'Delete' ||
+      event.key === 'ArrowLeft' ||
+      event.key === 'ArrowRight'
+    ) {
+      return true;
+    }
+  
+    event.preventDefault(); // Impede qualquer outro caractere
+    return false;
   }
 
 }

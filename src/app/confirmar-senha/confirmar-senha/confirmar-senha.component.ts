@@ -13,22 +13,29 @@ import { Router } from '@angular/router';
   styleUrl: './confirmar-senha.component.scss'
 })
 export class ConfirmarSenhaComponent {
+  //var ions --------------------------------
   faCheck = faCheck;
   faUnlock = faUnlock;
   faEye = faEye;
   faCircleCheck = faCircleCheck;
   faEyeSlash = faEyeSlash;
-
+  //var controle ions -----------------------
   showPassword = false;
   showPasswordConfirm = false;
+  //var funções -----------------------------
   usuario_senha = '';
   confirma_senha = '';
+  errorMessage = '';
+  //var url ---------------------------------
   urlParams = new URLSearchParams(window.location.search);
   usuario_token = this.urlParams.get('t') || '';
-  errorMessage = '';
 
-  constructor(private alterarSenhaService: AlterarSenhaService, private router: Router){}
+  //construtor ---------------------------------------------------------------------
+  constructor(private alterarSenhaService: AlterarSenhaService,
+              private router: Router
+  ){}
 
+  //serviços -----------------------------------------------------------------------
   getAlterarSenha(){
     if (this.usuario_senha == ''){
       this.errorMessage = 'Digite sua senha!';
@@ -43,11 +50,15 @@ export class ConfirmarSenhaComponent {
       this.errorMessage = '';
     }
 
+    if(!this.usuario_token){
+      console.warn("Token não encontrado");
+      return;
+    }
+
     this.alterarSenhaService.alterar_senha(this.usuario_senha, this.usuario_token).subscribe({
       next: (response) => {
         if(response.status == 1) {
           window.sessionStorage.setItem('paroquia_id', response.usuario.usuario_paroquia_id);
-          console.log('deu certo');
           this.router.navigate(['/lista-igreja']);
         }
       },
@@ -57,12 +68,7 @@ export class ConfirmarSenhaComponent {
     })
   }
 
-
-
-
-
-
-
+  //funções -------------------------------------------------------------------------
   togglePasswordVisibility(){
     this.showPassword = !this.showPassword;
   }

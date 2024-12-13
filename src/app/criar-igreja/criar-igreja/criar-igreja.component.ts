@@ -17,6 +17,7 @@ import { AjaxCepService } from '../../services/ajaxCep/ajax-cep.service';
   styleUrl: './criar-igreja.component.scss'
 })
 export class CriarIgrejaComponent {
+  //var ions ------------------------------------------
   faArrowLeft = faArrowLeft;
   faCheck = faCheck;
   faChurch = faChurch;
@@ -25,7 +26,7 @@ export class CriarIgrejaComponent {
   faFlag = faFlag;
   faLocationDot = faLocationDot;
   faHouse = faHouse;
-
+  //var focus controle --------------------------------
   @ViewChild('nomeInput') nomeInput!: ElementRef;
   @ViewChild('cepInput') cepInput!: ElementRef;
   @ViewChild('cidadeInput') cidadeInput!: ElementRef;
@@ -49,28 +50,30 @@ export class CriarIgrejaComponent {
 
   isCityInputFocused = false;
   showOtherInputs = true;
-
+  //var services ----------------------------
   paroquiaId: string | null = null;
   igrejaId: string | null = null;
 
   cidades: any[] = [];
   cidadesFiltradas: any[] = [];
 
+  //construtor ----------------------------------------------------------------
   constructor(private geoLocationService: GeoLocationService,
               private incluirIgrejaService: IncluirIgrejaService,
               private cidadeService: CidadeService,
               private ajaxCepService: AjaxCepService,
               private router: Router
-  ){}
+  ){};
 
+  //ready --------------------------------------------------------------------
   ngOnInit() {
     this.paroquiaId = window.sessionStorage.getItem('paroquia_id');
     this.igrejaId = window.sessionStorage.getItem('igreja_id');
     this.getCidades();
   }
 
+  //serviços ----------------------------------------------------------------
   getGeoLocation(){
-
     if (this.nomeInstituicao == ''){
       this.errorMessage = 'Para prosseguir coloque uma instituição';
       return;
@@ -156,7 +159,6 @@ export class CriarIgrejaComponent {
   }
 
   getSalvar(location: {lat: number, lng: number}){
-
     this.incluirIgrejaService.incluirIgreja(
                                             +this.cepInstituicao,
                                             this.logradouroInstituicao,
@@ -171,9 +173,6 @@ export class CriarIgrejaComponent {
                                             +this.igrejaMatriz,
                                             +this.paroquiaId!,
                                             this.nomeResumido
-
-
-
     ).subscribe({
       next: (response) => {
         if (response.status == '1'){
@@ -190,11 +189,7 @@ export class CriarIgrejaComponent {
     })
   }
 
-
-
-
-
-
+  //funções ------------------------------------------------------------------
   getAddress(): string {
     let address = this.logradouroInstituicao;
     if (this.numeroInstituicao) {

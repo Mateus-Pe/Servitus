@@ -13,7 +13,7 @@
 
         <div class="container_input">
             <fa-icon class="icon_inputs" [icon]="faMobileScreenButton"></fa-icon>
-            <input class="cadastro_input" [(ngModel)]="usuario_celular" id="celular" type="number" name="celular" placeholder="DDD+Celular" required>
+            <input class="cadastro_input" [(ngModel)]="usuario_celular" (keydown)="permitirApenasNumeros($event)" id="celular" type="text" name="celular" placeholder="DDD+Celular" maxlength="11" required>
         </div>
 
         <div class="container_input">

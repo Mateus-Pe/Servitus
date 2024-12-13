@@ -18,6 +18,7 @@ import { RemoverIgrejaService } from '../../services/remover-igreja/remover-igre
   styleUrl: './lista-igreja.component.scss'
 })
 export class ListaIgrejaComponent implements OnInit {
+  //var ions ------------------------------------
   faPlus = faPlus;
   faGear = faGear;
   faCircleChevronDown = faCircleChevronDown;
@@ -25,24 +26,26 @@ export class ListaIgrejaComponent implements OnInit {
   faCalendar = faCalendar;
   faTrash = faTrash;
   faChurch = faChurch
-
+  //var sercices --------------------------------
   paroquia_id : number | null = null;
   igrejas: any[] = [];
   eventos: any = {};
-
+  //var igrejas selecionadas --------------------
   selectedIgrejaId: number | null = null;
   selectedIgrejaName: string | null = null;
-
+  //var controle -------------------------
   showModal = false;
   showModalRemove = false;
   showModalConfirm = false;
-  textoModalConfirm: string | null = null;
-  matrizModalConfirm: string | null = null;
-  igrejaModalConfirm: string | null = null;
   showOptionsModal = false;
 
   isMenuOpen: boolean = false;
+  //var funções ---------------------------------
+  textoModalConfirm: string | null = null;
+  matrizModalConfirm: string | null = null;
+  igrejaModalConfirm: string | null = null;
 
+  //construtor --------------------------------------------------------
   constructor(
     private listaIgrejaService: ListaIgrejaService,
     private getEstatisticaService: GetEstatisticaService,
@@ -51,8 +54,9 @@ export class ListaIgrejaComponent implements OnInit {
     private removerIgrejaService: RemoverIgrejaService,
     private router: Router,
     private cd: ChangeDetectorRef
-  ){}
+  ){};
 
+  //ready -------------------------------------------------------------
   ngOnInit(): void {
     const id = window.sessionStorage.getItem('paroquia_id');
     this.paroquia_id = id ? Number(id) : null;
@@ -64,6 +68,7 @@ export class ListaIgrejaComponent implements OnInit {
     }
   }
 
+  //serviços ----------------------------------------------------------
   eventosGerais(paroquia_id: number): void{
     this.getEstatisticaService.getEstatistica(paroquia_id).subscribe({
       next: (response) => {
@@ -149,10 +154,7 @@ export class ListaIgrejaComponent implements OnInit {
     })
   }
 
-
-
-
-
+  //funções ----------------------------------------------------------
   toggleAccordion(comunidade: any) {
     // Alternar o estado expandido da comunidade
     comunidade.expanded = !comunidade.expanded;
@@ -167,15 +169,8 @@ export class ListaIgrejaComponent implements OnInit {
     });
   }
 
-
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
-  }
-
-
-  criarIgreja(): void{
-    window.sessionStorage.setItem('igreja_id', '');
-    this.router.navigate(['/criar-igreja']);
   }
 
   openModal(igrejaId: number, igrejaName: string, igrejaTipo: string) {
@@ -205,6 +200,11 @@ export class ListaIgrejaComponent implements OnInit {
 
   closeModalRemove(){
     this.showModalRemove = false;
+  }
+
+  criarIgreja(): void{
+    window.sessionStorage.setItem('igreja_id', '');
+    this.router.navigate(['/criar-igreja']);
   }
 
   calendario(){

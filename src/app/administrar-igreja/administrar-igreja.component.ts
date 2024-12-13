@@ -16,6 +16,7 @@ import { NovoUsuarioService } from '../services/novo_usuario/novo-usuario.servic
   styleUrls: ['./administrar-igreja.component.scss'] 
 })
 export class AdministrarIgrejaComponent implements OnInit {
+  //var ions ---------------------------
   faPenToSquare = faPenToSquare;
   faUserPlus = faUserPlus;
   faLocationDot = faLocationDot;
@@ -24,25 +25,28 @@ export class AdministrarIgrejaComponent implements OnInit {
   faPhone = faPhone;
   faBriefcase = faBriefcase;
   faCopy = faCopy;
-
+  //var services -----------------------
   @Input() igrejas: any[] = [];
   cidadeId: number | null = null;
   cidadeNome = '';
-
-  modalAdicionar: boolean = false;
+  //var funções ------------------------
   idParoquia: number | null = null;
   usuarioNome: string = '';
   usuarioCelular: number | null = null;
   usuarioTipo: string = 'tipo';
   linkUsuario: string = '';
-
+  //var controle modal -----------------
+  modalAdicionar: boolean = false;
+  
+  //construtor -------------------------------------------------------------------------
   constructor(
     private getListaParoquiaService: GetListaParoquiaService, 
     private novaParoquiaService : NovaParoquiaService,
     private novoUsuarioService : NovoUsuarioService, 
     private router: Router
-  ){}
+  ){};
 
+  //ready ------------------------------------------------------------------------------
   ngOnInit(): void {
     const cidadeIdString = window.sessionStorage.getItem('cidade_id');
     this.cidadeId = cidadeIdString ? parseInt(cidadeIdString, 10) : null;
@@ -58,6 +62,7 @@ export class AdministrarIgrejaComponent implements OnInit {
     this.getParoquias();
   }
 
+  //serviços ---------------------------------------------------------------------------
   getParoquias(): void{
     this.getListaParoquiaService.getParoquia(this.cidadeId!).subscribe({
       next: (response) => {
@@ -68,7 +73,6 @@ export class AdministrarIgrejaComponent implements OnInit {
       }
     })
   }
-
 
   getNovaParoquia(): void{
     this.novaParoquiaService.getNovaParoquia(this.cidadeId!).subscribe({
@@ -85,9 +89,7 @@ export class AdministrarIgrejaComponent implements OnInit {
     })
   }
 
-
   getNovoUsuario(): void{
-    console.log(this.usuarioNome, this.usuarioCelular, this.usuarioTipo, this.idParoquia);
     if (this.usuarioNome && this.usuarioCelular && this.usuarioTipo && this.idParoquia) {
     this.novoUsuarioService.getNovoUsuario(this.idParoquia, this.usuarioNome, this.usuarioCelular, this.usuarioTipo).subscribe({
       next: (response) => {
@@ -103,10 +105,7 @@ export class AdministrarIgrejaComponent implements OnInit {
     }
   }
 
-
-
-
-
+  //funções ----------------------------------------------------------------------------
   toggleAccordion(paroquia: any) {
     paroquia.expanded = !paroquia.expanded;
 

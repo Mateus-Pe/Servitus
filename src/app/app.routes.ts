@@ -13,6 +13,7 @@ import { ConfigurarLayoutUploadComponent } from './cnfigurar-layout-upload/confi
 import { ConfigurarPerfilIgrejaComponent } from './configurar-perfil-igreja/configurar-perfil-igreja/configurar-perfil-igreja.component';
 import { EstadoComponent } from './estado/estado/estado.component';
 import { CidadesComponent } from './cidades/cidades/cidades.component';
+import { PrincipalComponent } from './principal/principal/principal.component';
 
 export const routes: Routes = [
     { path: 'loginas', component: LoginasComponent },
@@ -29,5 +30,6 @@ export const routes: Routes = [
     { path: 'configurar-perfil-igreja', component: ConfigurarPerfilIgrejaComponent },
     { path: 'estado', component: EstadoComponent },
     { path: 'cidades', component: CidadesComponent},
+    { path: 'principal', component: PrincipalComponent},
     { path: '', redirectTo: '/loginas', pathMatch: 'full' }
 ];

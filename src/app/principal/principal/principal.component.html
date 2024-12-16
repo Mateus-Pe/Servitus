@@ -1,0 +1,56 @@
+<body>
+    <!------------Local------------>
+    <div> 
+        <div class="div_local">
+            <fa-icon [icon]="faLocationDot" class="ion_local"></fa-icon>
+            <span class="div_cidade">{{cidadeNome}}</span>
+        </div>
+    </div>
+    <!------------destaque------------>
+    <div>
+
+    </div>
+    <!------------eventos------------>
+    <div id="eventos" style="background-color: lightgray;">
+        <!--Repetição Eventos-->
+        <div *ngFor="let evento of eventos" id="div_evento" class="div_evento">
+            <div id="evento">
+                {{evento.evento_nome | uppercase}}
+            </div>
+            
+            <div id="horizontal_eventos">
+                <!--Repetição Agendas-->
+                <div *ngFor="let agenda of evento.agendas" id="agenda" class="agenda">
+                    <div class="div_principal_eventos">
+                        <div class="div_agenda">
+                            <span class="span_agenda span_agenda_left">
+                                {{dataAgenda(agenda)}}
+                            </span>
+                            <span class="span_agenda span_agenda_right">
+                                {{horarioAgenda(agenda)}}
+                            </span>
+                        </div>
+                        <img id="div_img" [src]="agenda.agenda_img">
+                        <div id="nome_evento_outros">
+                            <span class="span_nome_evento_outros">
+                                {{agenda.agenda_evento_outro}}
+                            </span>
+                        </div>
+                    </div>
+                    <div id="descricao">
+                        <span class="span_nome_igreja">
+                            {{agenda.igreja_nome}}
+                        </span>
+                    </div>
+                </div>
+                <!--Fim repetição agendas-->
+            </div>
+            <div class="div_ver_mais_white">
+                <span>
+                    Ver mais
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--Fim repetição eventos-->
+</body>

@@ -1,0 +1,192 @@
+.visualiza-evento{
+    position: fixed;
+    top: 0px;
+    overflow-y: hidden;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+.div_perfil {
+    display: flex;
+    text-decoration: none;
+    justify-content: space-between;
+    background-color: black;
+    font-size: 62.5%;
+    flex-shrink: 0;
+    align-items: center;
+}
+
+.div_perfil fa-icon{
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.perfil_div {
+    display: flex;
+    align-items: center;
+}
+
+.img_igreja {
+    height: 3.5rem;
+    border-radius: 50%;
+    width: 3.5rem;
+}
+
+.nome_igreja {
+    align-self: center;
+    color: white;
+    margin-left: 0.6rem;
+    font-size: 1.3rem;
+    font-family: exo;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+}
+
+#back_modal{
+    font-size: 24px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.contain_data_modal{
+    border: 1px solid black; 
+    align-items: center; 
+    display: grid; 
+    padding-right: 10px; 
+    padding-left: 10px; 
+    font-family: exo;
+}
+
+.contain_data_modal span{
+    font-size: 1.2rem; 
+    color: white; 
+    display: flex; 
+    justify-content: center;
+}
+
+.feed_principal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    flex-grow: 1;
+}
+
+.div_img_layout {
+    display: flex;
+    justify-content: center;
+}
+
+.div_img_layout img{
+    border: 1px solid white;
+    height: 95%;
+    width: 95%;
+    object-fit: contain;
+}
+ /*olhar se pode remover*/
+.div_descricao {
+    margin-top: 0px;
+}
+ /*olhar se pode remover*/
+.span_descricao {
+    color: rgb(98, 97, 97);
+    font-family: exo;
+    font-size: 1.5rem;
+}
+
+#divFixa{
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+#nome_igreja_desc{
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    line-height: 1.6rem;
+}
+
+#nome_igreja_desc span{
+    color: white;
+    font-family: 'VT323', monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block; 
+    max-width: 100%;
+    font-size: 10pt;
+}
+
+#horizontal_eventos{
+    overflow-y: hidden;
+    overflow-x: auto;
+    display: flex;
+    gap: 20px;
+}
+
+.div_agenda{
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    height: 25px;
+    align-items: center;
+}
+
+.div_principal_agendas {
+    border: 1px solid white;
+}
+
+.agenda_events {
+    width: 140px;
+    display: grid;
+    align-items: center;
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.span_agenda{
+    color: white;
+    font-size: 15px;
+    font-family: 'VT323', monospace;
+}
+
+.span_agenda_left{
+    padding-left: 3px;
+}
+
+.span_agenda_right{
+    padding-right: 3px;
+}
+
+#div_img{
+    width: 120px;
+    height: 120px;
+}
+
+.div_ver_mais{
+    margin-top: 10px;
+}
+
+.div_ver_mais span {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-family: exo;
+    color: white;
+    font-size: 15px;
+}

@@ -20,7 +20,7 @@
             
             <div id="horizontal_eventos">
                 <!--Repetição Agendas-->
-                <div *ngFor="let agenda of evento.agendas" id="agenda" class="agenda">
+                <div *ngFor="let agenda of evento.agendas" id="agenda" class="agenda" (click)="selecionarAgenda(agenda)">
                     <div class="div_principal_eventos">
                         <div class="div_agenda">
                             <span class="span_agenda span_agenda_left">
@@ -53,4 +53,29 @@
         </div>
     </div>
     <!--Fim repetição eventos-->
+
+    <div class="div_bottom_fixa">
+        <div id="pesquisar" class="div_select_options">
+            <fa-icon [icon]="faMagnifyingGlass" class="span_ion"></fa-icon>
+            <span class="span_options">
+                Pesquisar
+            </span>
+        </div>
+
+        <div id="calendario" class="div_select_options">
+            <fa-icon [icon]="faCalendarWeek" class="span_ion"></fa-icon>
+            <span class="span_options">
+                Calendário
+            </span>
+        </div>
+
+        <div id="feed" class="div_select_options">
+            <fa-icon [icon]="faList" class="span_ion"></fa-icon>
+            <span class="span_options">
+                Feed
+            </span>
+        </div>
+    </div>
+
+    <app-modal-agenda *ngIf="modalAgendas"></app-modal-agenda>
 </body>

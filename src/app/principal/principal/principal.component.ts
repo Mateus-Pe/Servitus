@@ -6,7 +6,6 @@ import { faLocationDot, faMagnifyingGlass, faCalendarWeek, faList } from '@forta
 import { ModalAgendaComponent } from '../../modal-agenda/modal-agenda/modal-agenda.component';
 import { UtilsService } from '../../utils/utils.service';
 import { GetEventosPrincipalService } from '../../services/get_eventos_principal/get-eventos-principal.service';
-import { GetEventoByAgendaIdService } from '../../services/get-evento-by-agenda-id/get-evento-by-agenda-id.service';
 
 @Component({
   selector: 'app-principal',

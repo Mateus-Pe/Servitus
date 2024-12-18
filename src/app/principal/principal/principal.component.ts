@@ -6,6 +6,7 @@ import { faLocationDot, faMagnifyingGlass, faCalendarWeek, faList } from '@forta
 import { ModalAgendaComponent } from '../../modal-agenda/modal-agenda/modal-agenda.component';
 import { UtilsService } from '../../utils/utils.service';
 import { GetEventosPrincipalService } from '../../services/get_eventos_principal/get-eventos-principal.service';
+import { GetEventoByAgendaIdService } from '../../services/get-evento-by-agenda-id/get-evento-by-agenda-id.service';
 
 @Component({
   selector: 'app-principal',
@@ -37,7 +38,7 @@ export class PrincipalComponent {
     const cidadeIdString = window.sessionStorage.getItem('cidade_id');
     //this.cidadeId = cidadeIdString ? parseInt(cidadeIdString, 10) : null;
     //this.cidadeNome = sessionStorage.getItem('cidade_nome') || '';
-    sessionStorage.setItem('origem', 'principal');
+    sessionStorage.setItem('origem-cidade', 'principal');
 
     if (!this.cidadeId || !this.cidadeNome) {
       this.cidadeNome = 'Selecione uma cidade';
@@ -67,7 +68,14 @@ export class PrincipalComponent {
 
   selecionarAgenda(agenda: any): void {
     this.agendaSelecionadaId = agenda.agenda_id;
-    console.log('Agenda selecionada ID:', this.agendaSelecionadaId);
+    this.openModalAgendas();
+  }
+
+  openModalAgendas(){
     this.modalAgendas = true;
+  }
+
+  colseModalAgendas(){
+    this.modalAgendas = false;
   }
 }

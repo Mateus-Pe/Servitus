@@ -77,5 +77,5 @@
         </div>
     </div>
 
-    <app-modal-agenda *ngIf="modalAgendas"></app-modal-agenda>
+    <app-modal-agenda [agendaId]="agendaSelecionadaId" (closeModalEvent)="colseModalAgendas()" *ngIf="modalAgendas"></app-modal-agenda>
 </body>

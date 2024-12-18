@@ -1,48 +1,48 @@
 <div class="visualiza-evento">
     <div class="div_perfil">
-        <fa-icon [icon]="faArrowLeft" id="back_modal"></fa-icon>
+        <fa-icon [icon]="faArrowLeft" id="back_modal" (click)="closeModal()"></fa-icon>
 
         <div class="perfil_div">
-            <img class="img_igreja" src="https://pedeoferta.com.br/templo/img/perfil/118_upload_mini.webp">
+            <img class="img_igreja" [src]="evento?.agenda?.igreja_logo_url">
             <span class="nome_igreja">
-                São Joaquim e Sant'ana 
+                {{ evento?.agenda?.igreja_nome }}
             </span>
         </div>
 
         <div class="contain_data_modal">
-            <span id="dia_evento">
-                AMANHÃ
+            <span id="dia_evento" *ngIf="evento?.agenda">
+                {{dataAgenda(evento)}}
             </span>
-            <span id="hora_evento">
-                19:30
+            <span id="hora_evento" *ngIf="evento?.agenda">
+                {{horarioAgenda(evento)}}
             </span>
         </div>
     </div>
 
     <div class="feed_principal">
         <div class="div_img_layout">
-            <img id="visualiza_layout_feed" src="https://pedeoferta.com.br/templo/img/layout/46_lote_media.webp">
+            <img id="visualiza_layout_feed" [src]="evento?.agenda?.agenda_img" >
         </div>
     </div>
 
     <div id="divFixa">
         <div id="horizontal_eventos">
             <!--Começo da repetição-->
-            <div id="agenda" class="agenda_events">
+            <div *ngFor="let eventoIgreja of evento?.eventos_igreja" (click)="selectEvento(eventoIgreja?.agenda_id)" id="agenda" class="agenda_events">
                 <div class="div_principal_agendas">
                     <div class="div_agenda">
                         <span class="span_agenda span_agenda_left">
-                            SEXTA
+                            {{dataAgendaEventos(eventoIgreja)}}
                         </span>
                         <span class="span_agenda span_agenda_right">
-                            18:00
+                            {{horarioAgendaEventos(eventoIgreja)}}
                         </span>
                     </div>
-                    <img id="div_img" src="https://pedeoferta.com.br/templo/img/layout/9706_upload_mini.webp">
+                    <img id="div_img" [src]="eventoIgreja?.agenda_img">
 
                     <div id="nome_igreja_desc">
                         <span>
-                            N.S.Sagrado Coração 
+                            {{ eventoIgreja?.igreja_desc_resumida }}
                         </span>
                     </div>
                 </div>

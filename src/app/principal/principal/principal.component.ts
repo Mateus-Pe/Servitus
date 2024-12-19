@@ -37,7 +37,6 @@ export class PrincipalComponent {
     const cidadeIdString = window.sessionStorage.getItem('cidade_id');
     //this.cidadeId = cidadeIdString ? parseInt(cidadeIdString, 10) : null;
     //this.cidadeNome = sessionStorage.getItem('cidade_nome') || '';
-    sessionStorage.setItem('origem-cidade', 'principal');
 
     if (!this.cidadeId || !this.cidadeNome) {
       this.cidadeNome = 'Selecione uma cidade';
@@ -76,5 +75,9 @@ export class PrincipalComponent {
 
   colseModalAgendas(){
     this.modalAgendas = false;
+  }
+
+  moveToCalendar(){
+    this.router.navigate(['/calendario-feed']);
   }
 }

@@ -14,6 +14,7 @@ import { ConfigurarPerfilIgrejaComponent } from './configurar-perfil-igreja/conf
 import { EstadoComponent } from './estado/estado/estado.component';
 import { CidadesComponent } from './cidades/cidades/cidades.component';
 import { PrincipalComponent } from './principal/principal/principal.component';
+import { CalendarioFeedComponent } from './calendario-feed/calendario-feed/calendario-feed.component';
 
 export const routes: Routes = [
     { path: 'loginas', component: LoginasComponent },
@@ -29,7 +30,8 @@ export const routes: Routes = [
     { path: 'configurar-layout-upload', component: ConfigurarLayoutUploadComponent },
     { path: 'configurar-perfil-igreja', component: ConfigurarPerfilIgrejaComponent },
     { path: 'estado', component: EstadoComponent },
-    { path: 'cidades', component: CidadesComponent},
-    { path: 'principal', component: PrincipalComponent},
+    { path: 'cidades', component: CidadesComponent },
+    { path: 'principal', component: PrincipalComponent },
+    { path: 'calendario-feed', component: CalendarioFeedComponent },
     { path: '', redirectTo: '/loginas', pathMatch: 'full' }
 ];

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, Input  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAnglesLeft, faAngleRight, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-calendario-utils',
@@ -19,6 +19,8 @@ export class CalendarioUtilsComponent {
 
   faAngleLeft = faAngleLeft;
   faAngleRight = faAngleRight;
+  faAnglesLeft = faAnglesLeft;
+  faAnglesRight = faAnglesRight;
 
   months = [
     { id: 1, name: 'Janeiro' },
@@ -35,20 +37,40 @@ export class CalendarioUtilsComponent {
     { id: 12, name: 'Dezembro' }
   ];
 
+  @Input() modo: 'mensal' | 'semanal' = 'mensal'; // Modo: 'mensal' ou 'semanal'
   @Input() selectedDay: Date | null = null;
   @Output() daySelected = new EventEmitter<string>();
+
+  // modo semanal
+  weekDays: string[] = [];
+  weekDates: Date[] = [];
+
   constructor() { }
 
   ngOnInit(): void {
     const today = new Date();
     this.globalCY = today.getFullYear();
     this.globalCM = today.getMonth(); // getMonth() retorna o mês no formato 0-11
-    this.makeCalendar(this.globalCY, this.globalCM);
+    this.montarCalendario();
 
     console.log(this.selectedDay);
   }
 
-  makeCalendar(year: number, month: number): void {
+  montarCalendario() {
+    const today = new Date();
+    if (this.modo == 'mensal') {
+      this.montarCalendarioMensal(this.globalCY, this.globalCM);
+      console.log('calendario mensal');
+    } else {
+      this.montarCalendarioSemanal();
+      console.log('calendario semanal');
+      this.selectedDay = today;
+      this.updateMonthName();
+    }
+  }
+
+  //Modo mensal ----------------------------------------------------------------------------------------------
+  montarCalendarioMensal(year: number, month: number): void {
     const { daysInMonth, firstDay } = this.letsCheck(year, month);
     this.daysInMonth = daysInMonth;
     this.firstDay = firstDay;
@@ -67,7 +89,7 @@ export class CalendarioUtilsComponent {
       this.globalCM = 0;
       this.globalCY++;
     }
-    this.makeCalendar(this.globalCY, this.globalCM);
+    this.montarCalendarioMensal(this.globalCY, this.globalCM);
   }
 
   prevMonth(): void {
@@ -77,7 +99,7 @@ export class CalendarioUtilsComponent {
       this.globalCM = 11;
       this.globalCY--;
     }
-    this.makeCalendar(this.globalCY, this.globalCM);
+    this.montarCalendarioMensal(this.globalCY, this.globalCM);
   }
 
   letsCheck(year: number, month: number): { daysInMonth: number, firstDay: number } {
@@ -90,12 +112,129 @@ export class CalendarioUtilsComponent {
     return { daysInMonth, firstDay };
   }
 
-  selectDay(day: number): void {
-    this.selectedDay = new Date(this.globalCY, this.globalCM, day);
-    const selectedDate = new Date(this.globalCY, this.globalCM, day);
-    this.daySelected.emit(this.formatDate(selectedDate));
+  //Modo semanal ------------------------------------------------------------------------------------------
+
+  montarCalendarioSemanal(): void {
+    const today = this.selectedDay || new Date();  // Se houver um selectedDay, usamos ele, senão usamos o dia atual
+    const firstDayOfWeek = this.getFirstDayOfWeek(today);
     
-    console.log('Selected Date: ', this.formatDate(selectedDate));
+    // Define os dias da semana (7 dias a partir de hoje)
+    this.weekDates = [];
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(firstDayOfWeek);
+      day.setDate(firstDayOfWeek.getDate() + i);  // Adiciona i dias à data inicial
+      this.weekDates.push(day);
+    }
+    
+    // Nomes dos dias da semana
+    this.weekDays = this.weekDates.map(d => this.getDayName(d));  // Pega o nome do dia
+    
+    if (this.selectedDay) {
+      this.updateMonthName(); // Atualiza o mês toda vez que a semana for atualizada
+    }
+  }
+
+  getFirstDayOfWeek(date: Date): Date {
+    const day = date.getDay(); // Retorna o dia da semana (0 = domingo, 1 = segunda, ..., 6 = sábado)
+    let diff = date.getDate() - day; // Ajuste para o primeiro dia da semana (domingo)
+    
+    // Se você quiser que a semana comece na quinta-feira (como no seu caso), ajusta para o dia correto.
+    // A semana começa no 'day' de hoje, então podemos manipular a data diretamente.
+    diff = date.getDate();  // Ajusta para o dia que queremos começar a semana
+    
+    const firstDay = new Date(date);
+    firstDay.setDate(diff); // Define a data do primeiro dia da semana (hoje)
+  
+    return firstDay;
+  }
+  
+  // Função que retorna o nome do dia (Seg, Ter, Qua, etc)
+  getDayName(date: Date): string {
+    const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
+    return days[date.getDay()];
+  }
+  
+  // Funções para navegação semanal ---------------------------------------------------------------------
+  nextDay(): void {
+    if (this.selectedDay) {
+      const nextDay = new Date(this.selectedDay); // Agora garantimos que selectedDay não seja null
+      nextDay.setDate(nextDay.getDate() + 1); // Avança 1 dia
+      this.selectedDay = nextDay; // Atualiza o dia selecionado
+      this.montarCalendarioSemanal(); // Atualiza a semana
+    } else {
+      console.log('selectedDay é nulo');
+      // Defina um valor padrão para selectedDay, caso seja nulo
+      this.selectedDay = new Date(); // Por exemplo, se for nulo, use a data atual
+    }
+  }
+
+  prevDay(): void {
+    if (this.selectedDay) {
+      const prevDay = new Date(this.selectedDay); // Agora garantimos que selectedDay não seja null
+      prevDay.setDate(prevDay.getDate() - 1); // Retrocede 1 dia
+      this.selectedDay = prevDay; // Atualiza o dia selecionado
+      this.montarCalendarioSemanal(); // Atualiza a semana
+    } else {
+      console.log('selectedDay é nulo');
+      this.selectedDay = new Date(); // Definindo um valor padrão
+    }
+  }
+
+  nextWeek(): void {
+    console.log('avançou 1 semana');
+    if (this.selectedDay) {
+      const nextWeekStart = new Date(this.selectedDay); // Pega o dia selecionado atual
+      nextWeekStart.setDate(nextWeekStart.getDate() + 7); // Avança 7 dias (1 semana)
+      this.selectedDay = nextWeekStart; // Atualiza o dia selecionado para o próximo começo de semana
+      this.montarCalendarioSemanal(); // Atualiza a semana
+    } else {
+      console.log('selectedDay é nulo');
+      this.selectedDay = new Date(); // Definindo um valor padrão
+    }
+  }
+
+  prevWeek(): void {
+    if (this.selectedDay) {
+      const prevWeekStart = new Date(this.selectedDay); // Pega o dia selecionado atual
+      prevWeekStart.setDate(prevWeekStart.getDate() - 7); // Retrocede 7 dias (1 semana)
+      this.selectedDay = prevWeekStart; // Atualiza o dia selecionado para o início da semana anterior
+      this.montarCalendarioSemanal(); // Atualiza a semana
+    } else {
+      console.log('selectedDay é nulo');
+      this.selectedDay = new Date(); // Definindo um valor padrão
+    }
+  }
+
+  //Função para ambos -------------------------------------------------------------------------------------
+
+  selectDay(day: number): void {
+    
+    if (this.modo == 'mensal'){
+      this.selectedDay = new Date(this.globalCY, this.globalCM, day);
+      const selectedDate = new Date(this.globalCY, this.globalCM, day);
+      this.daySelected.emit(this.formatDate(selectedDate));
+    }
+
+    if (this.modo == 'semanal'){
+      const selectedIndex = this.weekDates.findIndex(date => date.getDate() === day);
+      if (selectedIndex !== -1) {
+        const selectedDate = this.weekDates[selectedIndex];
+        this.selectedDay = selectedDate;
+        this.daySelected.emit(this.formatDate(selectedDate));
+      } else {
+        console.error('Índice de semana inválido para o dia: ', day);
+      }
+    }
+    this.updateMonthName();
+  }
+
+  updateMonthName(): void {
+    if (this.selectedDay) {
+      const options: Intl.DateTimeFormatOptions = { 
+        month: 'long'
+      };
+      this.monthName = this.selectedDay.toLocaleDateString('pt-BR', options);
+    }
   }
 
   formatDate(date: Date): string {

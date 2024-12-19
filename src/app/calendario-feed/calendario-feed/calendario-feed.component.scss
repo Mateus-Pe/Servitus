@@ -1,0 +1,206 @@
+body {
+    background-color: white !important; 
+    line-height:1.6 !important;
+}
+
+.calendarWeekList1 {
+   list-style: none;
+   width: 100%;
+   margin: 0;
+   padding: 0;
+   text-align: center;
+   display: grid;
+   grid-template-columns: repeat(7, 1fr);
+   grid-template-rows: repeat(1, 30px);
+   align-items: center;
+   justify-items: center;
+   grid-gap: 8px;
+   font-size: 14px;
+   color: #707070;
+}
+
+.calendarWeekList2 {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+   text-align: center;
+   display: grid;
+   grid-template-columns: repeat(7, 1fr);
+   grid-template-rows: repeat(1, 30px);
+   align-items: center;
+   justify-items: center;
+   grid-gap: 8px;
+   font-size: 14px;
+   color: #707070;
+}
+
+.calendarWeekList2 li {
+   text-align: center;
+   align-items: center;
+   justify-content: center;
+   display: flex;
+   padding: 10px;
+   width: 30px;
+   height: 22px;
+   cursor: pointer;
+   border-radius: 5px;
+}
+
+.calendarWeekList2 li:active {
+   background-color: darkred;
+   color: white;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.calendarWeekList1, .calendarWeekList2 {
+   transition: margin-left 0.5s ease;
+}
+
+.dia_selecionado{
+   background-color: #ffaaaa;
+   color: white;
+   transition: background-color 0.5s ease;
+   border: 1px solid darkred;
+}
+
+.calendar_open{
+   position: relative;
+   height: 100%;
+   overflow-y: auto;
+   overflow-x: hidden;
+   padding-top: 50%;
+   padding-bottom: 10%;
+   z-index: 1;
+}
+
+#div_dias{
+   border: 1px solid darkred;
+}
+
+.modal-calendario {
+   background-color: white !important;
+   margin: auto !important;
+   padding: 0px !important;
+   border: 1px solid #888 !important;
+   border-radius: 30px !important;
+   width: 90% !important;
+   top: 50% !important;
+   left: 50% !important;
+   transform: translate(-50%, -50%) !important;
+   position: fixed !important;
+   max-width: 400px !important;
+   text-align: center !important;
+   height: 50%;
+}
+
+.agenda{
+   display: flex;
+}
+
+.div_img{
+   padding: 10px;
+}
+
+.div_img img{
+   height: 120px; 
+   width: 150px;
+}
+
+.igreja_nome{
+   font-size: 13px; 
+   padding-top: 10px; 
+   font-weight: bold;
+   width: 40vh;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+   font-family: exo;
+
+}
+
+.endereco_igreja{
+   font-size: 1.3rem;
+   text-align:center;
+   text-decoration:none; 
+   padding-top: 10px;
+   font-family: exo;
+   width: 40vh;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+   font-family: exo;
+
+}
+
+.div_evento_agenda{
+   padding-top: 10px; 
+   align-items: center; 
+   display: flex;
+}
+
+.div_evento_agenda span{
+   font-size:1.3rem; 
+   color: black;
+   font-family: exo;
+
+}
+
+.agenda_hora{
+   font-size: 12px;
+   padding-top: 25px;
+   font-family: exo;
+
+}
+
+.select_filter{
+   display: flex; 
+   justify-content: space-between; 
+   height: 70px; 
+   align-items: center;
+}
+
+.select_filter div{
+   border: 1px solid darkred; border-radius: 20px;
+   height: 50px;
+   width: 125px;
+   justify-content: center;
+   display: flex;
+   align-items: center;
+   font-size: 1.5rem;
+   font-family: exo;
+   color: black;
+   cursor: pointer;
+}
+
+.select_filter div.selected {
+   background-color: darkred;
+   color: white;
+   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sem-eventos{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 15px;
+}
+
+.contain_calendar_principal{
+   overflow: hidden; 
+   position: fixed; 
+   width: 100%; 
+   z-index: 3; 
+   background-color: white;
+}
+
+.container_sem_agenda{
+   margin-left: 25%;
+   width: 50%;
+   align-items: center;
+   display: flex;
+   margin-right: 25%;
+}
+
+.container_sem_agenda img{
+   width: 100%;
+}

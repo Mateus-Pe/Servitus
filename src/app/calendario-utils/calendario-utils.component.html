@@ -1,9 +1,11 @@
-<div class="calendarYearMonth center">
+<!-- Modo Mensal -->
+<ng-container *ngIf="modo === 'mensal'">
+  <div class="calendarYearMonth center">
     <fa-icon [icon]="faAngleLeft" class="left calBtn" (click)="prevMonth()"></fa-icon>
     <p id="yearMonth">{{ globalCY }} {{ monthName }}</p>
     <fa-icon [icon]="faAngleRight" class="right calBtn" (click)="nextMonth()"></fa-icon>
   </div>
-  
+    
   <ol class="calendarList1">
     <li class="day-name">Seg</li>
     <li class="day-name">Ter</li>
@@ -22,4 +24,32 @@
       {{ i + 1 }}
     </li>
   </ol>
+</ng-container>
+<!-- Modo Semanal -->
+
+<ng-container *ngIf="modo === 'semanal'">
+  <div class="calendarYearMonth center">
+    <fa-icon [icon]="faAnglesLeft" class="left calBtn" (click)="prevWeek()"></fa-icon>
+    <fa-icon [icon]="faAngleLeft" class="left calBtn" (click)="prevDay()"></fa-icon>
+
+    <p id="yearMonth" *ngIf="selectedDay">{{ selectedDay.getDate() }} {{ monthName }}</p>
+
+    <fa-icon [icon]="faAngleRight" class="right calBtn" (click)="nextDay()"></fa-icon>
+    <fa-icon [icon]="faAnglesRight" class="right calBtn" (click)="nextWeek()"></fa-icon>
+  </div>
+
+  <div class="div_dias">
+    <ol class="calendarList1">
+      <!-- Nomes dos dias da semana dinâmicos -->
+      <li *ngFor="let day of weekDays" class="day-name">{{ day }}</li>
+    </ol>
   
+    <ol class="calendarList2" style="    grid-template-rows: repeat(1, 30px);">
+      <li *ngFor="let day of weekDates" 
+          [ngClass]="{ 'dia_selecionado': selectedDay?.getDate() == day.getDate() && selectedDay?.getMonth() == day.getMonth() && selectedDay?.getFullYear() == day.getFullYear() }"
+          (click)="selectDay(day.getDate())">
+        {{ day.getDate() }}
+      </li>
+    </ol>
+  </div>
+</ng-container>

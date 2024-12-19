@@ -45,7 +45,7 @@
                 </div>
                 <!--Fim repetição agendas-->
             </div>
-            <div class="div_ver_mais_white">
+            <div class="div_ver_mais_white" (click)="moveToCalendar()">
                 <span>
                     Ver mais
                 </span>
@@ -62,7 +62,7 @@
             </span>
         </div>
 
-        <div id="calendario" class="div_select_options">
+        <div id="calendario" class="div_select_options" (click)="moveToCalendar()">
             <fa-icon [icon]="faCalendarWeek" class="span_ion"></fa-icon>
             <span class="span_options">
                 Calendário

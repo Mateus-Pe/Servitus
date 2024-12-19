@@ -89,7 +89,7 @@
 
 <app-modal *ngIf="showModalCalendario" [estilosModalContent]="estiloModalContent">
     <div modal-body>
-        <app-calendario-utils [selectedDay]="storedSelectedDay" (daySelected)="onDaySelected($event)"></app-calendario-utils>
+        <app-calendario-utils [modo]="modoCalendario" [selectedDay]="storedSelectedDay" (daySelected)="onDaySelected($event)"></app-calendario-utils>
     </div>
 </app-modal>
 

@@ -56,6 +56,7 @@ export class CriarAgendaEspecificaComponent {
   selectAgendaAte: string = '0';
 
   storedSelectedDay: Date | null = null;
+  modoCalendario: 'mensal' | 'semanal' = 'mensal';
 
   horarios: string[] = [
     '06:00', '06:30', '07:00', '07:30', '08:00', '08:30', '09:00', '09:30',

@@ -1,1 +1,61 @@
-<app-calendario-utils [modo]="modoCalendario"></app-calendario-utils>
+<div class="containerPrincipal">
+    <div class="contain_calendar_principal">
+        <app-calendario-utils [modo]="modoCalendario" (daySelected)="onDateSelected($event)"></app-calendario-utils>
+    
+        <div class="select_filter">
+    
+            <div id="select_missa">
+                Missas
+            </div>
+    
+            <div id="select_confissao">
+                Confissões
+            </div>
+            
+            <div id="select_todos">
+                Todos
+            </div>
+        </div>
+    </div>
+    
+    <div id="divListaAgenda" class="calendar_open">
+        <div *ngIf="agendas.length == 0">
+            <div class="container_sem_agenda">
+                <img src="pesquisa_falha.gif">
+            </div>
+            <div class="sem-eventos">
+                Nenhum evento disponível...
+            </div>
+        </div>
+    
+        <div *ngFor="let agenda of agendas" class="pesq" style="border-bottom: 1px solid #5b318a36;">
+            <div class="add">
+                <div class="agenda">
+                    <div class="div_img">
+                        <img id="img_igreja_desc_resumida" [src]="agenda.igreja_fundo_url">
+                    </div>
+    
+                    <div>
+                        <div id="desc_resumida" class="igreja_nome">
+                            {{agenda.igreja_nome | uppercase}}
+                        </div>
+                        <span id="endereco_igreja" class="endereco_igreja">
+                            {{agenda.endereco_bairro}} - {{removeUf(agenda.endereco_cidade)}}
+                        </span>
+                        <div class="div_evento_agenda">
+                            <span>
+                                {{agenda.evento_nome}}
+                            </span>
+                        </div>
+                        <div *ngIf="agenda.tipo == 'E'" class="agenda_hora">
+                            Ás {{formataHora(agenda.agenda_hora)}}
+                        </div>
+                        <div *ngIf="agenda.tipo == 'L'" class="agenda_hora">
+                            Das {{agenda.agenda_hora}} ás {{agenda.agenda_fim}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

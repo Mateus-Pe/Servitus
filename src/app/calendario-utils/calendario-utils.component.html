@@ -32,7 +32,17 @@
     <fa-icon [icon]="faAnglesLeft" class="left calBtn" (click)="prevWeek()"></fa-icon>
     <fa-icon [icon]="faAngleLeft" class="left calBtn" (click)="prevDay()"></fa-icon>
 
-    <p id="yearMonth" *ngIf="selectedDay">{{ selectedDay.getDate() }} {{ monthName }}</p>
+    <div id="yearMonth" *ngIf="selectedDay">
+      <p style="margin: unset; height: 25px; font-size: 13.1px;">
+        {{ selectedDay.getDate() }}
+      </p>
+      <p style="margin: unset; height: 25px; font-size: 13.1px;">
+        {{ monthName | uppercase }}
+      </p>
+      <p style="margin: unset; height: 25px; font-size: 13.1px;">
+        {{ selectedDay.getFullYear() }}
+      </p>
+    </div>
 
     <fa-icon [icon]="faAngleRight" class="right calBtn" (click)="nextDay()"></fa-icon>
     <fa-icon [icon]="faAnglesRight" class="right calBtn" (click)="nextWeek()"></fa-icon>

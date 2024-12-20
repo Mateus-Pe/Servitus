@@ -53,17 +53,22 @@ export class CalendarioUtilsComponent {
     this.globalCM = today.getMonth(); // getMonth() retorna o mês no formato 0-11
     this.montarCalendario();
 
-    console.log(this.selectedDay);
+    if (this.modo == 'semanal'){
+      if (this.selectedDay) {
+        this.daySelected.emit(this.formatDataTwo(this.selectedDay)); // Emite o evento com o valor da data selecionada
+      } else {
+        this.selectedDay = today; // Se não houver selectedDay, utiliza a data de hoje
+        this.daySelected.emit(this.formatDataTwo(this.selectedDay)); // Emite com a data de hoje
+      }
+    }
   }
 
   montarCalendario() {
     const today = new Date();
     if (this.modo == 'mensal') {
       this.montarCalendarioMensal(this.globalCY, this.globalCM);
-      console.log('calendario mensal');
     } else {
       this.montarCalendarioSemanal();
-      console.log('calendario semanal');
       this.selectedDay = today;
       this.updateMonthName();
     }
@@ -161,6 +166,7 @@ export class CalendarioUtilsComponent {
       nextDay.setDate(nextDay.getDate() + 1); // Avança 1 dia
       this.selectedDay = nextDay; // Atualiza o dia selecionado
       this.montarCalendarioSemanal(); // Atualiza a semana
+      this.daySelected.emit(this.formatDataTwo(this.selectedDay));
     } else {
       console.log('selectedDay é nulo');
       // Defina um valor padrão para selectedDay, caso seja nulo
@@ -174,6 +180,7 @@ export class CalendarioUtilsComponent {
       prevDay.setDate(prevDay.getDate() - 1); // Retrocede 1 dia
       this.selectedDay = prevDay; // Atualiza o dia selecionado
       this.montarCalendarioSemanal(); // Atualiza a semana
+      this.daySelected.emit(this.formatDataTwo(this.selectedDay));
     } else {
       console.log('selectedDay é nulo');
       this.selectedDay = new Date(); // Definindo um valor padrão
@@ -181,12 +188,12 @@ export class CalendarioUtilsComponent {
   }
 
   nextWeek(): void {
-    console.log('avançou 1 semana');
     if (this.selectedDay) {
       const nextWeekStart = new Date(this.selectedDay); // Pega o dia selecionado atual
       nextWeekStart.setDate(nextWeekStart.getDate() + 7); // Avança 7 dias (1 semana)
       this.selectedDay = nextWeekStart; // Atualiza o dia selecionado para o próximo começo de semana
       this.montarCalendarioSemanal(); // Atualiza a semana
+      this.daySelected.emit(this.formatDataTwo(this.selectedDay));
     } else {
       console.log('selectedDay é nulo');
       this.selectedDay = new Date(); // Definindo um valor padrão
@@ -199,6 +206,7 @@ export class CalendarioUtilsComponent {
       prevWeekStart.setDate(prevWeekStart.getDate() - 7); // Retrocede 7 dias (1 semana)
       this.selectedDay = prevWeekStart; // Atualiza o dia selecionado para o início da semana anterior
       this.montarCalendarioSemanal(); // Atualiza a semana
+      this.daySelected.emit(this.formatDataTwo(this.selectedDay));
     } else {
       console.log('selectedDay é nulo');
       this.selectedDay = new Date(); // Definindo um valor padrão
@@ -220,12 +228,13 @@ export class CalendarioUtilsComponent {
       if (selectedIndex !== -1) {
         const selectedDate = this.weekDates[selectedIndex];
         this.selectedDay = selectedDate;
-        this.daySelected.emit(this.formatDate(selectedDate));
+        this.daySelected.emit(this.formatDataTwo(selectedDate));
       } else {
         console.error('Índice de semana inválido para o dia: ', day);
       }
     }
     this.updateMonthName();
+    
   }
 
   updateMonthName(): void {
@@ -242,5 +251,13 @@ export class CalendarioUtilsComponent {
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;  // Retorna a data no formato dd/mm/yyyy
+  }
+
+  formatDataTwo(data: Date): string {
+    const ano = data.getFullYear();
+    const mes = (data.getMonth() + 1).toString().padStart(2, '0'); // Mês com 2 dígitos
+    const dia = data.getDate().toString().padStart(2, '0'); // Dia com 2 dígitos
+  
+    return `${ano}-${mes}-${dia}`;
   }
 }

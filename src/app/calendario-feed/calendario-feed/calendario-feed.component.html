@@ -3,22 +3,27 @@
         <app-calendario-utils [modo]="modoCalendario" (daySelected)="onDateSelected($event)"></app-calendario-utils>
     
         <div class="select_filter">
-    
-            <div id="select_missa">
+            <div id="select_missa"
+                (click)="filtroLista('Missa')"
+                [ngClass]="{'selected': selectedFilter === 'Missa'}">
                 Missas
             </div>
     
-            <div id="select_confissao">
+            <div id="select_confissao"
+                (click)="filtroLista('Confissão')"
+                [ngClass]="{'selected': selectedFilter === 'Confissão'}">
                 Confissões
             </div>
             
-            <div id="select_todos">
+            <div id="select_todos"
+                (click)="filtroLista('Todos')"
+                [ngClass]="{'selected': selectedFilter === 'Todos'}">
                 Todos
             </div>
         </div>
     </div>
     
-    <div id="divListaAgenda" class="calendar_open">
+    <div id="divListaAgenda" class="calendar_open" #divListaAgenda>
         <div *ngIf="agendas.length == 0">
             <div class="container_sem_agenda">
                 <img src="pesquisa_falha.gif">
@@ -28,7 +33,7 @@
             </div>
         </div>
     
-        <div *ngFor="let agenda of agendas" class="pesq" style="border-bottom: 1px solid #5b318a36;">
+        <div *ngFor="let agenda of filteredAgendas" class="pesq" [ngStyle]="{'opacity': eventoPassado(agenda) ? '0.5' : '1'}" style="border-bottom: 1px solid #5b318a36;">
             <div class="add">
                 <div class="agenda">
                     <div class="div_img">

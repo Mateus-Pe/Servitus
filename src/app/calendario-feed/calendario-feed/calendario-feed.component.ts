@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { CalendarioUtilsComponent } from '../../calendario-utils/calendario-utils.component';
 import { GetAgendaCalendarioFeedService } from '../../services/get-agenda-calendario-feed/get-agenda-calendario-feed.service';
 import { UtilsService } from '../../utils/utils.service';
+import { ModalAgendaComponent } from '../../modal-agenda/modal-agenda/modal-agenda.component';
 
 @Component({
   selector: 'app-calendario-feed',
   standalone: true,
-  imports: [CalendarioUtilsComponent, CommonModule],
+  imports: [CalendarioUtilsComponent, CommonModule, ModalAgendaComponent],
   templateUrl: './calendario-feed.component.html',
   styleUrl: './calendario-feed.component.scss'
 })
@@ -15,6 +16,8 @@ export class CalendarioFeedComponent {
   modoCalendario: 'mensal' | 'semanal' = 'semanal';
   dateSelected: string = '';
   cidadeId: number = 9240;
+
+  modalAgendas = false;
 
   agendas: any[] = [];
   filteredAgendas = [...this.agendas];

@@ -1,6 +1,6 @@
 import { Component, HostListener  } from '@angular/core';
 import { LoginService } from '../services/login/login.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute  } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye, faEyeSlash, faCheck, faMobileScreenButton, faKey  } from '@fortawesome/free-solid-svg-icons';
@@ -27,8 +27,14 @@ export class LoginasComponent {
 
   //construtor -------------------------------------------------------------------------
   constructor(private loginService: LoginService,
-              private router: Router)
+              private router: Router,
+              private route : ActivatedRoute )
   {};
+
+  //init ------------------------------------------------------------------------------
+  ngOnInit(): void {
+    this.setarNumero();
+  }
 
   //Serviços ---------------------------------------------------------------------------
   login(){
@@ -97,5 +103,9 @@ export class LoginasComponent {
 
   esqueciSenha(){
     this.router.navigate(['/esqueci-senha'])
+  }
+
+  setarNumero(){
+    this.usuario_celular = this.route.snapshot.queryParamMap.get('c');
   }
 }

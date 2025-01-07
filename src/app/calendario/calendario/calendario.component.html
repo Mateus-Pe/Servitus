@@ -104,11 +104,11 @@
 
 
 
-        <div id="add" (click)="addAgenda()">
-            <fa-icon class="plus" [icon]="faPlus">
-                
-            </fa-icon>
-        </div>
+    </div>
+    <div id="add" (click)="addAgenda()" [ngClass]="{ 'is-blur': isMenuOpen }">
+        <fa-icon class="plus" [icon]="faPlus">
+            
+        </fa-icon>
     </div>
 
 

@@ -20,6 +20,7 @@ export class CalendarioFeedComponent {
   modalAgendas = false;
 
   agendas: any[] = [];
+  agendaSelecionadaId: number | null = null;
   filteredAgendas = [...this.agendas];
   selectedFilter: string = 'Todos';
 
@@ -34,7 +35,6 @@ export class CalendarioFeedComponent {
   }
 
   ngAfterViewInit(): void {
-    // Verificar se a rolagem até a última agenda já passada deve ser feita
     this.scrollToLastPassedAgenda();
   }
 
@@ -82,54 +82,45 @@ export class CalendarioFeedComponent {
 
   eventoPassado(agenda: any): boolean {
     const arrHora = agenda.agenda_hora.split(":");
-    const arrData = this.dateSelected.split("-");  // Usando a data selecionada pelo usuário
+    const arrData = this.dateSelected.split("-");
   
-    // Criação de uma data completa para o evento com ano, mês, dia e hora
     const eventoData = new Date(
-      parseInt(arrData[0]),   // Ano (data selecionada)
-      parseInt(arrData[1]) - 1, // Mês (lembrando que o mês no JavaScript começa de 0)
-      parseInt(arrData[2]),   // Dia (data selecionada)
+      parseInt(arrData[0]),   // Ano
+      parseInt(arrData[1]) - 1, // Mês (começa de 0)
+      parseInt(arrData[2]),   // Dia
       parseInt(arrHora[0]),   // Hora do evento
       parseInt(arrHora[1]),   // Minutos do evento
       0                       // Segundos
     );
   
-    const dataAtual = new Date(); // Data e hora atuais
+    const dataAtual = new Date();
   
-    return dataAtual > eventoData;  // Verifica se o evento já passou
+    return dataAtual > eventoData;
   }
 
   scrollToLastPassedAgenda() {
-    // Verifica se existem agendas para o dia selecionado
     if (this.filteredAgendas.length === 0) return;
   
-    // Verifica se todos os eventos já passaram ou se todos são futuros
     const todosPassados = this.filteredAgendas.every((agenda) => this.eventoPassado(agenda));
     const todosFuturos = this.filteredAgendas.every((agenda) => !this.eventoPassado(agenda));
   
-    // Se todos os eventos forem futuros, rola para o topo
     if (todosFuturos) {
       if (this.divListaAgenda) {
-        // Rolagem suave para o topo da lista
         this.divListaAgenda.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
-    // Se todos os eventos forem passados, rola para o fim da lista
     else if (todosPassados) {
       if (this.divListaAgenda) {
-        // Rolagem suave para o fim da lista
         this.divListaAgenda.nativeElement.scrollTo({ top: this.divListaAgenda.nativeElement.scrollHeight, behavior: 'smooth' });
       }
     }
-    // Se houver mistura de eventos passados e futuros, rola até o último evento passado
     else {
       const lastPassedIndex = this.filteredAgendas
-        .slice() // Faz uma cópia para evitar modificação da lista original
-        .reverse() // Reverte para começar a busca do último evento
+        .slice()
+        .reverse()
         .findIndex((agenda) => this.eventoPassado(agenda));
   
       if (lastPassedIndex !== -1 && this.divListaAgenda) {
-        // Obtém o índice correto considerando a lista invertida
         const realIndex = this.filteredAgendas.length - 1 - lastPassedIndex;
         const agendaElement = this.divListaAgenda.nativeElement.children[realIndex];
   
@@ -146,5 +137,18 @@ export class CalendarioFeedComponent {
 
   formataHora(hora: string){
     return this.utilsService.timeFormat(hora, 'h', true);
+  }
+
+  selecionarAgenda(agenda: any): void {
+    this.agendaSelecionadaId = agenda.agenda_id;
+    this.openModalAgendas();
+  }
+
+  openModalAgendas(){
+    this.modalAgendas = true;
+  }
+
+  colseModalAgendas(){
+    this.modalAgendas = false;
   }
 }

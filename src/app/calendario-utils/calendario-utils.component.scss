@@ -96,6 +96,13 @@
     height: 30px;
 }
 
+.yearMonthSemanal {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .calBtn {
     user-select: none;
     cursor: pointer;

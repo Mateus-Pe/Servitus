@@ -33,7 +33,7 @@
             </div>
         </div>
     
-        <div *ngFor="let agenda of filteredAgendas" class="pesq" [ngStyle]="{'opacity': eventoPassado(agenda) ? '0.5' : '1'}" style="border-bottom: 1px solid #5b318a36;">
+        <div *ngFor="let agenda of filteredAgendas" class="pesq" (click)="selecionarAgenda(agenda)" [ngStyle]="{'opacity': eventoPassado(agenda) ? '0.5' : '1'}" style="border-bottom: 1px solid #5b318a36;">
             <div class="add">
                 <div class="agenda">
                     <div class="div_img">
@@ -65,4 +65,4 @@
     </div>
 </div>
 
-<app-modal-agenda *ngIf="modalAgendas"></app-modal-agenda>
+<app-modal-agenda [agendaId]="agendaSelecionadaId" (closeModalEvent)="colseModalAgendas()" *ngIf="modalAgendas"></app-modal-agenda>

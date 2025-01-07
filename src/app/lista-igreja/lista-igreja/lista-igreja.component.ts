@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef  } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -53,6 +53,7 @@ export class ListaIgrejaComponent implements OnInit {
     private atualizarMatrizService: AtualizarMatrizService,
     private removerIgrejaService: RemoverIgrejaService,
     private router: Router,
+    private renderer: Renderer2,
     private cd: ChangeDetectorRef
   ){};
 
@@ -171,6 +172,14 @@ export class ListaIgrejaComponent implements OnInit {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+
+    if (this.isMenuOpen) {
+      this.renderer.addClass(document.documentElement, 'overflow-hidden');
+      this.renderer.addClass(document.body, 'overflow-hidden');
+    } else {
+      this.renderer.removeClass(document.documentElement, 'overflow-hidden');
+      this.renderer.removeClass(document.body, 'overflow-hidden');
+    }
   }
 
   openModal(igrejaId: number, igrejaName: string, igrejaTipo: string) {

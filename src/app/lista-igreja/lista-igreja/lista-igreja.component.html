@@ -67,7 +67,7 @@
 
     </div>
 
-    <div id="add" (click)="criarIgreja()">
+    <div id="add" (click)="criarIgreja()" [ngClass]="{ 'is-blur': isMenuOpen }">
         <fa-icon [icon]="faPlus" class="plus"></fa-icon>
     </div>
 

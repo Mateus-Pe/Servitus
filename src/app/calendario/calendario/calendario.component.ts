@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild,ElementRef, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -84,7 +84,8 @@ export class CalendarioComponent implements OnInit {
     private preLoteService: PreLoteService,
     private utilsService: UtilsService,
     private sanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
   ) {
     this.year = new Date().getFullYear();
     this.month = new Date().getMonth() + 1;
@@ -276,6 +277,14 @@ export class CalendarioComponent implements OnInit {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+
+    if (this.isMenuOpen) {
+      this.renderer.addClass(document.documentElement, 'overflow-hidden');
+      this.renderer.addClass(document.body, 'overflow-hidden');
+    } else {
+      this.renderer.removeClass(document.documentElement, 'overflow-hidden');
+      this.renderer.removeClass(document.body, 'overflow-hidden');
+    }
   }
 
   openModalConfig(item: any){
@@ -362,10 +371,12 @@ export class CalendarioComponent implements OnInit {
   }
 
   backLista(){
+    this.toggleMenu();
     this.router.navigate(['/lista-igreja']);
   }
 
   goPerfil(){
+    this.toggleMenu();
     this.router.navigate(['/configurar-perfil-igreja']);
   }
 

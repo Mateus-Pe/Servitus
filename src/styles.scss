@@ -94,7 +94,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 80%;
     height: 100vh;
     background-color: darkred;
     z-index: 1;
@@ -145,4 +145,10 @@
     margin-left: auto;
     padding-left: 15px;
     padding-right: 15px;
+  }
+
+  html.overflow-hidden, 
+  body.overflow-hidden {
+    overflow: hidden;
+    height: 100%;
   }

@@ -32,10 +32,8 @@
     <fa-icon [icon]="faAnglesLeft" class="left calBtn" (click)="prevWeek()"></fa-icon>
     <fa-icon [icon]="faAngleLeft" class="left calBtn" (click)="prevDay()"></fa-icon>
 
-    <div id="yearMonth" *ngIf="selectedDay">
-      <p style="margin: unset; height: 25px; font-size: 13.1px;">
-        {{ selectedDay.getDate() }}
-      </p>
+    <div id="yearMonth" class="yearMonthSemanal" *ngIf="selectedDay">
+      
       <p style="margin: unset; height: 25px; font-size: 13.1px;">
         {{ monthName | uppercase }}
       </p>

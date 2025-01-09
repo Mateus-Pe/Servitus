@@ -1,0 +1,7 @@
+<div id="div_nome_igreja_fixo" class=" div_nome_fixo header-down"> 
+    <fa-icon id="voltar_feed" [icon]="faArrowLeft" style="margin-left: 5px; font-size: 24px;"></fa-icon>
+
+    <span id="nome_igreja_fixo" *ngIf="igrejaPerfil?.igreja?.igreja_nome">
+        {{igrejaPerfil.igreja.igreja_nome}}
+    </span>
+</div>

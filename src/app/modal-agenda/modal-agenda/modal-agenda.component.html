@@ -2,7 +2,7 @@
     <div class="div_perfil">
         <fa-icon [icon]="faArrowLeft" id="back_modal" (click)="closeModal()"></fa-icon>
 
-        <div class="perfil_div">
+        <div class="perfil_div" (click)="goPerfilIgreja(evento?.agenda?.agenda_igreja_id)">
             <img class="img_igreja" [src]="evento?.agenda?.igreja_logo_url">
             <span class="nome_igreja">
                 {{ evento?.agenda?.igreja_nome }}
@@ -50,7 +50,7 @@
             <!--Fim da repetição-->
         </div>
         <div class="div_ver_mais">
-            <span>
+            <span (click)="goPerfilIgreja(evento?.agenda?.agenda_igreja_id)">
                 Ver mais
             </span>
         </div>

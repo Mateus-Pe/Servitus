@@ -1,5 +1,6 @@
 import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { GetEventoByAgendaIdService } from '../../services/get-evento-by-agenda-id/get-evento-by-agenda-id.service';
@@ -49,7 +50,8 @@ export class ModalAgendaComponent {
   @Input() agendaId: number | null = null;
 
   constructor(private getEventoByAgendaIdService: GetEventoByAgendaIdService,
-              private utilsService: UtilsService
+              private utilsService: UtilsService,
+              private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -91,5 +93,10 @@ export class ModalAgendaComponent {
 
   closeModal(){
     this.closeModalEvent.emit();
+  }
+
+  goPerfilIgreja(igrejaId: any){
+    window.sessionStorage.setItem('feed_igreja_id', igrejaId);
+    this.router.navigate(['/perfil-igreja']);
   }
 }

@@ -15,6 +15,7 @@ import { EstadoComponent } from './estado/estado/estado.component';
 import { CidadesComponent } from './cidades/cidades/cidades.component';
 import { PrincipalComponent } from './principal/principal/principal.component';
 import { CalendarioFeedComponent } from './calendario-feed/calendario-feed/calendario-feed.component';
+import { PerfilIgrejaComponent } from './perfil-igreja/perfil-igreja/perfil-igreja.component';
 
 export const routes: Routes = [
     { path: 'loginas', component: LoginasComponent },
@@ -33,5 +34,6 @@ export const routes: Routes = [
     { path: 'cidades', component: CidadesComponent },
     { path: 'principal', component: PrincipalComponent },
     { path: 'calendario-feed', component: CalendarioFeedComponent },
+    { path: 'perfil-igreja', component: PerfilIgrejaComponent},
     { path: '', redirectTo: '/loginas', pathMatch: 'full' }
 ];

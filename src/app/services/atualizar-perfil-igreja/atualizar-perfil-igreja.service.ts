@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AtualizarPerfilIgrejaService {
-  atualizarPerfilIgrejaUrl = 'https://pedeoferta.com.br/templo/index.php/welcome/atualizar_perfil_igreja';
+  private baseUrl = (window as any).baseUrl;
   constructor(private http: HttpClient) { }
-
+  
   getAtualizarPerfilIgreja(igrejaId: number,
-                           igrejaNome: string,
+    igrejaNome: string,
                            igrejaWhats: string,
                            igrejaFace: string,
                            igrejaInsta: string,
@@ -20,7 +20,8 @@ export class AtualizarPerfilIgrejaService {
                            imagemVemDoBanco: boolean,
                            imagemIgrejaUrl: string,
                            fileImagemIgreja: File,
-  ): Observable<any>{
+                          ): Observable<any>{
+    const atualizarPerfilIgrejaUrl = `${this.baseUrl}/templo/index.php/welcome/atualizar_perfil_igreja`;
     const formData = new FormData();
     formData.append('igreja_id', igrejaId.toString());
     formData.append('igreja_nome', igrejaNome);
@@ -36,6 +37,6 @@ export class AtualizarPerfilIgrejaService {
       formData.append('file', fileImagemIgreja);
     }
 
-    return this.http.post<any>(this.atualizarPerfilIgrejaUrl, formData);
+    return this.http.post<any>(atualizarPerfilIgrejaUrl, formData);
   }
 }

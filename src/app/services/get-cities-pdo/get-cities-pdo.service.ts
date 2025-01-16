@@ -6,13 +6,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GetCitiesPdoService {
-  private citiesPdoUrl = 'https://pedeoferta.com.br/oferta/welcome/get_cities_pdo';
+  private baseUrl = (window as any).baseUrl;
   constructor(private http: HttpClient) { }
-
+  
   getCities( uf: string): Observable<any>{
+    const citiesPdoUrl = `${this.baseUrl}/oferta/welcome/get_cities_pdo`;
     const params = new HttpParams()
     .set('uf', uf);
 
-    return this.http.get<any>(this.citiesPdoUrl, {params});
+    return this.http.get<any>(citiesPdoUrl, {params});
   }
 }

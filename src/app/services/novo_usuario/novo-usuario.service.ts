@@ -6,15 +6,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class NovoUsuarioService {
-  private novoUsuarioUrl = 'https://pedeoferta.com.br/templo/index.php/welcome/novo_usuario';
+  private baseUrl = (window as any).baseUrl;
   constructor(private http: HttpClient) { }
   getNovoUsuario(usuarioParoquiaId : number, usuarioNome: string, usuarioCelular: number, usuarioTipo: string): Observable<any>{
+    const novoUsuarioUrl = `${this.baseUrl}/templo/index.php/welcome/novo_usuario`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const body = new URLSearchParams();
     body.set('usuario_paroquia_id', usuarioParoquiaId.toString());
     body.set('usuario_nome', usuarioNome);
     body.set('usuario_celular', usuarioCelular.toString());
     body.set('usuario_tipo', usuarioTipo);
-    return this.http.post<any>(this.novoUsuarioUrl, body.toString(), {headers});
+    return this.http.post<any>(novoUsuarioUrl, body.toString(), {headers});
   }
 }

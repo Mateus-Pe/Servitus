@@ -6,17 +6,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AtualizarLayoutAgendaUploadService {
-  private atualizarLayoutUploadUrl = 'https://pedeoferta.com.br/templo/index.php/welcome/atualizar_layout_agenda_upload';
-
+  private baseUrl = (window as any).baseUrl;
+  
   constructor(private http: HttpClient) { }
-
+  
   atualizarLayoutAgendaUpload(agendaId: number,
-                               conteudoHtml: string,
-                               flagLote: number,
-                               imagemSrc: string,
-                               file: File,  // Certifique-se de que 'file' é do tipo 'File'
-                               origemImagem: string): Observable<any> {
-
+    conteudoHtml: string,
+    flagLote: number,
+    imagemSrc: string,
+    file: File,  // Certifique-se de que 'file' é do tipo 'File'
+    origemImagem: string): Observable<any> {
+    const atualizarLayoutUploadUrl = `${this.baseUrl}/templo/index.php/welcome/atualizar_layout_agenda_upload`;
+      
     const formData = new FormData();
     formData.append('agenda_id', agendaId.toString());
     formData.append('agenda_layout_upload_desc', conteudoHtml);
@@ -24,11 +25,10 @@ export class AtualizarLayoutAgendaUploadService {
     if (origemImagem == 'L') {
       formData.append('imagem_src', imagemSrc);
     } else {
-      formData.append('file', file);  // Aqui, adiciona o arquivo como 'file'
+      formData.append('file', file);
     }
     formData.append('origem_imagem', origemImagem);
 
-    // Não é necessário setar 'Content-Type' para 'multipart/form-data', o HttpClient faz isso automaticamente
-    return this.http.post<any>(this.atualizarLayoutUploadUrl, formData);
+    return this.http.post<any>(atualizarLayoutUploadUrl, formData);
   }
 }

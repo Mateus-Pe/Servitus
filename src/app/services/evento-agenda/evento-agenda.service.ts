@@ -8,12 +8,12 @@ import { Observable } from 'rxjs';
 })
 export class EventoAgendaService {
 
-  
-  private eventoAgendaUrl = 'https://pedeoferta.com.br/templo/index.php/welcome/get_evento_agenda';
+  private baseUrl = (window as any).baseUrl;
   constructor(private http: HttpClient) { }
-
+  
   getEventoAgenda():Observable<any>{
+    const eventoAgendaUrl = `${this.baseUrl}/templo/index.php/welcome/get_evento_agenda`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-    return this.http.post<any[]>(this.eventoAgendaUrl, null, {headers});
+    return this.http.post<any[]>(eventoAgendaUrl, null, {headers});
   }
 }

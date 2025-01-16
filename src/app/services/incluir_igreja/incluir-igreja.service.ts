@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class IncluirIgrejaService {
-  private inluirIgrejaUrl = 'https://pedeoferta.com.br/templo/index.php/welcome/incluir_igreja';
+  private baseUrl = (window as any).baseUrl;
   constructor(private http: HttpClient) { }
   incluirIgreja(
                 endereco_cep: number,
@@ -23,7 +23,8 @@ export class IncluirIgrejaService {
                 paroquia_id: number,
                 igreja_desc_resumida: string
               )
-  :Observable<any> {
+              :Observable<any> {
+    const inluirIgrejaUrl = `${this.baseUrl}/templo/index.php/welcome/incluir_igreja`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const body = new URLSearchParams();
     body.set('endereco_cep', endereco_cep.toString());
@@ -39,6 +40,6 @@ export class IncluirIgrejaService {
     body.set('igreja_matriz', igreja_matriz.toString());
     body.set('paroquia_id', paroquia_id.toString());
     body.set('igreja_desc_resumida', igreja_desc_resumida);
-    return this.http.post<any>(this.inluirIgrejaUrl, body.toString(), { headers });
+    return this.http.post<any>(inluirIgrejaUrl, body.toString(), { headers });
   }
 }

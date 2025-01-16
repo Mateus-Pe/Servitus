@@ -6,14 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GetEventosPrincipalService {
-  eventosPrincipalUrl = 'https://pedeoferta.com.br/templo/index.php/welcome/get_eventos_principal'
+  private baseUrl = (window as any).baseUrl;
   constructor(private http: HttpClient) { }
-
+  
   gerarEventos(): Observable<any>{
+    const eventosPrincipalUrl = `${this.baseUrl}/templo/index.php/welcome/get_eventos_principal`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded'
     });
 
-    return this.http.post<any>(this.eventosPrincipalUrl, null, {headers});
+    return this.http.post<any>(eventosPrincipalUrl, null, {headers});
   }
 }

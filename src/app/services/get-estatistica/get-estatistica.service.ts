@@ -6,12 +6,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GetEstatisticaService {
-  private eventosGeraisUrl = 'https://pedeoferta.com.br/templo/index.php/welcome/get_estatistica';
+  private baseUrl = (window as any).baseUrl;
   constructor(private http: HttpClient) { }
   getEstatistica(paroquiaId: number): Observable<any> {
+    const eventosGeraisUrl = `${this.baseUrl}/templo/index.php/welcome/get_estatistica`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const body = new URLSearchParams();
     body.set('paroquia_id', paroquiaId.toString());
-    return this.http.post<any>(this.eventosGeraisUrl, body.toString(), {headers});
+    return this.http.post<any>(eventosGeraisUrl, body.toString(), {headers});
   }
 }

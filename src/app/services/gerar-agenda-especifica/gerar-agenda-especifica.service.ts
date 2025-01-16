@@ -6,18 +6,19 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GerarAgendaEspecificaService {
-  gerarAgendaEspecificaurl = 'https://pedeoferta.com.br/templo/index.php/welcome/gerar_agenda_especifica';
+  private baseUrl = (window as any).baseUrl;
   constructor(private http: HttpClient) { }
-
+  
   gerarAgendaEspecifica(igrejaId: number,
-                        atualEventoId: number,
-                        agendaEventoOutro: string,
-                        agendaData: string,
-                        agendaDeHora: number,
-                        agendaDeMinuto: number,
-                        agendaAteHora: number,
-                        agendaAteMinuto: number
+    atualEventoId: number,
+    agendaEventoOutro: string,
+    agendaData: string,
+    agendaDeHora: number,
+    agendaDeMinuto: number,
+    agendaAteHora: number,
+    agendaAteMinuto: number
   ): Observable<any>{
+    const gerarAgendaEspecificaurl = `${this.baseUrl}/templo/index.php/welcome/gerar_agenda_especifica`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const body = new URLSearchParams();
     body.set('agenda_igreja_id', igrejaId.toString());
@@ -29,6 +30,6 @@ export class GerarAgendaEspecificaService {
     body.set('agenda_ate_hora', agendaAteHora.toString());
     body.set('agenda_ate_minuto', agendaAteMinuto.toString());
 
-    return this.http.post<any>(this.gerarAgendaEspecificaurl, body.toString(), {headers});
+    return this.http.post<any>(gerarAgendaEspecificaurl, body.toString(), {headers});
   }
 }

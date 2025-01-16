@@ -6,11 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CidadeService {
-  private apiUrl = 'https://pedeoferta.com.br/templo/index.php/welcome/get_cidades_temp';
-
+  private baseUrl = (window as any).baseUrl;
+  
   constructor(private http: HttpClient) {}
-
+  
   getCidades(importancia: string): Observable<any> {
-    return this.http.get<any>(this.apiUrl, { params: { importancia } });
+    const apiUrl = `${this.baseUrl}/templo/index.php/welcome/get_cidades_temp`;
+    return this.http.get<any>(apiUrl, { params: { importancia } });
   }
 }

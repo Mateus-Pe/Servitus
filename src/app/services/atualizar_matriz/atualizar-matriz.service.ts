@@ -6,21 +6,22 @@ import { Observable, BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AtualizarMatrizService {
-  private atualizarMatrizUrl = 'https://pedeoferta.com.br/templo/index.php/welcome/atualizar_matriz';
+  private baseUrl = (window as any).baseUrl;
   private igrejasSubject = new BehaviorSubject<any[]>([]);
   igrejas$ = this.igrejasSubject.asObservable();
-
+  
   setIgrejas(igrejas: any[]) {
     this.igrejasSubject.next(igrejas);
   }
-
+  
   constructor(private http: HttpClient) {}
-
+  
   getAtualizarMatriz(igrejaId: number, paroquiaId: number): Observable<any> {
+    const atualizarMatrizUrl = `${this.baseUrl}/templo/index.php/welcome/atualizar_matriz`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const body = new URLSearchParams();
     body.set('igreja_id', igrejaId.toString());
     body.set('paroquia_id', paroquiaId.toString());
-    return this.http.post<any>(this.atualizarMatrizUrl, body.toString(), { headers });
+    return this.http.post<any>(atualizarMatrizUrl, body.toString(), { headers });
   }
 }

@@ -6,13 +6,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GetBancoImgService {
-  getBancoImgUrl = 'https://pedeoferta.com.br/templo/index.php/welcome/get_banco_imagem';
+  private baseUrl = (window as any).baseUrl;
   constructor(private http: HttpClient) { }
-
+  
   getBancoImg(): Observable<any>{
+    const getBancoImgUrl = `${this.baseUrl}/templo/index.php/welcome/get_banco_imagem`;
     const headers = new HttpHeaders({
       'Content-Type': 'text/plain;charset=UTF-8',
     });
-    return this.http.post(this.getBancoImgUrl, '', { headers });
+    return this.http.post(getBancoImgUrl, '', { headers });
   }
 }

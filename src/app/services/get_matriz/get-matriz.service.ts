@@ -13,12 +13,13 @@ interface MatrizResponse {
   providedIn: 'root'
 })
 export class GetMatrizService {
-  private getMatrizUrl= 'https://pedeoferta.com.br/templo/index.php/welcome/get_matriz';
+  private baseUrl = (window as any).baseUrl;
   constructor(private http: HttpClient) { }
   getMatriz(paroquiaId: number): Observable<any>{
+    const getMatrizUrl= `${this.baseUrl}/templo/index.php/welcome/get_matriz`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const body = new URLSearchParams();
     body.set('paroquia_id', paroquiaId.toString());
-    return this.http.post<MatrizResponse>(this.getMatrizUrl, body.toString(), { headers});
+    return this.http.post<MatrizResponse>(getMatrizUrl, body.toString(), { headers});
   }
 }

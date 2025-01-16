@@ -6,14 +6,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GerarAgendaService {
-  gerarAgendaUrl = 'https://pedeoferta.com.br/templo/index.php/welcome/gerar_agenda';
+  private baseUrl = (window as any).baseUrl;
   constructor(private http: HttpClient) { }
-
+  
   getGerarAgenda(dias: string,
-                 igrejaId: number,
-                 atualEventoId: number,
-                 agendaEventoOutro: string,
-                 agendaDias: number,
+    igrejaId: number,
+    atualEventoId: number,
+    agendaEventoOutro: string,
+    agendaDias: number,
                  tempoDuracao: number,
                  agendaDe: string,
                  agendaAte: string,
@@ -22,6 +22,7 @@ export class GerarAgendaService {
                  agendaAteHora: number,
                  agendaAteMinuto: number
   ):Observable<any>{
+    const gerarAgendaUrl = `${this.baseUrl}/templo/index.php/welcome/gerar_agenda`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const body = new URLSearchParams();
     body.set('dias', dias);
@@ -37,6 +38,6 @@ export class GerarAgendaService {
     body.set('agenda_ate_hora', agendaAteHora.toString());
     body.set('agenda_ate_minuto', agendaAteMinuto.toString());
 
-    return this.http.post<any>(this.gerarAgendaUrl, body.toString(), {headers})
+    return this.http.post<any>(gerarAgendaUrl, body.toString(), {headers})
   }
 }

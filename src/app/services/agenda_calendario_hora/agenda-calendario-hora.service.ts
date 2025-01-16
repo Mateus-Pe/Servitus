@@ -17,13 +17,14 @@ interface CalendarioHora {
   providedIn: 'root'
 })
 export class AgendaCalendarioHoraService {
-  private agendaCalendarioHoraUrl = 'https://pedeoferta.com.br/templo/index.php/welcome/get_agenda_calendario_hora';
+  private baseUrl = (window as any).baseUrl;
   constructor(private http: HttpClient) { }
   getAgendaCalendarioHora(igrejaId:number, dtReferencia: string): Observable<any>{
+    const agendaCalendarioHoraUrl = `${this.baseUrl}/templo/index.php/welcome/get_agenda_calendario_hora`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const body = new URLSearchParams();
     body.set('igreja_id', igrejaId.toString());
     body.set('data_referencia', dtReferencia);
-    return this.http.post<{ calendario_hora: CalendarioHora[] }>(this.agendaCalendarioHoraUrl, body.toString(), { headers });
+    return this.http.post<{ calendario_hora: CalendarioHora[] }>(agendaCalendarioHoraUrl, body.toString(), { headers });
   }
 }

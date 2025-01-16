@@ -6,10 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GetAgendaCalendarioFeedService {
-  private agendaCalendarioFeedUrl = 'https://pedeoferta.com.br/templo/index.php/welcome/get_agenda_calendario_feed';
+  private baseUrl = (window as any).baseUrl;
   constructor(private http: HttpClient) { }
-
+  
   getAgendaCalendarioFeed(cidadeId: number, dataReferencia: string): Observable<any>{
+    const agendaCalendarioFeedUrl = `${this.baseUrl}/templo/index.php/welcome/get_agenda_calendario_feed`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded'
     });
@@ -17,6 +18,6 @@ export class GetAgendaCalendarioFeedService {
     body.set('cidade_id', cidadeId.toString());
     body.set('data_referencia', dataReferencia);
 
-    return this.http.post<any>(this.agendaCalendarioFeedUrl, body.toString(), { headers })
+    return this.http.post<any>(agendaCalendarioFeedUrl, body.toString(), { headers })
   }
 }

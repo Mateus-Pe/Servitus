@@ -28,7 +28,7 @@ export class GeoLocationService {
           const location = response.results[0].geometry.location;
           return { lat: location.lat, lng: location.lng };
         }
-        return null; // Retorna `null` se não houver resultados
+        return null;
       })
     );
   }

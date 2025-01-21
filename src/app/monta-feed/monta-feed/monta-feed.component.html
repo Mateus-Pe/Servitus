@@ -1,0 +1,47 @@
+<div class="div_publicacao">
+    <div class="feed_principal">
+        <div class="div_feed_secundario">
+            <div>
+                <div style="display: flex; justify-content: space-between;">
+                    <a class="div_perfil">
+                        <div class="perfil_div">
+                            <img class="img_igreja" [src]="linha.igreja_logo">
+                            <span class="nome_igreja">{{linha.igreja_nome}}</span>
+                        </div>
+                    </a>
+                    <div style="border: 1px solid black; align-items: center; display: grid; padding-right: 10px; padding-left: 10px; font-family: exo; margin-top: 2px; margin-right: 2px;">
+                        <span style="font-size: 1.2rem; color: grey; display: flex; justify-content: center;">
+                            {{formataDia(linha.data_evento)}}
+                        </span>
+                        <span style="font-size: 1.2rem; color: grey; display: flex; justify-content: center;">
+                            {{formataHora(linha.data_evento)}}
+                        </span>
+                    </div>
+                </div>
+                <div class="div_layout_feed">
+                    <a class="a_img_layout">
+                        <img class="img_layout_feed" [src]="linha.agenda_img">
+                    </a>
+                    <div class="div_descricao">
+                        <span class="span_descricao">
+                            {{linha.descricao_evento}}
+                        </span>
+                    </div>
+                </div>
+                <div class="div_rodape_feed">
+                    <div class="rodape_feed_botao">
+                        <fa-icon [icon]="faShareNodes" class="span_rodape_botao"></fa-icon>
+                    </div>
+                    <div class="compartilhamento">
+                        <a class="btn-compartilhar btn-whatsapp">
+                            <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/brands/whatsapp.svg">
+                        </a>
+                        <a class="btn-compartilhar btn-facebook">
+                            <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/brands/facebook.svg">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

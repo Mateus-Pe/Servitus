@@ -1,0 +1,85 @@
+body.styleBody {
+    background-color: lightgray;
+    height: unset;
+    width: unset;
+    font-size: 62.5%;
+}
+
+.feed_main {
+    background: lightgray;
+    font-size: 1.6rem;
+    font-family: sans-serif;
+    margin-top: 6rem;
+}
+
+.header1 {
+    background-color: darkred;
+    height: 55px;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+    align-items: center;
+}
+
+.mobile_nav {
+    background-color: darkred !important;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.span_criar-igreja {
+    font-size: 2rem;
+    color: #fff;
+    position: relative;
+    right: 2.0rem;
+    padding: 1.5rem;
+    font-family: Exo;
+}
+
+.search-market__input::placeholder {
+    color: white;
+}
+
+.show_compartilha {
+    max-height: 500px;
+    display: flex;
+}
+
+.btn-instagram {
+    background-color: #E4405F;
+    /* Cor característica do Instagram */
+}
+
+.btn-instagram:hover {
+    background-color: #CA3754;
+    /* Cor de destaque ao passar o mouse */
+}
+
+.btn-compartilhar img {
+    width: 24px;
+    /* Tamanho dos ícones */
+    height: 24px;
+    filter: invert(1);
+}
+
+.btn-compartilhar:hover {
+    opacity: 0.8;
+    /* Opacidade reduzida ao passar o mouse */
+}
+
+.header-up {
+    top: -100px; 
+    transition: top 0.3s ease-in-out;
+}
+
+.header-down {
+    top: 0;
+    transition: top 0.3s ease-in-out;
+}

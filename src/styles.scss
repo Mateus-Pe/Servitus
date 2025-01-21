@@ -135,6 +135,10 @@
     pointer-events: none;
   }
 
+  .no-scroll {
+    overflow: hidden;
+}
+
   .page-menu.disabled {
     left: calc(100% - 20%);
   }

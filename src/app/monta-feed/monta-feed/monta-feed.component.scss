@@ -1,0 +1,126 @@
+.div_publicacao {
+    background-color: lightgray;
+}
+
+.feed_principal {
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 2px;
+    padding-left: 2px;
+    padding-right: 6px;
+    padding-bottom: 10px;
+}
+
+.div_feed_secundario {
+    border: 1px solid white;
+    margin-left: 0.2rem;
+    margin-bottom: 0.1rem;
+    margin-right: 0.2rem;
+    background-color: white;
+    width: 100%;
+}
+
+.div_perfil {
+    display: flex;
+    text-decoration: none;
+}
+
+.perfil_div {
+    display: flex;
+    align-items: center;
+}
+
+.img_igreja {
+    height: 3.5rem;
+    border-radius: 50%;
+    width: 3.5rem;
+}
+
+.nome_igreja {
+    align-self: center;
+    color: #363636;
+    margin-left: 0.6rem;
+    font-size: 1.3rem;
+    font-family: exo;
+}
+
+.div_layout_feed {
+    margin-top: 1.5rem;
+}
+
+.a_img_layout {
+    color: #363636;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.img_layout_feed {
+    align-self: center;
+    max-width: 100%;
+    width: 100%;
+}
+
+.div_descricao {
+    margin-top: 15px;
+}
+
+.span_descricao {
+    height: 2.5rem;
+    margin-top: 1.5rem;
+    color: rgb(98, 97, 97);
+    font-family: exo;
+    font-size: 1.5rem;
+}
+
+.div_rodape_feed {
+    margin-top: 1.1rem;
+}
+
+.rodape_feed_botao {
+    text-align: right;
+    display: block;
+}
+
+.span_rodape_botao {
+    background-color: white;
+    color: lightslategray;
+    font-size: 22px !important;
+    margin-right: 12px;
+}
+
+.compartilhamento {
+    display: none;
+    justify-content: center;
+    gap: 2rem;
+    overflow: hidden;
+    max-height: 0px;
+    transition: max-height 0.6s ease-in-out;
+    border-top: 1px solid lightgray;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.btn-compartilhar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    margin-top: 5px;
+}
+
+.btn-whatsapp {
+    background-color: #25D366;
+    /* Verde do WhatsApp */
+}
+
+.btn-facebook {
+    background-color: #1877F2;
+    /* Azul do Facebook */
+}

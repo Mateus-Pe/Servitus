@@ -80,4 +80,8 @@ export class PrincipalComponent {
   moveToCalendar(){
     this.router.navigate(['/calendario-feed']);
   }
+
+  moveToFeed(){
+    this.router.navigate(['/feed']);
+  }
 }

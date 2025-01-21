@@ -1,0 +1,47 @@
+<nav class="mobile-nav mobile_nav" [class.mobile_nav]="isMenuOpen">
+    <ul class="mobile-nav__items">
+        <li>
+            <a href="principal">
+                <fa-icon [icon]="faHouse"></fa-icon>
+                Principal
+            </a>
+        </li>
+
+        <li>
+            <a href="calendario-feed">
+                <fa-icon [icon]="faCalendar"></fa-icon>
+                Calendário
+            </a>
+        </li>
+
+        <li>
+            <a>
+                <fa-icon [icon]="faMagnifyingGlassLocation"></fa-icon>
+                Mudar de cidade
+            </a>
+        </li>
+
+        <li>
+            <a>
+                <fa-icon [icon]="faChurch"></fa-icon>
+                Igrejas
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<div class="page-menu" style="background-color: lightgray;" [ngClass]="{ 'disabled': isMenuOpen }">
+    <header class="header1">
+        <a class="page-menu--toggle page-menu__hamburger" id="btnMenu" [class.page-menu__hamburger--open]="isMenuOpen" (click)="toggleMenu()">
+            <span class="page-menu__item"></span>
+            <span class="page-menu__item"></span>
+            <span class="page-menu__item"></span>
+        </a>
+    </header>
+
+    <main class="feed_main" [ngClass]="{ 'no-scroll': isMenuOpen }" [ngClass]="{ 'is-blur': isMenuOpen }">
+        <div *ngFor="let evento of agendas; let i = index">
+            <app-monta-feed [linha]="evento" [i]="i"></app-monta-feed>
+        </div>
+    </main>
+</div>

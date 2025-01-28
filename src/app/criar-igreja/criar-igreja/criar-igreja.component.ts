@@ -34,6 +34,8 @@ export class CriarIgrejaComponent {
   @ViewChild('logradouroInput') logradouroInput!: ElementRef;
   @ViewChild('numeroInput') numeroInput!: ElementRef;
 
+  inputsDesabilitados: boolean = false;
+
   nomeInstituicao = '';
   cepInstituicao = '';
   cidadeInstituicao = '';
@@ -133,20 +135,24 @@ export class CriarIgrejaComponent {
               }
   
               this.cepValido = true;
+              this.inputsDesabilitados = true;
             } else {
               this.cepValido = false;
+              this.inputsDesabilitados = false;
             }
             resolve();  // Indica que a busca foi concluída
           },
           error: (error) => {
             console.error('Erro ao buscar o CEP:', error);
             this.cepValido = false;
+            this.inputsDesabilitados = false;
             resolve();  // Indica que a busca foi concluída
           }
         });
       });
     } else {
       this.cepValido = false;
+      this.inputsDesabilitados = false;
       return Promise.resolve();
     }
   }

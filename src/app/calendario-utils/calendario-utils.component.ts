@@ -1,12 +1,13 @@
-import { Component, EventEmitter, Output, Input  } from '@angular/core';
+import { Component, EventEmitter, Output, Input, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAngleLeft, faAnglesLeft, faAngleRight, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
+import { ModalComponent } from '../modal/modal/modal.component';
 
 @Component({
   selector: 'app-calendario-utils',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, ModalComponent],
   templateUrl: './calendario-utils.component.html',
   styleUrls: ['./calendario-utils.component.scss'] // Corrigido de 'styleUrl' para 'styleUrls'
 })
@@ -39,11 +40,19 @@ export class CalendarioUtilsComponent {
 
   @Input() modo: 'mensal' | 'semanal' = 'mensal'; // Modo: 'mensal' ou 'semanal'
   @Input() selectedDay: Date | null = null;
+  @Input() ativarModal: boolean | null = false;
   @Output() daySelected = new EventEmitter<string>();
+  @Output() daySelectedModal = new EventEmitter<Date>();
 
   // modo semanal
   weekDays: string[] = [];
   weekDates: Date[] = [];
+
+  openModal = false;
+  modoModalMensal: 'mensal' | 'semanal' = 'mensal';
+  estiloModalContent = {
+    'width': '90%'
+  };
 
   constructor() { }
 
@@ -60,6 +69,13 @@ export class CalendarioUtilsComponent {
         this.selectedDay = today; // Se não houver selectedDay, utiliza a data de hoje
         this.daySelected.emit(this.formatDataTwo(this.selectedDay)); // Emite com a data de hoje
       }
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedDay'] && this.selectedDay) {
+      //console.log('Dia selecionado atualizado', this.selectedDay);
+      this.montarCalendarioSemanal(); // Atualiza o calendário semanal
     }
   }
 
@@ -80,7 +96,7 @@ export class CalendarioUtilsComponent {
     this.daysInMonth = daysInMonth;
     this.firstDay = firstDay;
 
-    console.log(`Recalculando: ${this.months[month].name} - ${firstDay} - Dias: ${daysInMonth}`);
+    //console.log(`Recalculando: ${this.months[month].name} - ${firstDay} - Dias: ${daysInMonth}`);
     // Corrigir a exibição do nome do mês, considerando que 'getMonth()' é zero-indexed
     this.monthName = this.months[month].name; 
     this.globalCY = year;
@@ -122,6 +138,8 @@ export class CalendarioUtilsComponent {
   montarCalendarioSemanal(): void {
     const today = this.selectedDay || new Date();  // Se houver um selectedDay, usamos ele, senão usamos o dia atual
     const firstDayOfWeek = this.getFirstDayOfWeek(today);
+
+    //console.log("Dia selecionado do Modal",today);
     
     // Define os dias da semana (7 dias a partir de hoje)
     this.weekDates = [];
@@ -168,7 +186,7 @@ export class CalendarioUtilsComponent {
       this.montarCalendarioSemanal(); // Atualiza a semana
       this.daySelected.emit(this.formatDataTwo(this.selectedDay));
     } else {
-      console.log('selectedDay é nulo');
+      //console.log('selectedDay é nulo');
       // Defina um valor padrão para selectedDay, caso seja nulo
       this.selectedDay = new Date(); // Por exemplo, se for nulo, use a data atual
     }
@@ -182,7 +200,7 @@ export class CalendarioUtilsComponent {
       this.montarCalendarioSemanal(); // Atualiza a semana
       this.daySelected.emit(this.formatDataTwo(this.selectedDay));
     } else {
-      console.log('selectedDay é nulo');
+      //console.log('selectedDay é nulo');
       this.selectedDay = new Date(); // Definindo um valor padrão
     }
   }
@@ -195,7 +213,7 @@ export class CalendarioUtilsComponent {
       this.montarCalendarioSemanal(); // Atualiza a semana
       this.daySelected.emit(this.formatDataTwo(this.selectedDay));
     } else {
-      console.log('selectedDay é nulo');
+      //console.log('selectedDay é nulo');
       this.selectedDay = new Date(); // Definindo um valor padrão
     }
   }
@@ -208,10 +226,28 @@ export class CalendarioUtilsComponent {
       this.montarCalendarioSemanal(); // Atualiza a semana
       this.daySelected.emit(this.formatDataTwo(this.selectedDay));
     } else {
-      console.log('selectedDay é nulo');
+      //console.log('selectedDay é nulo');
       this.selectedDay = new Date(); // Definindo um valor padrão
     }
   }
+
+  //lógicas para ativação do modal mensal no calendario semanal
+  ativeModal(): void{
+    if (this.ativarModal == true) {
+      this.openModal = true;
+    }
+  }
+
+  onDaySelectedModal(selectedDate: string): void {
+    const [day, month, year] = selectedDate.split('/').map(num => parseInt(num, 10));
+    const formattedDate = new Date(year, month - 1, day, 0, 0, 0);
+
+    // Agora você tem um objeto Date e pode emitir
+    this.daySelectedModal.emit(formattedDate);
+    setTimeout(() => {
+      this.openModal = false;
+    }, 200);
+  };
 
   //Função para ambos -------------------------------------------------------------------------------------
 
@@ -230,7 +266,7 @@ export class CalendarioUtilsComponent {
         this.selectedDay = selectedDate;
         this.daySelected.emit(this.formatDataTwo(selectedDate));
       } else {
-        console.error('Índice de semana inválido para o dia: ', day);
+       // console.error('Índice de semana inválido para o dia: ', day);
       }
     }
     this.updateMonthName();

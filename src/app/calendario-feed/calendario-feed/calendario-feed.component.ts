@@ -15,6 +15,8 @@ import { ModalAgendaComponent } from '../../modal-agenda/modal-agenda/modal-agen
 export class CalendarioFeedComponent {
   modoCalendario: 'mensal' | 'semanal' = 'semanal';
   dateSelected: string = '';
+  dateSelectedModal: Date | null = null;
+  diaModalFormatado: string = '';
   cidadeId: number = 9240;
 
   modalAgendas = false;
@@ -24,10 +26,12 @@ export class CalendarioFeedComponent {
   filteredAgendas = [...this.agendas];
   selectedFilter: string = 'Todos';
 
+  ativarModalCalendario = true;
+
   @ViewChild('divListaAgenda') divListaAgenda: ElementRef | undefined;
 
   constructor(private getAgendaCalendarioFeedService: GetAgendaCalendarioFeedService,
-              private utilsService: UtilsService
+              private utilsService: UtilsService,
   ){}
 
   ngOnInit(): void{
@@ -40,8 +44,8 @@ export class CalendarioFeedComponent {
 
 
   //Serviços -------------------------------------------------------------------------------------
-  getCalendarioAgendas(){
-    this.getAgendaCalendarioFeedService.getAgendaCalendarioFeed(this.cidadeId, this.dateSelected).subscribe({
+  getCalendarioAgendas(dataSelecionada: string){
+    this.getAgendaCalendarioFeedService.getAgendaCalendarioFeed(this.cidadeId, dataSelecionada).subscribe({
       next: (response) => {
         this.agendas = response.calendario_hora;
         this.filteredAgendas = [...this.agendas];
@@ -72,7 +76,20 @@ export class CalendarioFeedComponent {
 
   onDateSelected(date: string): void {
     this.dateSelected = date;
-    this.getCalendarioAgendas();
+    console.log(this.dateSelected);
+    this.getCalendarioAgendas(this.dateSelected);
+    this.selectedFilter = 'Todos';
+
+    setTimeout(() => {
+      this.scrollToLastPassedAgenda();
+    }, 500);
+  }
+
+  onDateSelectedModal(date: Date): void {
+    this.dateSelectedModal = date;
+    this.diaModalFormatado = this.utilsService.formatData(this.dateSelectedModal);
+    console.log(this.diaModalFormatado);
+    this.getCalendarioAgendas(this.diaModalFormatado);
     this.selectedFilter = 'Todos';
 
     setTimeout(() => {
@@ -82,7 +99,7 @@ export class CalendarioFeedComponent {
 
   eventoPassado(agenda: any): boolean {
     const arrHora = agenda.agenda_hora.split(":");
-    const arrData = this.dateSelected.split("-");
+    const arrData = this.dateSelectedModal ? this.diaModalFormatado.split("-") : this.dateSelected.split("-");
   
     const eventoData = new Date(
       parseInt(arrData[0]),   // Ano
@@ -92,7 +109,6 @@ export class CalendarioFeedComponent {
       parseInt(arrHora[1]),   // Minutos do evento
       0                       // Segundos
     );
-  
     const dataAtual = new Date();
   
     return dataAtual > eventoData;

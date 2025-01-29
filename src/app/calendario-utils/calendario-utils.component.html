@@ -32,7 +32,7 @@
     <fa-icon [icon]="faAnglesLeft" class="left calBtn" (click)="prevWeek()"></fa-icon>
     <fa-icon [icon]="faAngleLeft" class="left calBtn" (click)="prevDay()"></fa-icon>
 
-    <div id="yearMonth" class="yearMonthSemanal" *ngIf="selectedDay">
+    <div id="yearMonth" class="yearMonthSemanal" *ngIf="selectedDay" (click)="ativeModal()">
       
       <p style="margin: unset; height: 25px; font-size: 13.1px;">
         {{ monthName | uppercase }}
@@ -61,3 +61,9 @@
     </ol>
   </div>
 </ng-container>
+
+<app-modal *ngIf="openModal" [estilosModalContent]="estiloModalContent">
+  <div modal-body>
+      <app-calendario-utils [modo]="modoModalMensal" (daySelected)="onDaySelectedModal($event)"></app-calendario-utils>
+  </div>
+</app-modal>

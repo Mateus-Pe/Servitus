@@ -234,4 +234,13 @@ export class UtilsService {
     return t.toUpperCase();
   }
 
+  //usado para formatar valores do tipo "data"
+  formatData(data: Date): string {
+    const ano = data.getFullYear();
+    const mes = (data.getMonth() + 1).toString().padStart(2, '0'); // Mês com 2 dígitos
+    const dia = data.getDate().toString().padStart(2, '0'); // Dia com 2 dígitos
+  
+    return `${ano}-${mes}-${dia}`;
+  }
+
 }

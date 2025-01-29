@@ -1,6 +1,6 @@
 <div class="containerPrincipal">
     <div class="contain_calendar_principal">
-        <app-calendario-utils [modo]="modoCalendario" (daySelected)="onDateSelected($event)"></app-calendario-utils>
+        <app-calendario-utils [modo]="modoCalendario" [ativarModal]="ativarModalCalendario" (daySelected)="onDateSelected($event)" (daySelectedModal)="onDateSelectedModal($event)" [selectedDay]="dateSelectedModal"></app-calendario-utils>
     
         <div class="select_filter">
             <div id="select_missa"

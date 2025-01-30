@@ -24,12 +24,22 @@ export class FeedComponent implements OnInit, OnDestroy {
   cidadeId = '';
   agendas: any[] = [];
 
+  origem: string | null = null;
+  origemFeed: boolean | null = null;
+
   constructor(private getFeedService: GetFeedService,
               private renderer: Renderer2)
   {}
 
   ngOnInit() {
     this.renderer.addClass(document.body, 'styleBody');
+    this.origem = window.sessionStorage.getItem('feed-origem-igreja');
+    console.log(this.origem);
+    if (this.origem == 'igrejas') {
+      this.origemFeed = true;
+    }else{
+      this.origemFeed = false;
+    }
 
     this.cidadeId = '9240';
     this.carregaFeed();

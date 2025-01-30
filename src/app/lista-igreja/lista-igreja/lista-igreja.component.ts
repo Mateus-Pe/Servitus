@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlus, faGear, faCircleChevronDown, faCircleChevronUp, faCalendar, faTrash, faChurch  } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faGear, faCircleChevronDown, faCircleChevronUp, faCalendar, faTrash, faChurch, faList } from '@fortawesome/free-solid-svg-icons';
 import { ListaIgrejaService } from '../../services/lista_igreja/lista-igreja.service';
 import { GetEstatisticaService } from '../../services/get-estatistica/get-estatistica.service';
 import { ModalComponent } from '../../modal/modal/modal.component';
@@ -25,7 +25,8 @@ export class ListaIgrejaComponent implements OnInit {
   faCircleChevronUp = faCircleChevronUp;
   faCalendar = faCalendar;
   faTrash = faTrash;
-  faChurch = faChurch
+  faChurch = faChurch;
+  faList = faList;
   //var sercices --------------------------------
   paroquia_id : number | null = null;
   igrejas: any[] = [];
@@ -59,6 +60,7 @@ export class ListaIgrejaComponent implements OnInit {
 
   //ready -------------------------------------------------------------
   ngOnInit(): void {
+    window.sessionStorage.setItem('feed-origem-igreja', 'igrejas');
     const id = window.sessionStorage.getItem('paroquia_id');
     this.paroquia_id = id ? Number(id) : null;
     if (this.paroquia_id != null) {
